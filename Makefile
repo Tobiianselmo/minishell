@@ -6,9 +6,11 @@
 #    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/05/09 15:21:45 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/05/09 16:09:50 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+USER = tanselmo
 
 LIBFT_DIR = Libft/
 
@@ -42,7 +44,8 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJS_SRCS)
 	@$(MAKE) -s all bonus printf gnl -C $(LIBFT_DIR)
-	@$(CC) $(INCLUDE) $(OBJS_SRCS) -L$(LIBFT_DIR) -lft -o $(NAME)
+#	@$(CC) $(INCLUDE) $(OBJS_SRCS) -L$(LIBFT_DIR) -lft -o $(NAME)
+	@$(CC) $(INCLUDE) $(OBJS_SRCS) -L$(LIBFT_DIR) -lft -o $(NAME) -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 
 bonus: $(NAME_BONUS)
 
