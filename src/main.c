@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:22:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/09 19:10:50 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:25:00 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ int	main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		char *line = readline("minishell % ");
-		if (ft_strncmp(line, "exit", 5) == 0)
-			break;
+		if (!line || ft_strncmp(line, "exit", 5) == 0)
+		{
+			free(line);
+			printf("exit\n");
+			break ;
+		}
 		add_history(line);
-		//printf("%s\n", line);
+		free(line);
 		rl_on_new_line();
 	}
 	return (0);
