@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tanselmo <tanselmo@student.42.fr>          +#+  +:+       +#+         #
+#    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/22 18:54:17 by tanselmo          #+#    #+#              #
-#    Updated: 2024/03/27 12:17:48 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/05/24 09:30:33 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = clang
 
 CFLAGS = -Wall -Werror -Wextra
 

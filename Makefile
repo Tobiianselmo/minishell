@@ -6,7 +6,7 @@
 #    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/05/09 16:09:50 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/05/24 09:36:03 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,12 @@ SRCS_DIR = src
 OBJ_DIR = obj
 
 FILES = src/main.c \
+src/env.c \
+src/checker.c \
 
-CC = gcc
+CC = clang
 
-CFLAGS = -g -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 OBJS_SRCS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(FILES))
 
