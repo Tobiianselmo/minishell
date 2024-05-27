@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/24 17:31:34 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:42:09 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,29 @@
 
 typedef enum e_status
 {
-	S_INIT = 1,
-	S_WORD = 2,
-	S_QUOTE = 3,
-	S_DOUBLE_QUOTE = 4,
-	S_DOLLAR = 5,
-	S_DOLLAR_QUOTE = 6
+	S_INIT = 7,
+	S_WORD = 8,
+	S_QUOTE = 9,
+	S_DOUBLE_QUOTE = 10,
+	S_DOLLAR = 11,
+	S_DOLLAR_QUOTE = 12
 }	t_status;
 
 typedef enum e_token_type
 {
-	T_START = 1,
-	T_WORD = 2,
-	T_PIPE = 3,
-	T_G = 4,
-	T_L = 5,
-	T_DG = 6,
-	T_DL = 7
+	T_WORD = 1,
+	T_PIPE = 2,
+	T_G = 3,
+	T_L = 4,
+	T_DG = 5,
+	T_DL = 6
 }	t_tok_type;
 
 typedef struct s_token
 {
-	char	*content;
-
+	char			*content;
+	t_tok_type		type;
+	struct	s_token	*next;
 }	t_token;
 
 typedef struct s_env
@@ -71,6 +71,10 @@ typedef struct s_cmd
 t_env	*get_env(char **envp);
 void	get_first_env(t_env *aux, char **envp);
 void	get_all_env(t_env *aux, char **envp, int y, int j);
-void	print_env(t_env *env);
+char	*check_input(void);
+void	set_tokens(char *line);
+
+void	print_tokens(t_token *tokens);
+void	print_exit(char *str);
 
 #endif
