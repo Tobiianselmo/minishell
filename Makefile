@@ -6,7 +6,7 @@
 #    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/05/24 09:36:03 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/05/28 19:44:14 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,14 @@ OBJ_DIR = obj
 FILES = src/main.c \
 src/env.c \
 src/checker.c \
+src/tokens.c \
+src/set_tokens.c \
+src/create_nodes.c \
+src/prints.c \
 
 CC = clang
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra
 
 OBJS_SRCS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(FILES))
 

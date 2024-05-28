@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 15:22:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/28 18:29:23 by tanselmo         ###   ########.fr       */
+/*   Created: 2024/05/28 19:30:08 by tanselmo          #+#    #+#             */
+/*   Updated: 2024/05/28 19:32:19 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	error_msh(char *msg)
 {
-	t_env	*env;
-	char	*line;
-
-	(void)argc;
-	(void)argv;
-//	line = ft_strdup("cat << | echo 'hola' como > < >>chau");
-	line = check_input();
-	set_tokens(line);
-	env = get_env(envp);
-	return (0);
+	ft_putendl_fd(msg, 2);
+	exit(EXIT_FAILURE);
 }
