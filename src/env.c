@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:48 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/24 17:58:38 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:33:47 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,4 @@ t_env	*get_env(char **envp)
 	get_first_env(aux, envp);
 	get_all_env(aux, envp, 0, 0);
 	return (env);
-}
-
-void	print_env(t_env *env)
-{
-	while (env)
-	{
-		printf("%s%s%s=%s%s%s\n", RED, env->type, RST, W,env->content, RST);
-		env = env->next;
-	}
 }

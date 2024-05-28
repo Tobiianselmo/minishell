@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/27 15:42:09 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:34:49 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,31 @@
 
 typedef enum e_status
 {
-	S_INIT = 7,
-	S_WORD = 8,
-	S_QUOTE = 9,
-	S_DOUBLE_QUOTE = 10,
-	S_DOLLAR = 11,
-	S_DOLLAR_QUOTE = 12
+	S_INIT,
+	S_WORD,
+	S_QUOTE,
+	S_DOUBLE_QUOTE,
+	S_DOLLAR,
+	S_DOLLAR_QUOTE
 }	t_status;
 
 typedef enum e_token_type
 {
-	T_WORD = 1,
-	T_PIPE = 2,
-	T_G = 3,
-	T_L = 4,
-	T_DG = 5,
-	T_DL = 6
+	T_WORD,
+	T_PIPE,
+	T_G,
+	T_L,
+	T_DG,
+	T_DL,
+	T_Q,
+	T_DQ
 }	t_tok_type;
 
 typedef struct s_token
 {
 	char			*content;
 	t_tok_type		type;
-	struct	s_token	*next;
+	struct s_token	*next;
 }	t_token;
 
 typedef struct s_env
@@ -63,18 +65,34 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_cmd
+/* typedef struct s_cmd
 {
-	/*command struct*/
-}	t_cmd;
+	command struct
+}	t_cmd; */
 
+//-------------PRINTS-----------// (BORRAR A FUTURO)
+void	print_tokens(t_token *tokens);
+void	print_env(t_env *env);
+void	print_exit(char *str);
+//-------------UTILS------------//
+void	error_msh(char *msg);
+//--------------ENV-------------//
 t_env	*get_env(char **envp);
 void	get_first_env(t_env *aux, char **envp);
 void	get_all_env(t_env *aux, char **envp, int y, int j);
+//-------------INPUT------------//
 char	*check_input(void);
+//-------------TOKENS-----------//
 void	set_tokens(char *line);
-
-void	print_tokens(t_token *tokens);
-void	print_exit(char *str);
+void	set_word_tok(char *line, int *i, t_token **tokens);
+void	set_dq_tok(char *line, int *i, t_token **tokens);
+void	set_q_tok(char *line, int *i, t_token **tokens);
+void	set_l_tok(char *line, int *i, t_token **tokens);
+void	set_g_tok(char *line, int *i, t_token **tokens);
+void	set_pipe_tok(char *line, int *i, t_token **tokens);
+//-----------TOKEN LIST---------//
+t_token	*new_node(char *content, int type);
+void	create_tok_lst(t_token **tok, int type, char *content);
+void	add_back(t_token **lst, t_token *new);
 
 #endif

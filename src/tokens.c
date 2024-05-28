@@ -6,128 +6,83 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:55:57 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/27 16:57:37 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:25:32 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static t_token	*new_node(char *content, int type)
-{
-	t_token	*new;
-
-	new = (t_token *)malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
-	new->content = ft_strdup(content);
-	new->type = type;
-	new->next = NULL;
-	return (new);
-}
-
-/* static void	set_pipe_tok(char *line, int *i, t_token *tok)
+void	set_pipe_tok(char *line, int *i, t_token **tokens)
 {
 	if (line[*i])
 	{
-		tok = new_node("|", T_PIPE);
+		create_tok_lst(tokens, T_PIPE, ft_strdup("|"));
 		*i += 1;
 	}
 }
 
-static void	set_g_tok(char *line, int *i, t_token *tok)
+void	set_g_tok(char *line, int *i, t_token **tokens)
 {
 	if (line[*i])
 	{
-		if (line[*i + 1] == '<')
+		if (line[*i + 1] == '>')
 		{
-			tok->content = ft_strdup(">>");
-			tok->type = T_DG;
+			create_tok_lst(tokens, T_DG, ft_strdup(">>"));
 			*i += 2;
 		}
 		else
 		{
-			tok->content = ft_strdup(">");
-			tok->type = T_G;
+			create_tok_lst(tokens, T_G, ft_strdup(">"));
 			*i += 1;
 		}
-		tok->next = NULL;
 	}
 }
 
-static void	set_l_tok(char *line, int *i, t_token *tok)
+void	set_l_tok(char *line, int *i, t_token **tokens)
 {
 	if (line[*i])
 	{
 		if (line[*i + 1] == '<')
 		{
-			tok = new_node("<<", T_DL);
+			create_tok_lst(tokens, T_DL, ft_strdup("<<"));
 			*i += 2;
 		}
 		else
 		{
-			tok = new_node("<", T_L);
+			create_tok_lst(tokens, T_L, ft_strdup("<"));
 			*i += 1;
 		}
 	}
-	
-} */
+}
 
-static t_token	*set_word_tok(char *line, int *i)
+void	set_q_tok(char *line, int *i, t_token **tokens)
 {
-	t_token	*tok;
 	int	start;
 
-	tok = NULL;
 	start = *i;
 	if (line[*i])
 	{
-		while (line[*i] && line[*i] > 32 && line[*i] < 127 && line[*i] != '<'
-				&& line[*i] != '>' && line[*i] != '|')
+		*i += 1;
+		while (line[*i] && line[*i] != '\'')
 			*i += 1;
-		tok = new_node(ft_substr(line, start, (*i - start)), T_WORD);
+		if (line[*i] == '\'')
+			*i += 1;
+		create_tok_lst(tokens, T_Q, ft_substr(line, start, (*i - start)));
 	}
-	return (tok);
 }
 
-void	add_back(t_token **lst, t_token *new)
+void	set_dq_tok(char *line, int *i, t_token **tokens)
 {
-	t_token	*new_node;
+	int	start;
 
-	if (*lst == NULL)
+	start = *i;
+	if (line[*i])
 	{
-		*lst = new;
-		return ;
+		*i += 1;
+		while (line[*i] && line[*i] != '\"')
+			*i += 1;
+		if (line[*i] == '\"')
+			*i += 1;
+		create_tok_lst(tokens, T_DQ, ft_substr(line, start, (*i - start)));
 	}
-	new_node = *lst;
-	while (new_node->next != NULL)
-		new_node = new_node->next;
-	new_node->next = new;
 }
-
-void	set_tokens(char *line)
-{
-	int		i;
-	t_token	*tokens;
-	t_token	*aux;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '<' && line[i] != '>'
-			&& line[i] != '|' && line[i] != '\n')
-			aux = set_word_tok(line, &i);
-/* 		else if (line[i] == '<')
-			set_l_tok(line, &i, tokens);
-		else if (line[i] == '>')
-			set_g_tok(line, &i, tokens);
-		else if (line[i] == '|')
-			set_pipe_tok(line, &i, tokens); */
-		else if (line[i] == ' ' || line[i] == '\n')
-			i++;
-		add_back(&tokens, )
-		printf("%s\n", tokens->content);
-		print_exit("llega");
-	}
-	print_tokens(tokens);
-}
-
