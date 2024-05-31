@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:55:57 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/28 19:25:32 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:01:50 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	set_q_tok(char *line, int *i, t_token **tokens)
 			*i += 1;
 		if (line[*i] == '\'')
 			*i += 1;
-		create_tok_lst(tokens, T_Q, ft_substr(line, start, (*i - start)));
+		create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)));
 	}
 }
 
@@ -83,6 +83,6 @@ void	set_dq_tok(char *line, int *i, t_token **tokens)
 			*i += 1;
 		if (line[*i] == '\"')
 			*i += 1;
-		create_tok_lst(tokens, T_DQ, ft_substr(line, start, (*i - start)));
+		create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)));
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/28 19:34:49 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:52:23 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-typedef enum e_status
+typedef enum e_states
 {
 	S_INIT,
 	S_WORD,
@@ -37,7 +37,7 @@ typedef enum e_status
 	S_DOUBLE_QUOTE,
 	S_DOLLAR,
 	S_DOLLAR_QUOTE
-}	t_status;
+}	t_states;
 
 typedef enum e_token_type
 {
@@ -47,8 +47,6 @@ typedef enum e_token_type
 	T_L,
 	T_DG,
 	T_DL,
-	T_Q,
-	T_DQ
 }	t_tok_type;
 
 typedef struct s_token
@@ -74,6 +72,8 @@ typedef struct s_env
 void	print_tokens(t_token *tokens);
 void	print_env(t_env *env);
 void	print_exit(char *str);
+//-------------INIT-------------//
+void	init_msh(void);
 //-------------UTILS------------//
 void	error_msh(char *msg);
 //--------------ENV-------------//
@@ -83,13 +83,14 @@ void	get_all_env(t_env *aux, char **envp, int y, int j);
 //-------------INPUT------------//
 char	*check_input(void);
 //-------------TOKENS-----------//
-void	set_tokens(char *line);
+t_token	*set_tokens(char *line);
 void	set_word_tok(char *line, int *i, t_token **tokens);
 void	set_dq_tok(char *line, int *i, t_token **tokens);
 void	set_q_tok(char *line, int *i, t_token **tokens);
 void	set_l_tok(char *line, int *i, t_token **tokens);
 void	set_g_tok(char *line, int *i, t_token **tokens);
 void	set_pipe_tok(char *line, int *i, t_token **tokens);
+void	check_tokens(t_token **tokens);
 //-----------TOKEN LIST---------//
 t_token	*new_node(char *content, int type);
 void	create_tok_lst(t_token **tok, int type, char *content);

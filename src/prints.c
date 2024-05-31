@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:37:37 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/28 19:42:51 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:04:00 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ static void	print_tok(int i)
 		printf("%sTOKEN_TYPE:%s DOUBLE GREAT", C, RST);
 	else if (i == T_DL)
 		printf("%sTOKEN_TYPE:%s DOUBLE LESS", C, RST);
-	else if (i == T_Q)
-		printf("%sTOKEN_TYPE:%s SIMPLE QUOTE", C, RST);
-	else if (i == T_DQ)
-		printf("%sTOKEN_TYPE:%s DOUBLE QUOTE", C, RST);
 	else
 		printf("%sTOKEN_TYPE:%s NULL", C, RST);
 }
@@ -40,7 +36,8 @@ void	print_tokens(t_token *tokens)
 	while (tokens)
 	{
 		print_tok(tokens->type);
-		printf(" %s---->%s %sTOKEN_CONTENT:%s %s\n", RED, RST, G, RST, tokens->content);
+		printf(" %s---->%s %sTOKEN_CONTENT:%s %s\n",
+			RED, RST, G, RST, tokens->content);
 		tokens = tokens->next;
 	}
 }

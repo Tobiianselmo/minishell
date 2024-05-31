@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 15:22:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/31 17:53:02 by tanselmo         ###   ########.fr       */
+/*   Created: 2024/05/31 16:38:09 by tanselmo          #+#    #+#             */
+/*   Updated: 2024/05/31 17:57:43 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	init_msh(void)
 {
-	t_env	*env;
+	char	*line;
+	t_token	*tok;
 
-	(void)argc;
-	(void)argv;
-	init_msh();
-	env = get_env(envp);
-	return (0);
+	line = ft_strdup("ls| echo 'hola' > > out ");
+	tok = set_tokens(line);
+	check_tokens(&tok);
+	print_tokens(tok);
 }

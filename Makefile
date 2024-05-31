@@ -6,7 +6,7 @@
 #    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/05/28 19:44:14 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/05/31 18:03:11 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ src/checker.c \
 src/tokens.c \
 src/set_tokens.c \
 src/create_nodes.c \
+src/utils.c \
+src/init.c \
 src/prints.c \
 
 CC = clang

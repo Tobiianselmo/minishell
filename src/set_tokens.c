@@ -6,11 +6,35 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:21:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/28 19:22:35 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:05:10 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	check_tokens(t_token **tokens)
+{
+	t_token	*aux;
+	int		flag;
+
+	aux = *tokens;
+	flag = 0;
+	while (aux)
+	{
+		if (aux->type == T_PIPE && !flag)
+			error_msh("lex: syntax error near unexpected token");
+		else if (aux->type == T_L || aux->type == T_G || aux->type == T_DL
+			|| aux->type == T_DG || aux->type == T_PIPE)
+		{
+			if (!aux->next)
+				error_msh("lex: syntax error unexpected end of file");
+			if (aux->next->type != T_WORD)
+				error_msh("lex: syntax error near unexpected token");
+		}
+		aux = aux->next;
+		flag++;
+	}
+}
 
 void	set_word_tok(char *line, int *i, t_token **tokens)
 {
@@ -27,7 +51,7 @@ void	set_word_tok(char *line, int *i, t_token **tokens)
 	}
 }
 
-void	set_tokens(char *line)
+t_token	*set_tokens(char *line)
 {
 	int		i;
 	t_token	*tokens;
@@ -53,5 +77,5 @@ void	set_tokens(char *line)
 		else if (line[i] == ' ' || line[i] == '\n')
 			i++;
 	}
-	print_tokens(tokens);
+	return (tokens);
 }
