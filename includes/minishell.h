@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/31 17:52:23 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:01:52 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <string.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../Libft/libft.h"
 # define RST    "\033[0m"      /* Reset to default color */
 # define RED    "\033[1;31m"   /* Bold Red */
@@ -63,10 +65,19 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-/* typedef struct s_cmd
+typedef struct s_cmd
 {
-	command struct
-}	t_cmd; */
+	char			*cmd;
+	char			**argv;
+	int				fd_in;
+	int				fd_out;
+	struct s_cmd	*next;
+}	t_cmd;
+
+/* typedef struct s_msh
+{
+	struct s_msh	*next;	
+}	t_msh; */
 
 //-------------PRINTS-----------// (BORRAR A FUTURO)
 void	print_tokens(t_token *tokens);
@@ -91,9 +102,17 @@ void	set_l_tok(char *line, int *i, t_token **tokens);
 void	set_g_tok(char *line, int *i, t_token **tokens);
 void	set_pipe_tok(char *line, int *i, t_token **tokens);
 void	check_tokens(t_token **tokens);
-//-----------TOKEN LIST---------//
+//-----------TOKEN LIST--------//
 t_token	*new_node(char *content, int type);
 void	create_tok_lst(t_token **tok, int type, char *content);
 void	add_back(t_token **lst, t_token *new);
+//------------COMMANDS---------//
+t_cmd	*get_cmd(t_token *tok);
+void	set_cmd(t_cmd **cmd, t_token **tokens);
+//----------CMD CONTENT--------//
+t_cmd	*new_node_cmd(void);
+int		cmd_content(t_cmd *new, t_token **tok);
+void	create_cmd_lst(t_cmd **cmd, t_cmd *new);
+void	add_back_cmd(t_cmd **lst, t_cmd *new);
 
 #endif

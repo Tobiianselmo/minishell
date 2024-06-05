@@ -6,11 +6,13 @@
 #    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/05/31 18:03:11 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/06/05 18:56:46 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 USER = tanselmo
+
+LIB_RDL = -lreadline
 
 LIBFT_DIR = Libft/
 
@@ -28,6 +30,8 @@ src/set_tokens.c \
 src/create_nodes.c \
 src/utils.c \
 src/init.c \
+src/commands.c \
+src/cmd_content.c \
 src/prints.c \
 
 CC = clang
@@ -52,8 +56,7 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJS_SRCS)
 	@$(MAKE) -s all bonus printf gnl -C $(LIBFT_DIR)
-#	@$(CC) $(INCLUDE) $(OBJS_SRCS) -L$(LIBFT_DIR) -lft -o $(NAME)
-	@$(CC) $(INCLUDE) $(OBJS_SRCS) -L$(LIBFT_DIR) -lft -o $(NAME) -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
+	@$(CC) $(INCLUDE) $(OBJS_SRCS) $(LIB_RDL) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 bonus: $(NAME_BONUS)
 
