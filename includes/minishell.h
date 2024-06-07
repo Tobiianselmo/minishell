@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/05 19:01:52 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:01:17 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 # define M      "\033[1;35m"   /* Bold Magenta */
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
+# define UNEXPEC_TOK "sintax error near unexpected token"
+# define UNEXPEC_EOF "syntax error unexpected end of file"
+# define WRONG_Q "unexpected EOF while looking for matching `''"
+# define WRONG_DQ "unexpected EOF while looking for matching `\"'"
+# define NO_FILE "No such file or directory"
+# define NO_CFILE "File can not be created"
 
 typedef enum e_states
 {
@@ -69,30 +75,55 @@ typedef struct s_cmd
 {
 	char			*cmd;
 	char			**argv;
-	int				fd_in;
-	int				fd_out;
 	struct s_cmd	*next;
 }	t_cmd;
 
-/* typedef struct s_msh
+typedef struct s_msh
 {
-	struct s_msh	*next;	
-}	t_msh; */
+	char			*line;
+	int				fd_in;
+	int				fd_out;
+	int				flag;
+	struct s_env	*env;
+	struct s_token	*tokens;
+	struct s_cmd	*cmd;
+}	t_msh;
 
 //-------------PRINTS-----------// (BORRAR A FUTURO)
 void	print_tokens(t_token *tokens);
 void	print_env(t_env *env);
-void	print_exit(char *str);
+
+
+
 //-------------INIT-------------//
-void	init_msh(void);
+void	init_msh(char **envp, t_msh *msh);
+void	get_line(t_msh *msh);
+
+
+
 //-------------UTILS------------//
 void	error_msh(char *msg);
+void	error_files(char *name, char *msg);
+
+
+
 //--------------ENV-------------//
 t_env	*get_env(char **envp);
 void	get_first_env(t_env *aux, char **envp);
 void	get_all_env(t_env *aux, char **envp, int y, int j);
+
+
+
+//--------------FREE------------//
+void	free_msh(t_msh *msh);
+
+
+
 //-------------INPUT------------//
 char	*check_input(void);
+
+
+
 //-------------TOKENS-----------//
 t_token	*set_tokens(char *line);
 void	set_word_tok(char *line, int *i, t_token **tokens);
@@ -101,14 +132,23 @@ void	set_q_tok(char *line, int *i, t_token **tokens);
 void	set_l_tok(char *line, int *i, t_token **tokens);
 void	set_g_tok(char *line, int *i, t_token **tokens);
 void	set_pipe_tok(char *line, int *i, t_token **tokens);
-void	check_tokens(t_token **tokens);
+int		check_tokens(t_token **tokens);
+
+
+
 //-----------TOKEN LIST--------//
 t_token	*new_node(char *content, int type);
 void	create_tok_lst(t_token **tok, int type, char *content);
 void	add_back(t_token **lst, t_token *new);
+
+
+
 //------------COMMANDS---------//
-t_cmd	*get_cmd(t_token *tok);
-void	set_cmd(t_cmd **cmd, t_token **tokens);
+int		get_cmd(t_msh *msh);
+void	set_cmd(t_msh *msh, t_token **tokens);
+
+
+
 //----------CMD CONTENT--------//
 t_cmd	*new_node_cmd(void);
 int		cmd_content(t_cmd *new, t_token **tok);

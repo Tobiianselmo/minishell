@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:37:37 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/31 18:04:00 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:18:09 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,6 @@ void	print_tokens(t_token *tokens)
 			RED, RST, G, RST, tokens->content);
 		tokens = tokens->next;
 	}
-}
-
-void	print_exit(char *str)
-{
-	printf("%s\n", str);
-	exit(0);
 }
 
 void	print_env(t_env *env)

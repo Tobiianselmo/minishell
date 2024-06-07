@@ -6,32 +6,44 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:38:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/05 21:11:45 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:06:20 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	init_msh(void)
+void	init_msh(char **envp, t_msh *msh)
 {
-	char		*line;
-	t_token		*tok;
-	t_cmd		*cmd;
+	msh->env = get_env(envp);
+	msh->cmd = NULL;
+	msh->tokens = NULL;
+	msh->fd_in = 0;
+	msh->fd_out = 0;
+	msh->flag = 0;
+}
 
-	cmd = NULL;
-	line = ft_strdup("ls -la | wc -l");
-	add_history(line);
-	tok = set_tokens(line);
-	check_tokens(&tok);
-/* 	cmd = get_cmd(tok);
-	int i;
-	while (cmd)
+void	get_line(t_msh *msh)
+{
+	msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
+	while (msh->line)
 	{
-		i = 0;
-		printf("COMANDO: %s\n", cmd->cmd);
-		while (cmd->argv[i])
-			printf("MATRIX CMD: %s\n", cmd->argv[i++]);
-		cmd = cmd->next;
-	} */
-	print_tokens(tok);
+		if (msh->line[0] == '\0')
+		{
+			free(msh->line);
+			msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
+		}
+		else
+		{
+			msh->tokens = set_tokens(msh->line);
+			if (check_tokens(&msh->tokens))
+			{
+				if (get_cmd(msh))
+				{
+					printf("funciona todo correctamente\n");
+				}
+			}
+			free_msh(msh);
+			msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
+		}
+	}
 }

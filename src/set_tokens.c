@@ -6,13 +6,13 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:21:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:50:40 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:05:17 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	check_tokens(t_token **tokens)
+int	check_tokens(t_token **tokens)
 {
 	t_token	*aux;
 	int		flag;
@@ -22,18 +22,19 @@ void	check_tokens(t_token **tokens)
 	while (aux)
 	{
 		if (aux->type == T_PIPE && !flag)
-			error_msh("lex: syntax error near unexpected token");
+			return (error_msh(UNEXPEC_TOK), 0);
 		else if (aux->type == T_L || aux->type == T_G || aux->type == T_DL
 			|| aux->type == T_DG || aux->type == T_PIPE)
 		{
 			if (!aux->next)
-				error_msh("lex: syntax error unexpected end of file");
+				return (error_msh(UNEXPEC_EOF), 0);
 			if (aux->next->type != T_WORD)
-				error_msh("lex: syntax error near unexpected token");
+				return (error_msh(UNEXPEC_TOK), 0);
 		}
 		aux = aux->next;
 		flag++;
 	}
+	return (1);
 }
 
 void	set_word_tok(char *line, int *i, t_token **tokens)

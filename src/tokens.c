@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:55:57 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/31 14:01:50 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:10:57 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,21 @@ void	set_q_tok(char *line, int *i, t_token **tokens)
 {
 	int	start;
 
-	start = *i;
+	start = *i + 1;
 	if (line[*i])
 	{
 		*i += 1;
 		while (line[*i] && line[*i] != '\'')
 			*i += 1;
 		if (line[*i] == '\'')
-			*i += 1;
-		create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)));
+		{
+			create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)));
+			*i += 1;	
+		}
+		else
+		{
+			error_msh(WRONG_Q);
+		}
 	}
 }
 
@@ -82,7 +88,13 @@ void	set_dq_tok(char *line, int *i, t_token **tokens)
 		while (line[*i] && line[*i] != '\"')
 			*i += 1;
 		if (line[*i] == '\"')
-			*i += 1;
-		create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)));
+		{
+			create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)));
+			*i += 1;	
+		}
+		else
+		{
+			error_msh(WRONG_DQ);
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:52:28 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/05 18:53:24 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:47:10 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	cmd_content(t_cmd *new, t_token **tok)
 	{
 		new->argv[i] = ft_strdup((*tok)->content);
 		if (!new->argv[i])
-		{
-			//free_matrix(new->argv);
 			return (0);
-		}
 		i++;
 		*tok = (*tok)->next;
 	}

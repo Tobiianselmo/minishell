@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:22:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/31 17:53:02 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:23:45 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*env;
+	t_msh	msh;
 
 	(void)argc;
 	(void)argv;
-	init_msh();
-	env = get_env(envp);
+	init_msh(envp, &msh);
+	get_line(&msh);
 	return (0);
 }

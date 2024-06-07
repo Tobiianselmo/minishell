@@ -6,7 +6,7 @@
 #    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/06/05 18:56:46 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/06/06 17:14:39 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ src/utils.c \
 src/init.c \
 src/commands.c \
 src/cmd_content.c \
+src/free.c \
 src/prints.c \
 
 CC = clang
