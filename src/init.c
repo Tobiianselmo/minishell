@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:38:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/07 17:06:20 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:05:36 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	get_line(t_msh *msh)
 	msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
 	while (msh->line)
 	{
+		add_history(msh->line);
 		if (msh->line[0] == '\0')
 		{
 			free(msh->line);

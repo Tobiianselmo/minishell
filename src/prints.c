@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:37:37 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/07 14:18:09 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:41:48 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_env(t_env *env)
 {
 	while (env)
 	{
-		printf("%s%s%s=%s%s%s\n", RED, env->type, RST, W, env->content, RST);
+		printf("TYPE: %s%s%s\nCONTENT: %s%s%s\n", RED, env->type, RST, W, env->content, RST);
 		env = env->next;
 	}
 }
