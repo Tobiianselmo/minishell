@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:49 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/07 17:05:11 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:41:17 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	free_matrix(char **matrix)
 static void	free_tokens(t_token **tokens)
 {
 	t_token	*aux;
-	
+
 	if (!*tokens || !tokens)
 		return ;
 	while (*tokens)

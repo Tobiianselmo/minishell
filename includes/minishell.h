@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/10 17:29:37 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:08:29 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,16 @@ typedef enum e_token_type
 	T_L,
 	T_DG,
 	T_DL,
+	T_Q,
+	T_DQ
 }	t_tok_type;
 
 typedef struct s_token
 {
 	char			*content;
 	t_tok_type		type;
+	int				flag;
+	int				exp;
 	struct s_token	*next;
 }	t_token;
 
@@ -119,6 +123,11 @@ void	free_msh(t_msh *msh);
 
 
 
+//------------DOLLAR------------//
+void	dollar_flag(t_token *tok);
+
+
+
 //-------------INPUT------------//
 char	*check_input(void);
 
@@ -137,8 +146,8 @@ int		check_tokens(t_token **tokens);
 
 
 //-----------TOKEN LIST--------//
-t_token	*new_node(char *content, int type);
-void	create_tok_lst(t_token **tok, int type, char *content);
+t_token	*new_node(char *content, int type, int flag);
+void	create_tok_lst(t_token **tok, int type, char *content, int flag);
 void	add_back(t_token **lst, t_token *new);
 
 

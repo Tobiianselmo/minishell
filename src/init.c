@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:38:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/10 18:05:36 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:04:51 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	get_line(t_msh *msh)
 		else
 		{
 			msh->tokens = set_tokens(msh->line);
+			dollar_flag(msh->tokens);
+			print_tokens(msh->tokens);
+			exit(0);
 			if (check_tokens(&msh->tokens))
 			{
 				if (get_cmd(msh))
