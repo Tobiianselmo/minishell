@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:34:19 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/07 17:02:59 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:08:35 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	get_cmd(t_msh *msh)
 	cmd = NULL;
 	while (tmp)
 	{
-		if (tmp->type == T_WORD)
+		if (tmp->type == T_WORD || tmp->type == T_Q || tmp->type == T_DQ)
 			set_cmd(msh, &tmp);
 		else if (tmp->type == T_L || tmp->type == T_DL)
 			set_infile(msh, &tmp);

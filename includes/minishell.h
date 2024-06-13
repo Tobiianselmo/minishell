@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/12 19:08:29 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:13:32 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_token
 	t_tok_type		type;
 	int				flag;
 	int				exp;
+	int				backslash;
 	struct s_token	*next;
 }	t_token;
 

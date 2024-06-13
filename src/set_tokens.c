@@ -6,95 +6,50 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:21:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/12 18:39:02 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:27:44 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* static int	flag_zero(char *line, int *i)
+static void	set_backslash_tok(char *line, int *i, t_token **tokens, int flag)
 {
-	int	flag;
+	int	start;
 
-	flag = 0;
-	while (line[*i] && line[*i] > 32 && line[*i] < 127
-		&& line[*i] != '<' && line[*i] != '>' && line[*i] != '|'
-		&& line[*i] != '\'' && line[*i] != '\"')
-		*i += 1;
-	if (line[*i] == '\'')
-		return (1);
-	else if (line[*i] == '\"')
-		return (3);
-	else
-		return (2);
-}
-
-static int	flag_one(char *line, int *i)
-{
-	int	flag;
-
-	flag = 0;
-	*i += 1;
-	while (line[*i] && line[*i] != '\'')
-		*i += 1;
-	if (line[*i] == '\0')
-		return (4);
-	*i += 1;
-	return (0);
-}
-
-static int	flag_three(char *line, int *i)
-{
-	int	flag;
-
-	flag = 0;
-	*i += 1;
-	while (line[*i] && line[*i] != '\"')
-		*i += 1;
-	if (line[*i] == '\0')
-		return (4);
-	*i += 1;
-	return (0);
-} */
-
-/* void	set_word_tok(char *line, int *i, t_token **tokens)
-{
-	int		start;
-
-	start = *i;
-	while (flag != 2)
+	start = *i + 1;
+	if (line[*i] == '\\' && line[*i + 1] != '\0')
 	{
-		if (flag == 0)
-			flag = flag_zero(line, i);
-		if (flag == 1)
-			flag = flag_one(line, i);
-		if (flag == 3)
-			flag = flag_three(line, i);
-		if (flag == 4)
-			return (error_msh(WRONG_Q));
+		*i += 1;
+		create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i + 1 - start)), flag);
 	}
-	aux = ft_substr(line, start, (*i - start));
-	content = clean_quotes(aux, '\"');
-	free(aux);
-	create_tok_lst(tokens, T_WORD, content);
-} */
+	else
+		create_tok_lst(tokens, T_WORD, ft_strdup(""), 2);
+	*i += 1;
+}
 
 void	set_word_tok(char *line, int *i, t_token **tokens)
 {
 	int	start;
 	int	flag;
+	int	j;
 
 	flag = 0;
 	start = *i;
+	j = 0;
 	if (line[*i])
 	{
 		if (*i > 0 && line[*i - 1] != ' ')
 			flag = 1;
-		while (line[*i] && line[*i] > 32 && line[*i] < 127 && line[*i] != '<'
-			&& line[*i] != '>' && line[*i] != '|'
-			&& line[*i] != '\'' && line[*i] != '\"')
-			*i += 1;
-		create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)), flag);
+		if (line[*i] == '\\')
+			set_backslash_tok(line, i, tokens, flag);
+		else
+		{	
+			while (line[*i] && line[*i] > 32 && line[*i] < 127 && line[*i] != '<'
+				&& line[*i] != '>' && line[*i] != '|'
+				&& line[*i] != '\'' && line[*i] != '\"' && line[*i] != '\\')
+				*i += 1;
+			create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)), flag);
+		}
 	}
 }
 
@@ -143,8 +98,14 @@ int	check_tokens(t_token **tokens)
 		{
 			if (!aux->next)
 				return (error_msh(UNEXPEC_EOF), 0);
-			if (aux->next->type != T_WORD)
+			if (aux->next->type != T_WORD && aux->next->type != T_Q
+				&& aux->next->type != T_DQ)
 				return (error_msh(UNEXPEC_TOK), 0);
+		}
+		else if (aux->type == T_WORD)
+		{
+			if (!aux->next && aux->flag == 2)
+				return (error_msh(UNEXPEC_EOF), 0);
 		}
 		aux = aux->next;
 		flag++;
