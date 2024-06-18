@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: tanselmo <tanselmo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:38:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/13 17:31:03 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:29:40 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	get_line(t_msh *msh)
 			if (check_tokens(&msh->tokens))
 			{
 				print_tokens(msh->tokens);
-				if (get_cmd(msh))
+				/* if (get_cmd(msh))
 				{
 					printf("funciona todo correctamente\n");
-				}
+				} */
 			}
 			free_msh(msh);
 			msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
