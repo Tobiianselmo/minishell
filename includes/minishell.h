@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: tanselmo <tanselmo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/13 17:13:32 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:06:43 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,14 @@ void	free_msh(t_msh *msh);
 
 //------------DOLLAR------------//
 void	dollar_flag(t_token *tok);
+
+
+//------------EXPAND------------//
+void	expand_tokens(t_token **tokens, t_env *env);
+
+
+//-------------JOIN-------------//
+void	join_tokens(t_token **tokens);
 
 
 

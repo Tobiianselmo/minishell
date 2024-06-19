@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
+#    By: tanselmo <tanselmo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/06/12 18:58:04 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/06/19 18:19:43 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ src/commands.c \
 src/cmd_content.c \
 src/free.c \
 src/dollar.c \
+src/expand.c \
+src/join_tokens.c \
 src/prints.c \
 
 CC = clang
