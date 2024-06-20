@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:21:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:27:44 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:07:48 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ static void	set_backslash_tok(char *line, int *i, t_token **tokens, int flag)
 	start = *i + 1;
 	if (line[*i] == '\\' && line[*i + 1] != '\0')
 	{
+		if (line[*i + 1] == '$')
+			start--;
 		*i += 1;
-		create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i + 1 - start)), flag);
+		create_tok_lst(tokens, T_WORD, ft_substr(line, start,
+				(*i + 1 - start)), flag);
 	}
 	else
 		create_tok_lst(tokens, T_WORD, ft_strdup(""), 2);
@@ -40,15 +43,18 @@ void	set_word_tok(char *line, int *i, t_token **tokens)
 	{
 		if (*i > 0 && line[*i - 1] != ' ')
 			flag = 1;
+		if (*i > 1 && line[*i - 1] != ' ' && line[*i - 2] == '\\')
+			flag = 1;
 		if (line[*i] == '\\')
 			set_backslash_tok(line, i, tokens, flag);
 		else
-		{	
-			while (line[*i] && line[*i] > 32 && line[*i] < 127 && line[*i] != '<'
-				&& line[*i] != '>' && line[*i] != '|'
+		{
+			while (line[*i] && line[*i] > 32 && line[*i] < 127
+				&& line[*i] != '<' && line[*i] != '>' && line[*i] != '|'
 				&& line[*i] != '\'' && line[*i] != '\"' && line[*i] != '\\')
 				*i += 1;
-			create_tok_lst(tokens, T_WORD, ft_substr(line, start, (*i - start)), flag);
+			create_tok_lst(tokens, T_WORD, ft_substr(line, start,
+					(*i - start)), flag);
 		}
 	}
 }
@@ -91,10 +97,9 @@ int	check_tokens(t_token **tokens)
 	flag = 0;
 	while (aux)
 	{
-		if (aux->type == T_PIPE && !flag)
+		if (aux->type == T_PIPE && !flag++)
 			return (error_msh(UNEXPEC_TOK), 0);
-		else if (aux->type == T_L || aux->type == T_G || aux->type == T_DL
-			|| aux->type == T_DG || aux->type == T_PIPE)
+		else if (aux->type != T_WORD && aux->type != T_Q && aux->type != T_DQ)
 		{
 			if (!aux->next)
 				return (error_msh(UNEXPEC_EOF), 0);
@@ -108,7 +113,6 @@ int	check_tokens(t_token **tokens)
 				return (error_msh(UNEXPEC_EOF), 0);
 		}
 		aux = aux->next;
-		flag++;
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/19 18:06:43 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:57:11 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,51 +97,29 @@ typedef struct s_msh
 //-------------PRINTS-----------// (BORRAR A FUTURO)
 void	print_tokens(t_token *tokens);
 void	print_env(t_env *env);
-
-
-
 //-------------INIT-------------//
 void	init_msh(char **envp, t_msh *msh);
 void	get_line(t_msh *msh);
-
-
-
 //-------------UTILS------------//
 void	error_msh(char *msg);
 void	error_files(char *name, char *msg);
-
-
-
 //--------------ENV-------------//
 t_env	*get_env(char **envp);
 void	get_first_env(t_env *aux, char **envp);
 void	get_all_env(t_env *aux, char **envp, int y, int j);
-
-
-
 //--------------FREE------------//
 void	free_msh(t_msh *msh);
-
-
-
 //------------DOLLAR------------//
 void	dollar_flag(t_token *tok);
-
-
 //------------EXPAND------------//
 void	expand_tokens(t_token **tokens, t_env *env);
-
-
+void	expand_content(t_token *tok, t_env *env);
+char	*get_exp(char *line, int *i, t_env *env);
+char	*expand_var(char *var, t_env *env);
+char	*get_word(char *s1, int *i);
+char	*strjoin_msh(char *s1, char *s2);
 //-------------JOIN-------------//
 void	join_tokens(t_token **tokens);
-
-
-
-//-------------INPUT------------//
-char	*check_input(void);
-
-
-
 //-------------TOKENS-----------//
 t_token	*set_tokens(char *line);
 void	set_word_tok(char *line, int *i, t_token **tokens);
@@ -151,22 +129,13 @@ void	set_l_tok(char *line, int *i, t_token **tokens);
 void	set_g_tok(char *line, int *i, t_token **tokens);
 void	set_pipe_tok(char *line, int *i, t_token **tokens);
 int		check_tokens(t_token **tokens);
-
-
-
 //-----------TOKEN LIST--------//
 t_token	*new_node(char *content, int type, int flag);
 void	create_tok_lst(t_token **tok, int type, char *content, int flag);
 void	add_back(t_token **lst, t_token *new);
-
-
-
 //------------COMMANDS---------//
 int		get_cmd(t_msh *msh);
 void	set_cmd(t_msh *msh, t_token **tokens);
-
-
-
 //----------CMD CONTENT--------//
 t_cmd	*new_node_cmd(void);
 int		cmd_content(t_cmd *new, t_token **tok);

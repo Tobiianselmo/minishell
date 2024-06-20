@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:31:25 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/19 18:05:34 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/20 12:30:50 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_token	*pop(t_token *tok)
 	return (aux);
 }
 
-static t_token *join_pop(t_token *tok)
+static t_token	*join_pop(t_token *tok)
 {
 	t_token	*aux;
 	char	*first;
