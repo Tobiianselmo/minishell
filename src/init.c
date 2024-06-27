@@ -6,19 +6,47 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:38:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/20 18:11:15 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:18:29 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	print_cmd(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	printf("%sCOMMANDS%s\n", G, RST);
+	while (cmd)
+	{
+		i = 0;
+		printf("%s%s%s\n", C, cmd->argv[0], RST);
+		while (cmd->argv[i])
+		{
+			printf("%sCONTENT:%s %s\n", G, RST, cmd->argv[i++]);
+		}
+		printf("%sFD_IN = %s%d\n", M, RST, cmd->fd_in);
+		printf("%sFD_OUT = %s%d\n", M, RST, cmd->fd_out);
+		cmd = cmd->next;
+	}
+}
+
+static int	clean_tokens(t_msh *msh)
+{
+	expand_flag(msh->tokens);
+	expand_tokens(&msh->tokens, msh->env);
+	join_tokens(&msh->tokens);
+	if (check_tokens(&msh->tokens))
+		return (1);
+	return (0);
+}
 
 void	init_msh(char **envp, t_msh *msh)
 {
 	msh->env = get_env(envp);
 	msh->cmd = NULL;
 	msh->tokens = NULL;
-	msh->fd_in = 0;
-	msh->fd_out = 0;
 	msh->flag = 0;
 }
 
@@ -29,27 +57,21 @@ void	get_line(t_msh *msh)
 	{
 		add_history(msh->line);
 		if (msh->line[0] == '\0')
-		{
 			free(msh->line);
-			msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
-			continue ;
-		}
 		else
 		{
 			msh->tokens = set_tokens(msh->line);
-			dollar_flag(msh->tokens);
-			expand_tokens(&msh->tokens, msh->env);
-			join_tokens(&msh->tokens);
-			print_tokens(msh->tokens);
-			/* if (check_tokens(&msh->tokens))
+			if (clean_tokens(msh))
 			{
+				//print_tokens(msh->tokens);
 				if (get_cmd(msh))
 				{
 					printf("funciona todo correctamente\n");
 				}
-			} */
+				print_cmd(msh->cmd);
+			}
 			free_msh(msh);
-			msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
 		}
+		msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:55:51 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/12 19:10:03 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:59:42 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_dollar(char *line)
 	return (0);
 }
 
-void	dollar_flag(t_token *tok)
+void	expand_flag(t_token *tok)
 {
 	t_token	*aux;
 

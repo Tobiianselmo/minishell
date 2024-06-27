@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:52:28 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/07 16:47:10 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:16:10 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,27 @@ void	create_cmd_lst(t_cmd **cmd, t_cmd *new)
 		add_back_cmd(cmd, new);
 }
 
-int	cmd_content(t_cmd *new, t_token **tok)
+int	cmd_content(t_cmd *new, t_token *tok)
 {
-	int	i;
+	t_token	*aux;
+	int		i;
 
+	aux = tok;
 	i = 0;
-	while (*tok && (*tok)->type == T_WORD)
+	while (aux && aux->type != T_PIPE)
 	{
-		new->argv[i] = ft_strdup((*tok)->content);
-		if (!new->argv[i])
-			return (0);
-		i++;
-		*tok = (*tok)->next;
+		if (aux->type == T_G || aux->type == T_DG
+			|| aux->type == T_L || aux->type == T_DL)
+			aux = aux->next;
+		else
+		{
+			new->argv[i] = ft_strdup(aux->content);
+			if (!new->argv[i])
+				return (0);
+			i++;	
+		}
+		aux = aux->next;
 	}
 	new->argv[i] = NULL;
-	new->cmd = ft_strdup(new->argv[0]);
-	if (!new->cmd)
-		return (0);
 	return (1);
 }

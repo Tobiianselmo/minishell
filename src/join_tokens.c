@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:31:25 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/20 12:30:50 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:35:25 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	join_tokens(t_token **tokens)
 		{
 			aux = join_pop(aux);
 		}
+		if (aux->type == T_Q || aux->type == T_DQ)
+			aux->type = T_WORD;
 		aux = aux->next;
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:34:19 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:08:35 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:31:35 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	set_cmd(t_msh *msh, t_token **tokens)
+/* void	set_cmd(t_msh *msh, t_token **tokens)
 {
 	t_cmd	*new_cmd;
 	t_token	*tok;
@@ -35,14 +35,14 @@ void	set_cmd(t_msh *msh, t_token **tokens)
 		msh->flag = 1;
 	}
 	create_cmd_lst(&msh->cmd, new_cmd);
-}
+} */
 
-static void	set_infile(t_msh *msh, t_token **tokens)
+/* static void	set_infile(t_msh *msh, t_token **tokens)
 {
 	if ((*tokens)->type == T_L)
 	{
-		msh->fd_in = open((*tokens)->next->content, O_RDONLY);
-		if (msh->fd_in == -1)
+		msh->cmd->fd_in = open((*tokens)->next->content, O_RDONLY);
+		if (msh->cmd->fd_in == -1)
 		{
 			error_files((*tokens)->next->content, NO_FILE);
 			msh->flag = 1;
@@ -59,9 +59,9 @@ static void	set_outfile(t_msh *msh, t_token **tokens)
 {
 	if ((*tokens)->type == T_G)
 	{
-		msh->fd_out = open((*tokens)->next->content,
+		msh->cmd->fd_out = open((*tokens)->next->content,
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (msh->fd_out == -1)
+		if (msh->cmd->fd_out == -1)
 		{
 			error_files((*tokens)->next->content, NO_CFILE);
 			msh->flag = 1;
@@ -69,24 +69,22 @@ static void	set_outfile(t_msh *msh, t_token **tokens)
 	}
 	else if ((*tokens)->type == T_DG)
 	{
-		msh->fd_out = open((*tokens)->next->content,
+		msh->cmd->fd_out = open((*tokens)->next->content,
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (msh->fd_out == -1)
+		if (msh->cmd->fd_out == -1)
 		{
 			error_files((*tokens)->next->content, NO_CFILE);
 			msh->flag = 1;
 		}
 	}
 	*tokens = (*tokens)->next->next;
-}
+} */
 
-int	get_cmd(t_msh *msh)
+/* int	get_cmd(t_msh *msh)
 {
 	t_token	*tmp;
-	t_cmd	*cmd;
 
 	tmp = msh->tokens;
-	cmd = NULL;
 	while (tmp)
 	{
 		if (tmp->type == T_WORD || tmp->type == T_Q || tmp->type == T_DQ)
@@ -98,9 +96,131 @@ int	get_cmd(t_msh *msh)
 		else if (tmp->type == T_PIPE)
 			tmp = tmp->next;
 	}
-	msh->cmd = cmd;
 	if (msh->flag == 0)
 		return (1);
 	else
 		return (0);
+} */
+
+static int	get_cmd_len(t_token *tok)
+{
+	t_token	*aux;
+	int		len;
+
+	aux = tok;
+	len = 0;
+	while (aux && aux->type != T_PIPE)
+	{
+		if (aux->type == T_G || aux->type == T_DG
+			|| aux->type == T_L || aux->type == T_DL)
+			aux = aux->next;
+		else
+			len++;
+		aux = aux->next;
+	}
+	return (len);
+}
+
+static void	set_outfile(t_msh *msh, t_token **tok, t_cmd *new)
+{
+	*tok = (*tok)->next;
+	if (new->fd_out > 2)
+		close(new->fd_out);
+	new->fd_out = open((*tok)->content,
+			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (new->fd_out == -1)
+	{
+		error_files((*tok)->content, NO_CFILE);
+		msh->flag = 1;
+	}
+	*tok = (*tok)->next;
+}
+
+static void	set_append(t_msh *msh, t_token **tok, t_cmd *new)
+{
+	*tok = (*tok)->next;
+	if (new->fd_out > 2)
+		close(new->fd_out);
+	new->fd_out = open((*tok)->content,
+			O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (new->fd_out == -1)
+	{
+		error_files((*tok)->content, NO_CFILE);
+		msh->flag = 1;
+	}
+	*tok = (*tok)->next;
+}
+
+static void	set_infile(t_msh *msh, t_token **tok, t_cmd *new)
+{
+	*tok = (*tok)->next;
+	if (new->fd_in > 2)
+		close(new->fd_in);
+	new->fd_out = open((*tok)->content, O_RDONLY);
+	if (new->fd_in == -1)
+	{
+		error_files((*tok)->content, NO_FILE);
+		msh->flag = 1;
+	}
+	*tok = (*tok)->next;
+}
+
+static void	set_fd(t_msh *msh, t_token **tok, t_cmd *new)
+{
+	new->fd_in = -1;
+	new->fd_out = -1;
+	while (*tok && (*tok)->type != T_PIPE)
+	{
+		if ((*tok)->type == T_G)
+			set_outfile(msh, tok, new);
+		else if ((*tok)->type == T_DG)
+			set_append(msh, tok, new);
+		else if ((*tok)->type == T_L)
+			set_infile(msh, tok, new);
+//		else if ((*tok)->type == T_DL)
+//			set_heredoc(msh, tok, new);
+		else if ((*tok)->type == T_WORD)
+			*tok = (*tok)->next;
+	}
+}
+
+static void	set_cmd(t_msh *msh, t_token **tokens)
+{
+	t_cmd	*new_cmd;
+	t_token	*tok;
+	int		len;
+
+	tok = *tokens;
+	len = get_cmd_len(*tokens);
+	new_cmd = new_node_cmd();
+	new_cmd->argv = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!new_cmd->argv)
+		return ;
+	if (len > 0)
+	{
+		if (cmd_content(new_cmd, *tokens) == 0)
+		{
+			error_msh("Error\n");
+			msh->flag = 1;
+		}
+	}
+	else
+		new_cmd->argv[0] = NULL;
+	set_fd(msh, tokens, new_cmd);
+	create_cmd_lst(&msh->cmd, new_cmd);
+}
+
+int	get_cmd(t_msh *msh)
+{
+	t_token *tmp;
+
+	tmp = msh->tokens;
+	while (tmp)
+	{
+		if (tmp->type != T_PIPE)
+			set_cmd(msh, &tmp);
+		else
+			tmp = tmp->next;
+	}
+	return (1);
 }

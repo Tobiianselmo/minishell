@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/20 16:57:11 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:24:26 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ typedef struct s_env
 
 typedef struct s_cmd
 {
-	char			*cmd;
 	char			**argv;
+	int				len;
+	int				fd_in;
+	int				fd_out;
 	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_msh
 {
 	char			*line;
-	int				fd_in;
-	int				fd_out;
 	int				flag;
 	struct s_env	*env;
 	struct s_token	*tokens;
@@ -110,7 +110,7 @@ void	get_all_env(t_env *aux, char **envp, int y, int j);
 //--------------FREE------------//
 void	free_msh(t_msh *msh);
 //------------DOLLAR------------//
-void	dollar_flag(t_token *tok);
+void	expand_flag(t_token *tok);
 //------------EXPAND------------//
 void	expand_tokens(t_token **tokens, t_env *env);
 void	expand_content(t_token *tok, t_env *env);
@@ -135,10 +135,9 @@ void	create_tok_lst(t_token **tok, int type, char *content, int flag);
 void	add_back(t_token **lst, t_token *new);
 //------------COMMANDS---------//
 int		get_cmd(t_msh *msh);
-void	set_cmd(t_msh *msh, t_token **tokens);
 //----------CMD CONTENT--------//
 t_cmd	*new_node_cmd(void);
-int		cmd_content(t_cmd *new, t_token **tok);
+int		cmd_content(t_cmd *new, t_token *tok);
 void	create_cmd_lst(t_cmd **cmd, t_cmd *new);
 void	add_back_cmd(t_cmd **lst, t_cmd *new);
 

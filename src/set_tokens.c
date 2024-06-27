@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:21:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/20 18:07:48 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:13:14 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	check_tokens(t_token **tokens)
 	flag = 0;
 	while (aux)
 	{
-		if (aux->type == T_PIPE && !flag++)
+		if (!flag++ && aux->type == T_PIPE)
 			return (error_msh(UNEXPEC_TOK), 0);
 		else if (aux->type != T_WORD && aux->type != T_Q && aux->type != T_DQ)
 		{
