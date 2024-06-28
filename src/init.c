@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:38:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/27 15:18:29 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/28 12:42:53 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	print_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	printf("%sCOMMANDS%s\n", G, RST);
+	printf("%sCOMMANDS%s\n", RED, RST);
 	while (cmd)
 	{
 		i = 0;
@@ -26,6 +26,7 @@ static void	print_cmd(t_cmd *cmd)
 		{
 			printf("%sCONTENT:%s %s\n", G, RST, cmd->argv[i++]);
 		}
+		printf("%sERROR: %s%d\n", M, RST, cmd->error);
 		printf("%sFD_IN = %s%d\n", M, RST, cmd->fd_in);
 		printf("%sFD_OUT = %s%d\n", M, RST, cmd->fd_out);
 		cmd = cmd->next;
@@ -47,7 +48,6 @@ void	init_msh(char **envp, t_msh *msh)
 	msh->env = get_env(envp);
 	msh->cmd = NULL;
 	msh->tokens = NULL;
-	msh->flag = 0;
 }
 
 void	get_line(t_msh *msh)

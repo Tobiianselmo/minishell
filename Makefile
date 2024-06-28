@@ -6,7 +6,7 @@
 #    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/06/20 16:58:03 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/06/28 15:34:10 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ src/init.c \
 src/commands.c \
 src/cmd_content.c \
 src/free.c \
-src/dollar.c \
 src/expand.c \
+src/expand_flag.c \
 src/expand_utils.c \
 src/join_tokens.c \
 src/prints.c \

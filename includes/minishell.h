@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/27 17:24:26 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/28 12:32:21 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	char			**argv;
-	int				len;
+	int				error;
 	int				fd_in;
 	int				fd_out;
 	struct s_cmd	*next;
@@ -88,7 +88,7 @@ typedef struct s_cmd
 typedef struct s_msh
 {
 	char			*line;
-	int				flag;
+	int				len;
 	struct s_env	*env;
 	struct s_token	*tokens;
 	struct s_cmd	*cmd;

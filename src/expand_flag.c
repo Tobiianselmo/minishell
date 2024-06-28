@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollar.c                                           :+:      :+:    :+:   */
+/*   expand_flag.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 18:55:51 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/25 12:59:42 by tanselmo         ###   ########.fr       */
+/*   Created: 2024/06/28 13:03:20 by tanselmo          #+#    #+#             */
+/*   Updated: 2024/06/28 15:39:12 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ static int	check_dollar(char *line)
 	return (0);
 }
 
+static int	check_home(char *line)
+{
+	if (line[0] == '~' && !line[1])
+		return (1);
+	return (0);
+}
+
 void	expand_flag(t_token *tok)
 {
 	t_token	*aux;
@@ -38,6 +45,10 @@ void	expand_flag(t_token *tok)
 		{
 			if (check_dollar(aux->content) == 1)
 				aux->exp = 1;
+			else if (check_home(aux->content) == 1)
+			{
+				aux->exp = 2;
+			}
 		}
 		aux = aux->next;
 	}

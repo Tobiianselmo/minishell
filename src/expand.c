@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:08:42 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/20 18:11:43 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:36:14 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,44 @@ void	expand_content(t_token *tok, t_env *env)
 	while (tok->content[i])
 	{
 		if (tok->content[i] == '\\')
-		{
 			aux = get_noexp_var(tok->content, &i);
-			printf("entra\n");
-		}
 		else if (tok->content[i] == '$')
 			aux = get_exp(tok->content, &i, env);
 		else
 			aux = get_word(tok->content, &i);
 		line = strjoin_msh(line, aux);
+	}
+	free(tok->content);
+	tok->content = ft_strdup(line);
+	free(line);
+}
+
+static void	expand_home(t_token *tok, t_env *env)
+{
+	int		i;
+	char	*line;
+	t_env	*aux;
+	
+	i = 0;
+	line = NULL;
+	aux = env;
+	while (aux)
+	{
+		if (ft_strncmp("HOME", aux->type, 4) == 0)
+			line = ft_strdup(aux->content);
+		aux = aux->next;
+	}
+// Si el HOME no existe, tendria que guardarse el primero cuando se abrio la MINISHELL
+	if (!line)
+	{
+		line = ft_strdup("Deberia guardar el primer HOME , en caso de no encontrar");
+		/* aux = env;
+		while (aux)
+		{
+			if (ft_strncmp("~", aux->type, 1) == 0)
+				line = ft_strdup(aux->content);
+		}
+		aux = aux->next; */
 	}
 	free(tok->content);
 	tok->content = ft_strdup(line);
@@ -78,6 +107,8 @@ void	expand_tokens(t_token **tokens, t_env *env)
 			tmp = tmp->next;
 		else if (tmp->exp == 1)
 			expand_content(tmp, env);
+		else if (tmp->exp == 2)
+			expand_home(tmp, env);
 		if (tmp)
 			tmp = tmp->next;
 	}
