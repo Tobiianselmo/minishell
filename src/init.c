@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:38:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/28 12:42:53 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:05:57 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void	print_cmd(t_cmd *cmd)
 static int	clean_tokens(t_msh *msh)
 {
 	expand_flag(msh->tokens);
-	expand_tokens(&msh->tokens, msh->env);
+	expand_tokens(&msh->tokens, msh);
 	join_tokens(&msh->tokens);
-	if (check_tokens(&msh->tokens))
+	if (check_tokens(&msh->tokens, msh))
 		return (1);
 	return (0);
 }
@@ -46,6 +46,8 @@ static int	clean_tokens(t_msh *msh)
 void	init_msh(char **envp, t_msh *msh)
 {
 	msh->env = get_env(envp);
+	msh->cmd_len = 0;
+	msh->state = 0;
 	msh->cmd = NULL;
 	msh->tokens = NULL;
 }
@@ -60,14 +62,10 @@ void	get_line(t_msh *msh)
 			free(msh->line);
 		else
 		{
-			msh->tokens = set_tokens(msh->line);
+			msh->tokens = set_tokens(msh->line, msh);
 			if (clean_tokens(msh))
 			{
-				//print_tokens(msh->tokens);
-				if (get_cmd(msh))
-				{
-					printf("funciona todo correctamente\n");
-				}
+				get_cmd(msh);
 				print_cmd(msh->cmd);
 			}
 			free_msh(msh);

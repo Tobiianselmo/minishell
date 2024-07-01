@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 12:43:06 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/20 15:30:53 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:07:56 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,25 @@ char	*get_word(char *s1, int *i)
 	return (line);
 }
 
-char	*expand_var(char *var, t_env *env)
+char	*expand_var(char *var, t_msh *msh)
 {
 	t_env	*aux;
 	char	*line;
 	int		len;
 
-	aux = env;
+	aux = msh->env;
 	line = ft_strdup("");
+	int tmp = ft_strlen(var);
+	printf("len: %d\n", tmp);
 	while (aux)
 	{
 		len = ft_strlen(aux->type);
+		if (var[0] == '?' && !var[1])
+		{
+			free(line);
+			line = ft_itoa(msh->state);
+			break ;
+		}
 		if (ft_strncmp(var, aux->type, len) == 0 && var[len] == '\0')
 		{
 			free(line);
@@ -84,7 +92,7 @@ char	*expand_var(char *var, t_env *env)
 	return (line);
 }
 
-char	*get_exp(char *line, int *i, t_env *env)
+char	*get_exp(char *line, int *i, t_msh *msh)
 {
 	char	*ret;
 	char	*var;
@@ -92,12 +100,12 @@ char	*get_exp(char *line, int *i, t_env *env)
 
 	start = *i + 1;
 	*i += 1;
-	while (line[*i] && line[*i] != '$' && line[*i] != '|'
-		&& line[*i] != '<' && line[*i] != '>' && line[*i] != ' '
-		&& line[*i] != '\\')
+	while (ft_isalnum(line[*i]) || line[*i] == '_')
+		*i += 1;
+	if (*i == start && line[*i] == '?')
 		*i += 1;
 	var = ft_substr(line, start, (*i - start));
-	ret = expand_var(var, env);
+	ret = expand_var(var, msh);
 	free(var);
 	return (ret);
 }

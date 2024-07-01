@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:21:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/25 15:13:14 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:04:18 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	set_word_tok(char *line, int *i, t_token **tokens)
 	}
 }
 
-t_token	*set_tokens(char *line)
+t_token	*set_tokens(char *line, t_msh *msh)
 {
 	int		i;
 	t_token	*tokens;
@@ -79,16 +79,16 @@ t_token	*set_tokens(char *line)
 		else if (line[i] == '|')
 			set_pipe_tok(line, &i, &tokens);
 		else if (line[i] == '\'')
-			set_q_tok(line, &i, &tokens);
+			set_q_tok(line, &i, &tokens, msh);
 		else if (line[i] == '\"')
-			set_dq_tok(line, &i, &tokens);
+			set_dq_tok(line, &i, &tokens, msh);
 		else if (line[i] == ' ' || line[i] == '\n')
 			i++;
 	}
 	return (tokens);
 }
 
-int	check_tokens(t_token **tokens)
+int	check_tokens(t_token **tokens, t_msh *msh)
 {
 	t_token	*aux;
 	int		flag;
@@ -98,19 +98,19 @@ int	check_tokens(t_token **tokens)
 	while (aux)
 	{
 		if (!flag++ && aux->type == T_PIPE)
-			return (error_msh(UNEXPEC_TOK), 0);
+			return (error_msh(UNEXPEC_TOK, msh, 127), 0);
 		else if (aux->type != T_WORD && aux->type != T_Q && aux->type != T_DQ)
 		{
 			if (!aux->next)
-				return (error_msh(UNEXPEC_EOF), 0);
+				return (error_msh(UNEXPEC_EOF, msh, 2), 0);
 			if (aux->next->type != T_WORD && aux->next->type != T_Q
 				&& aux->next->type != T_DQ)
-				return (error_msh(UNEXPEC_TOK), 0);
+				return (error_msh(UNEXPEC_TOK, msh, 127), 0);
 		}
 		else if (aux->type == T_WORD)
 		{
 			if (!aux->next && aux->flag == 2)
-				return (error_msh(UNEXPEC_EOF), 0);
+				return (error_msh(UNEXPEC_EOF, msh, 2), 0);
 		}
 		aux = aux->next;
 	}

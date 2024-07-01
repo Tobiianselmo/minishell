@@ -1,0 +1,13 @@
+COSAS A REALIZAR:
+
+-Numero de error para guardar en la señal.
+
+-Funcion de HEREDOC.
+
+- echo $~ : Tendria que imprimir "$~", pero lo deja vacio ya que
+no encuentra la variable de entorno '~'.
+
+-Gestionar bien el "$~", cuando la carpeta home la modifica o si no existe.
+
+-Agregar mensaje de error en commands.c creo xd, cuando falla el malloc.
+

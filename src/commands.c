@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:34:19 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/28 16:24:13 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:07:35 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void	set_outfile(t_msh *msh, t_token **tokens)
 		return (0);
 } */
 
-static int	get_cmd_len(t_token *tok)
+/* static int	get_cmd_len(t_token *tok)
 {
 	t_token	*aux;
 	int		len;
@@ -119,9 +119,9 @@ static int	get_cmd_len(t_token *tok)
 		aux = aux->next;
 	}
 	return (len);
-}
+} */
 
-static void	set_outfile(t_token **tok, t_cmd *new)
+/* static void	set_outfile(t_token **tok, t_cmd *new)
 {
 	*tok = (*tok)->next;
 	if (new->error == 0)
@@ -155,9 +155,9 @@ static void	set_append(t_token **tok, t_cmd *new)
 		}
 	}
 	*tok = (*tok)->next;
-}
+} */
 
-static void	set_infile(t_token **tok, t_cmd *new)
+/* static void	set_infile(t_token **tok, t_cmd *new)
 {
 	*tok = (*tok)->next;
 	if (new->fd_in > 2)
@@ -169,12 +169,10 @@ static void	set_infile(t_token **tok, t_cmd *new)
 		new->error = 1;
 	}
 	*tok = (*tok)->next;
-}
+} */
 
 static void	set_fd(t_token **tok, t_cmd *new)
 {
-	new->fd_in = -1;
-	new->fd_out = -1;
 	while (*tok && (*tok)->type != T_PIPE)
 	{
 		if ((*tok)->type == T_G)
@@ -206,17 +204,18 @@ static void	set_cmd(t_msh *msh, t_token **tokens)
 	{
 		if (cmd_content(new_cmd, *tokens) == 0)
 		{
-			error_msh("Error\n");
+			error_msh("Malloc fail", msh, 2);
 			new_cmd->error = 1;
 		}
 	}
 	else
 		new_cmd->argv[0] = NULL;
 	set_fd(tokens, new_cmd);
+	msh->cmd_len += 1;
 	create_cmd_lst(&msh->cmd, new_cmd);
 }
 
-int	get_cmd(t_msh *msh)
+void	get_cmd(t_msh *msh)
 {
 	t_token *tmp;
 
@@ -228,5 +227,4 @@ int	get_cmd(t_msh *msh)
 		else
 			tmp = tmp->next;
 	}
-	return (1);
 }

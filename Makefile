@@ -6,7 +6,7 @@
 #    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/06/28 15:34:10 by tanselmo         ###   ########.fr        #
+#    Updated: 2024/07/01 10:32:22 by tanselmo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,12 @@ src/env.c \
 src/tokens.c \
 src/set_tokens.c \
 src/create_nodes.c \
-src/utils.c \
+src/errors.c \
 src/init.c \
 src/commands.c \
+src/cmd_utils.c \
 src/cmd_content.c \
+src/redirections.c \
 src/free.c \
 src/expand.c \
 src/expand_flag.c \

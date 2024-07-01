@@ -1,53 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_flag.c                                      :+:      :+:    :+:   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/28 13:03:20 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/01 16:24:59 by tanselmo         ###   ########.fr       */
+/*   Created: 2024/07/01 10:13:25 by tanselmo          #+#    #+#             */
+/*   Updated: 2024/07/01 10:14:08 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	check_dollar(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static int	check_home(char *line)
-{
-	if (line[0] == '~' && !line[1])
-		return (1);
-	return (0);
-}
-
-void	expand_flag(t_token *tok)
+int	get_cmd_len(t_token *tok)
 {
 	t_token	*aux;
+	int		len;
 
 	aux = tok;
-	while (aux)
+	len = 0;
+	while (aux && aux->type != T_PIPE)
 	{
-		aux->exp = 0;
-		if (aux->type == T_WORD || aux->type == T_DQ)
-		{
-			if (check_dollar(aux->content) == 1)
-				aux->exp = 1;
-			else if (check_home(aux->content) == 1)
-				aux->exp = 2;
-		}
+		if (aux->type == T_G || aux->type == T_DG
+			|| aux->type == T_L || aux->type == T_DL)
+			aux = aux->next;
+		else
+			len++;
 		aux = aux->next;
 	}
+	return (len);
 }

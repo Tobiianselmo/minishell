@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:52:28 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/28 12:37:30 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/01 10:24:14 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_cmd	*new_node_cmd(void)
 	if (!new)
 		return (NULL);
 	new->error = 0;
+	new->fd_in = 0;
+	new->fd_out = 1;
 	new->next = NULL;
 	return (new);
 }

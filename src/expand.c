@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:08:42 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/28 15:36:14 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:29:03 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*get_noexp_var(char *s1, int *i)
 	return (line);
 }
 
-void	expand_content(t_token *tok, t_env *env)
+void	expand_content(t_token *tok, t_msh *msh)
 {
 	int		i;
 	char	*line;
@@ -53,8 +53,13 @@ void	expand_content(t_token *tok, t_env *env)
 	{
 		if (tok->content[i] == '\\')
 			aux = get_noexp_var(tok->content, &i);
+		else if (tok->content[i] == '$' && tok->content[i + 1] == '~')
+		{
+			aux = ft_strdup("$~");
+			i += 2;
+		}
 		else if (tok->content[i] == '$')
-			aux = get_exp(tok->content, &i, env);
+			aux = get_exp(tok->content, &i, msh);
 		else
 			aux = get_word(tok->content, &i);
 		line = strjoin_msh(line, aux);
@@ -64,7 +69,7 @@ void	expand_content(t_token *tok, t_env *env)
 	free(line);
 }
 
-static void	expand_home(t_token *tok, t_env *env)
+static void	expand_home(t_token *tok, t_msh *msh)
 {
 	int		i;
 	char	*line;
@@ -72,7 +77,7 @@ static void	expand_home(t_token *tok, t_env *env)
 	
 	i = 0;
 	line = NULL;
-	aux = env;
+	aux = msh->env;
 	while (aux)
 	{
 		if (ft_strncmp("HOME", aux->type, 4) == 0)
@@ -83,7 +88,7 @@ static void	expand_home(t_token *tok, t_env *env)
 	if (!line)
 	{
 		line = ft_strdup("Deberia guardar el primer HOME , en caso de no encontrar");
-		/* aux = env;
+		/* aux = msh->env;
 		while (aux)
 		{
 			if (ft_strncmp("~", aux->type, 1) == 0)
@@ -96,7 +101,7 @@ static void	expand_home(t_token *tok, t_env *env)
 	free(line);
 }
 
-void	expand_tokens(t_token **tokens, t_env *env)
+void	expand_tokens(t_token **tokens, t_msh *msh)
 {
 	t_token	*tmp;
 
@@ -106,9 +111,9 @@ void	expand_tokens(t_token **tokens, t_env *env)
 		if (tmp->type == T_DL)
 			tmp = tmp->next;
 		else if (tmp->exp == 1)
-			expand_content(tmp, env);
+			expand_content(tmp, msh);
 		else if (tmp->exp == 2)
-			expand_home(tmp, env);
+			expand_home(tmp, msh);
 		if (tmp)
 			tmp = tmp->next;
 	}

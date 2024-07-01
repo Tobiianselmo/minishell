@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:55:57 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/06/20 12:37:06 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:03:18 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	set_l_tok(char *line, int *i, t_token **tokens)
 	}
 }
 
-void	set_q_tok(char *line, int *i, t_token **tokens)
+void	set_q_tok(char *line, int *i, t_token **tokens, t_msh *msh)
 {
 	int	start;
 	int	flag;
@@ -76,11 +76,11 @@ void	set_q_tok(char *line, int *i, t_token **tokens)
 			*i += 1;
 		}
 		else
-			error_msh(WRONG_Q);
+			error_msh(WRONG_Q, msh, 2);
 	}
 }
 
-void	set_dq_tok(char *line, int *i, t_token **tokens)
+void	set_dq_tok(char *line, int *i, t_token **tokens, t_msh *msh)
 {
 	int	start;
 	int	flag;
@@ -101,6 +101,6 @@ void	set_dq_tok(char *line, int *i, t_token **tokens)
 			*i += 1;
 		}
 		else
-			error_msh(WRONG_DQ);
+			error_msh(WRONG_DQ, msh, 2);
 	}
 }
