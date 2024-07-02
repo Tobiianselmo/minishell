@@ -6,13 +6,13 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 10:25:13 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/01 10:25:41 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/02 17:22:12 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	set_outfile(t_token **tok, t_cmd *new)
+void	set_outfile(t_token **tok, t_cmd *new, t_msh *msh)
 {
 	*tok = (*tok)->next;
 	if (new->error == 0)
@@ -25,16 +25,17 @@ void	set_outfile(t_token **tok, t_cmd *new)
 		{
 			error_files((*tok)->content, NO_CFILE);
 			new->error = 1;
+			msh->state = 1;
 		}
 	}
 	*tok = (*tok)->next;
 }
 
-void	set_append(t_token **tok, t_cmd *new)
+void	set_append(t_token **tok, t_cmd *new, t_msh *msh)
 {
 	*tok = (*tok)->next;
 	if (new->error == 0)
-	{	
+	{
 		if (new->fd_out > 2)
 			close(new->fd_out);
 		new->fd_out = open((*tok)->content,
@@ -43,12 +44,13 @@ void	set_append(t_token **tok, t_cmd *new)
 		{
 			error_files((*tok)->content, NO_CFILE);
 			new->error = 1;
+			msh->state = 1;
 		}
 	}
 	*tok = (*tok)->next;
 }
 
-void	set_infile(t_token **tok, t_cmd *new)
+void	set_infile(t_token **tok, t_cmd *new, t_msh *msh)
 {
 	*tok = (*tok)->next;
 	if (new->fd_in > 2)
@@ -58,6 +60,7 @@ void	set_infile(t_token **tok, t_cmd *new)
 	{
 		error_files((*tok)->content, NO_FILE);
 		new->error = 1;
+		msh->state = 1;
 	}
 	*tok = (*tok)->next;
 }

@@ -4,10 +4,17 @@ COSAS A REALIZAR:
 
 -Funcion de HEREDOC.
 
-- echo $~ : Tendria que imprimir "$~", pero lo deja vacio ya que
-no encuentra la variable de entorno '~'.
-
--Gestionar bien el "$~", cuando la carpeta home la modifica o si no existe.
+-Gestionar bien el "~", cuando la carpeta home la modifica o si no existe.
 
 -Agregar mensaje de error en commands.c creo xd, cuando falla el malloc.
+
+aguante River viejo y nada mas
+
+NUMERO DE ERRORES:
+
+1: No such file or directory
+
+2: Unexpected token.
+
+127: Command not found.
 

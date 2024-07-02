@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 13:03:20 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/01 16:24:59 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/02 12:50:54 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,19 @@ static int	check_home(char *line)
 {
 	if (line[0] == '~' && !line[1])
 		return (1);
+	else if (line[0] == '\\' && line[1] == '~')
+		return (2);
 	return (0);
+}
+
+static void	sup_backslash(char *line)
+{
+	char	*aux;
+
+	aux = ft_substr(line, 1, ft_strlen(line));
+	free(line);
+	line = ft_strdup(aux);
+	free(aux);
 }
 
 void	expand_flag(t_token *tok)
@@ -41,12 +53,15 @@ void	expand_flag(t_token *tok)
 	while (aux)
 	{
 		aux->exp = 0;
+		printf("%s\n", aux->content);
 		if (aux->type == T_WORD || aux->type == T_DQ)
 		{
 			if (check_dollar(aux->content) == 1)
 				aux->exp = 1;
 			else if (check_home(aux->content) == 1)
 				aux->exp = 2;
+			else if (check_home(aux->content) == 2)
+				sup_backslash(aux->content);
 		}
 		aux = aux->next;
 	}

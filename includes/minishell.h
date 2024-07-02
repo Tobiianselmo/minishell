@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/01 17:04:30 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/02 17:24:26 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ void	add_back_cmd(t_cmd **lst, t_cmd *new);
 //-----------CMD UTILS---------//
 int		get_cmd_len(t_token *tok);
 //----------REDIRECTIONS-------//
-void	set_outfile(t_token **tok, t_cmd *new);
-void	set_append(t_token **tok, t_cmd *new);
-void	set_infile(t_token **tok, t_cmd *new);
+void	set_outfile(t_token **tok, t_cmd *new, t_msh *msh);
+void	set_append(t_token **tok, t_cmd *new, t_msh *msh);
+void	set_infile(t_token **tok, t_cmd *new, t_msh *msh);
 
 #endif

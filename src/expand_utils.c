@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 12:43:06 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/01 16:07:56 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:41:28 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ char	*expand_var(char *var, t_msh *msh)
 
 	aux = msh->env;
 	line = ft_strdup("");
-	int tmp = ft_strlen(var);
-	printf("len: %d\n", tmp);
 	while (aux)
 	{
 		len = ft_strlen(aux->type);

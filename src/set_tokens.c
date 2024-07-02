@@ -6,7 +6,7 @@
 /*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:21:29 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/01 17:04:18 by tanselmo         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:53:04 by tanselmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ static void	set_backslash_tok(char *line, int *i, t_token **tokens, int flag)
 	start = *i + 1;
 	if (line[*i] == '\\' && line[*i + 1] != '\0')
 	{
-		if (line[*i + 1] == '$')
+		if (line[*i + 1] == '$' || line[*i + 1] == '~')
 			start--;
 		*i += 1;
+		if (line[*i + 1] && line[*i + 1] == '~')
+			*i += 1;
 		create_tok_lst(tokens, T_WORD, ft_substr(line, start,
 				(*i + 1 - start)), flag);
 	}
@@ -98,7 +100,7 @@ int	check_tokens(t_token **tokens, t_msh *msh)
 	while (aux)
 	{
 		if (!flag++ && aux->type == T_PIPE)
-			return (error_msh(UNEXPEC_TOK, msh, 127), 0);
+			return (error_msh(UNEXPEC_TOK, msh, 2), 0);
 		else if (aux->type != T_WORD && aux->type != T_Q && aux->type != T_DQ)
 		{
 			if (!aux->next)
