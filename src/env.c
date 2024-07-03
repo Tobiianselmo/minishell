@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 16:03:48 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/28 19:33:47 by tanselmo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
@@ -41,10 +30,7 @@ void	get_all_env(t_env *aux, char **envp, int y, int j)
 		x = 0;
 		aux->next = malloc(sizeof(t_env));
 		if (!aux)
-		{
-			/* free struct function */
 			return ;
-		}
 		aux = aux->next;
 		while (envp[y][x] != '=')
 			x++;

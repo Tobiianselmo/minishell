@@ -1,16 +1,7 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/05/28 19:44:14 by tanselmo         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 USER = tanselmo
+
+LIB_RDL = -lreadline
 
 LIBFT_DIR = Libft/
 
@@ -22,10 +13,21 @@ OBJ_DIR = obj
 
 FILES = src/main.c \
 src/env.c \
-src/checker.c \
 src/tokens.c \
 src/set_tokens.c \
 src/create_nodes.c \
+src/errors.c \
+src/init.c \
+src/commands.c \
+src/cmd_utils.c \
+src/cmd_content.c \
+src/redirections.c \
+src/here_doc.c \
+src/free.c \
+src/expand.c \
+src/expand_flag.c \
+src/expand_utils.c \
+src/join_tokens.c \
 src/prints.c \
 
 CC = clang
@@ -50,8 +52,7 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJS_SRCS)
 	@$(MAKE) -s all bonus printf gnl -C $(LIBFT_DIR)
-#	@$(CC) $(INCLUDE) $(OBJS_SRCS) -L$(LIBFT_DIR) -lft -o $(NAME)
-	@$(CC) $(INCLUDE) $(OBJS_SRCS) -L$(LIBFT_DIR) -lft -o $(NAME) -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
+	@$(CC) $(INCLUDE) $(OBJS_SRCS) $(LIB_RDL) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 bonus: $(NAME_BONUS)
 

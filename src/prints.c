@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prints.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 15:37:37 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/05/28 19:42:51 by tanselmo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
@@ -27,7 +16,7 @@ static void	print_tok(int i)
 	else if (i == T_DL)
 		printf("%sTOKEN_TYPE:%s DOUBLE LESS", C, RST);
 	else if (i == T_Q)
-		printf("%sTOKEN_TYPE:%s SIMPLE QUOTE", C, RST);
+		printf("%sTOKEN_TYPE:%s QUOTE", C, RST);
 	else if (i == T_DQ)
 		printf("%sTOKEN_TYPE:%s DOUBLE QUOTE", C, RST);
 	else
@@ -40,22 +29,16 @@ void	print_tokens(t_token *tokens)
 	while (tokens)
 	{
 		print_tok(tokens->type);
-		printf(" %s---->%s %sTOKEN_CONTENT:%s %s\n", RED, RST, G, RST, tokens->content);
+		printf(" %s---->%s %sTOKEN_CONTENT:%s %s %s------>%s %sFLAG:%s %d %s------>%s %sEXP:%s %d\n", RED, RST, G, RST, tokens->content, RED, RST, G, RST, tokens->flag, RED, RST, G, RST, tokens->exp);
 		tokens = tokens->next;
 	}
-}
-
-void	print_exit(char *str)
-{
-	printf("%s\n", str);
-	exit(0);
 }
 
 void	print_env(t_env *env)
 {
 	while (env)
 	{
-		printf("%s%s%s=%s%s%s\n", RED, env->type, RST, W, env->content, RST);
+		printf("TYPE: %s%s%s\nCONTENT: %s%s%s\n", RED, env->type, RST, W, env->content, RST);
 		env = env->next;
 	}
 }
