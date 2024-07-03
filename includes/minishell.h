@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 13:21:09 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/02 17:24:26 by tanselmo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -137,5 +126,6 @@ int		get_cmd_len(t_token *tok);
 void	set_outfile(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_append(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_infile(t_token **tok, t_cmd *new, t_msh *msh);
+void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh);
 
 #endif

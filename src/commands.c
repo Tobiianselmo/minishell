@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 16:34:19 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/02 17:24:55 by tanselmo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
@@ -22,8 +11,8 @@ static void	set_fd(t_token **tok, t_cmd *new, t_msh *msh)
 			set_append(tok, new, msh);
 		else if ((*tok)->type == T_L)
 			set_infile(tok, new, msh);
-//		else if ((*tok)->type == T_DL)
-//			set_heredoc(tok, new, msh);
+		else if ((*tok)->type == T_DL)
+			set_heredoc(tok, new, msh);
 		else if ((*tok)->type == T_WORD)
 			*tok = (*tok)->next;
 	}

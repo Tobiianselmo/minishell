@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expand_flag.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/28 13:03:20 by tanselmo          #+#    #+#             */
-/*   Updated: 2024/07/02 12:50:54 by tanselmo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
@@ -53,7 +42,6 @@ void	expand_flag(t_token *tok)
 	while (aux)
 	{
 		aux->exp = 0;
-		printf("%s\n", aux->content);
 		if (aux->type == T_WORD || aux->type == T_DQ)
 		{
 			if (check_dollar(aux->content) == 1)

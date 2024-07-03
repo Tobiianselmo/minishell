@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tanselmo <tanselmo@student.42malaga.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/05/09 15:19:25 by tanselmo          #+#    #+#              #
-#    Updated: 2024/07/01 10:32:22 by tanselmo         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 USER = tanselmo
 
@@ -33,6 +22,7 @@ src/commands.c \
 src/cmd_utils.c \
 src/cmd_content.c \
 src/redirections.c \
+src/here_doc.c \
 src/free.c \
 src/expand.c \
 src/expand_flag.c \
