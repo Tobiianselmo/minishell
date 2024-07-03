@@ -11,24 +11,24 @@ SRCS_DIR = src
 
 OBJ_DIR = obj
 
-FILES = src/main.c \
-src/env.c \
-src/tokens.c \
-src/set_tokens.c \
-src/create_nodes.c \
-src/errors.c \
-src/init.c \
-src/commands.c \
-src/cmd_utils.c \
-src/cmd_content.c \
-src/redirections.c \
-src/here_doc.c \
-src/free.c \
-src/expand.c \
-src/expand_flag.c \
-src/expand_utils.c \
-src/join_tokens.c \
-src/prints.c \
+FILES = src/parser/main.c \
+src/parser/env.c \
+src/parser/tokens.c \
+src/parser/set_tokens.c \
+src/parser/create_nodes.c \
+src/parser/errors.c \
+src/parser/init.c \
+src/parser/commands.c \
+src/parser/cmd_utils.c \
+src/parser/cmd_content.c \
+src/parser/redirections.c \
+src/parser/here_doc.c \
+src/parser/free.c \
+src/parser/expand.c \
+src/parser/expand_flag.c \
+src/parser/expand_utils.c \
+src/parser/join_tokens.c \
+src/parser/prints.c \
 
 CC = clang
 
