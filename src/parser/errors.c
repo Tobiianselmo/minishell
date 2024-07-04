@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 void	error_msh(char *msg, t_msh *msh, int state)

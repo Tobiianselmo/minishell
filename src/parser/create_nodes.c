@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 void	add_back(t_token **lst, t_token *new)

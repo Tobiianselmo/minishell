@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 void	set_outfile(t_token **tok, t_cmd *new, t_msh *msh)

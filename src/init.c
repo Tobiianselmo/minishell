@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 static void	print_cmd(t_cmd *cmd)

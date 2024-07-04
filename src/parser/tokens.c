@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 void	set_pipe_tok(char *line, int *i, t_token **tokens)
