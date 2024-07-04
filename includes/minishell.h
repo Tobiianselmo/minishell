@@ -75,6 +75,8 @@ typedef struct s_msh
 	struct s_cmd	*cmd;
 }	t_msh;
 
+//              PARSER
+
 //-------------PRINTS----------// (BORRAR A FUTURO)
 void	print_tokens(t_token *tokens);
 void	print_env(t_env *env);
@@ -129,5 +131,11 @@ void	set_outfile(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_append(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_infile(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh);
+
+
+//                 	EXECUTOR
+
+
+
 
 #endif

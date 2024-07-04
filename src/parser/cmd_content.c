@@ -56,6 +56,7 @@ int	cmd_content(t_cmd *new, t_token *tok)
 			if (!new->argv[i])
 				return (0);
 			i++;
+
 		}
 		aux = aux->next;
 	}
