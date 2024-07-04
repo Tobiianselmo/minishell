@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 void	get_first_env(t_env *aux, char **envp)

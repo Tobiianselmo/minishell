@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 static void	set_fd(t_token **tok, t_cmd *new, t_msh *msh)

@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 char	*get_noexp_var(char *s1, int *i)

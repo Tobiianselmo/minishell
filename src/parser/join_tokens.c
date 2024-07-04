@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 static t_token	*pop(t_token *tok)

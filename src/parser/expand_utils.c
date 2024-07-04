@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 char	*strjoin_msh(char *s1, char *s2)

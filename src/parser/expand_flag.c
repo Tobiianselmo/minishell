@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 static int	check_dollar(char *line)

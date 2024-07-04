@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 int	get_cmd_len(t_token *tok)
