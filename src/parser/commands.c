@@ -34,7 +34,7 @@ static void	set_cmd(t_msh *msh, t_token **tokens)
 	{
 		if (cmd_content(new_cmd, *tokens) == 0)
 		{
-			error_msh("Malloc fail", msh, 2);
+			error_msh(MLLC_ERR, msh, 2);
 			new_cmd->error = 1;
 		}
 	}
@@ -47,7 +47,7 @@ static void	set_cmd(t_msh *msh, t_token **tokens)
 
 void	get_cmd(t_msh *msh)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = msh->tokens;
 	while (tmp)

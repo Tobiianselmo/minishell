@@ -1,14 +1,8 @@
 COSAS A REALIZAR:
 
--Numero de error para guardar en la señal.
-
 -Funcion de HEREDOC.
 
 -Gestionar bien el "~", cuando la carpeta home la modifica o si no existe.
-
--Agregar mensaje de error en commands.c creo xd, cuando falla el malloc.
-
-aguante River viejo y nada mas
 
 NUMERO DE ERRORES:
 
@@ -17,4 +11,3 @@ NUMERO DE ERRORES:
 2: Unexpected token.
 
 127: Command not found.
-

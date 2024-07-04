@@ -11,13 +11,13 @@ SRCS_DIR = src
 
 OBJ_DIR = obj
 
-FILES = src/parser/main.c \
+FILES = src/main.c \
+src/init.c \
 src/parser/env.c \
 src/parser/tokens.c \
 src/parser/set_tokens.c \
 src/parser/create_nodes.c \
 src/parser/errors.c \
-src/parser/init.c \
 src/parser/commands.c \
 src/parser/cmd_utils.c \
 src/parser/cmd_content.c \

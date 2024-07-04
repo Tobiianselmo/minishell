@@ -1,5 +1,48 @@
-
 #include "../includes/minishell.h"
+
+static void	exp_line(char *str, t_msh *msh)
+{
+	char	*aux;
+	char	*line;
+	int		i;
+
+	line = ft_strdup("");
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\\')
+			aux = get_noexp_var(str, &i);
+		else if (str[i] == '$' && str[i + 1] == '~')
+		{
+			aux = ft_strdup("$~");
+			i += 2;
+		}
+		else if (str[i] == '$')
+			aux = get_exp(str, &i, msh);
+		else
+			aux = get_word(str, &i);
+		line = strjoin_msh(line, aux);
+	}
+	free(str);
+	str = ft_strdup(line);
+	free(line);
+}
+
+static void	expand_heredoc(char *line, t_msh *msh)
+{
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '$')
+		{
+			exp_line(line, msh);
+			break ;
+		}
+		i++;
+	}
+}
 
 static void	here_doc(char *limit, t_cmd *new, t_msh *msh)
 {
@@ -18,7 +61,7 @@ static void	here_doc(char *limit, t_cmd *new, t_msh *msh)
 			free(line);
 			break ;
 		}
-		//expand_heredoc(line, msh);
+		expand_heredoc(line, msh);
 		ft_putendl_fd(line, fd);
 		free(line);
 		line = readline("> ");

@@ -25,6 +25,7 @@
 # define WRONG_DQ "unexpected EOF while looking for matching `\"'"
 # define NO_FILE "No such file or directory"
 # define NO_CFILE "File can not be created"
+# define MLLC_ERR "Error asignning Malloc"
 
 typedef enum e_token_type
 {
@@ -97,6 +98,7 @@ void	expand_flag(t_token *tok);
 void	expand_tokens(t_token **tokens, t_msh *msh);
 void	expand_content(t_token *tok, t_msh *msh);
 char	*get_exp(char *line, int *i, t_msh *msh);
+char	*get_noexp_var(char *s1, int *i);
 char	*expand_var(char *var, t_msh *msh);
 char	*get_word(char *s1, int *i);
 char	*strjoin_msh(char *s1, char *s2);

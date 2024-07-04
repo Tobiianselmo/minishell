@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-static char	*get_noexp_var(char *s1, int *i)
+char	*get_noexp_var(char *s1, int *i)
 {
 	char	*line;
 	int		len;
@@ -63,7 +63,7 @@ static void	expand_home(t_token *tok, t_msh *msh)
 	int		i;
 	char	*line;
 	t_env	*aux;
-	
+
 	i = 0;
 	line = NULL;
 	aux = msh->env;
@@ -75,16 +75,7 @@ static void	expand_home(t_token *tok, t_msh *msh)
 	}
 // Si el HOME no existe, tendria que guardarse el primero cuando se abrio la MINISHELL
 	if (!line)
-	{
 		line = ft_strdup("Deberia guardar el primer HOME , en caso de no encontrar");
-		/* aux = msh->env;
-		while (aux)
-		{
-			if (ft_strncmp("~", aux->type, 1) == 0)
-				line = ft_strdup(aux->content);
-		}
-		aux = aux->next; */
-	}
 	free(tok->content);
 	tok->content = ft_strdup(line);
 	free(line);
