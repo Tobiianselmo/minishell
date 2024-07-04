@@ -55,7 +55,7 @@ int	cmd_content(t_cmd *new, t_token *tok)
 			new->argv[i] = ft_strdup(aux->content);
 			if (!new->argv[i])
 				return (0);
-			i++;	
+			i++;
 		}
 		aux = aux->next;
 	}
