@@ -11,3 +11,16 @@ NUMERO DE ERRORES:
 2: Unexpected token.
 
 127: Command not found.
+
+
+
+
+EJECUTOR
+
+BUILTINS:
+
+cd
+echo
+export
+unset
+pwd

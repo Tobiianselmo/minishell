@@ -6,6 +6,8 @@
 # include <limits.h>
 # include <string.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <signal.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -74,10 +76,14 @@ typedef struct s_msh
 	struct s_cmd	*cmd;
 }	t_msh;
 
+extern int	g_signal;
+
 //              PARSER
 //-------------PRINTS----------// (BORRAR A FUTURO)
 void	print_tokens(t_token *tokens);
 void	print_env(t_env *env);
+//-------------SIGNALS---------//
+void	init_signals(void);
 //-------------INIT------------//
 void	init_msh(char **envp, t_msh *msh);
 void	get_line(t_msh *msh);
@@ -130,5 +136,9 @@ void	set_append(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_infile(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh);
 //                 	EXECUTOR
+void	executor(t_msh *msh);
+//------------BUILTINS---------//
+void	env(t_msh *msh);
+void	echo(t_msh *msh);
 
 #endif
