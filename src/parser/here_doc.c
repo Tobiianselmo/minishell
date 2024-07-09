@@ -72,10 +72,16 @@ static void	here_doc(char *limit, t_cmd *new, t_msh *msh)
 
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh)
 {
+//	pid_t	pid;
+
 	*tok = (*tok)->next;
 	if (new->fd_in > 2)
 		close(new->fd_in);
-	here_doc((*tok)->content, new, msh);
+	// pid = fork();
+	// if (pid == 0)
+	here_doc((*tok)->content, new, msh); // Falta hacer funcion de here_doc con fork()
+	// else if (pid > 0)
+	// 	waitpid(pid, NULL, 0); // Falta hacer una funcion que espere.
 	if (new->fd_in == -1)
 	{
 		error_files((*tok)->content, NO_FILE);

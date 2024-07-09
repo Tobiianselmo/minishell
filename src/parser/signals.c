@@ -20,6 +20,11 @@ static void	ctrl_c(int signal)
 void	init_signals(void)
 {
 	signal(SIGTSTP, SIG_IGN); // ctrl + z
-	signal(SIGQUIT, SIG_IGN); // ctrl + /
+	signal(SIGQUIT, SIG_IGN); // ctrl + backslash
 	signal(SIGINT, ctrl_c); //ctrl + c
+}
+
+void	ctrl_d(void)
+{
+	ft_putstr_fd("exit\n", 1);
 }
