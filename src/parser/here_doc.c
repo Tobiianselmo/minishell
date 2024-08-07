@@ -1,57 +1,32 @@
 #include "../includes/minishell.h"
 
-static void	exp_line(char *str, t_msh *msh)
+static void	wait_hd(t_cmd *cmd, t_msh *msh, int fd)
 {
-	char	*aux;
-	char	*line;
-	int		i;
-
-	line = ft_strdup("");
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\\')
-			aux = get_noexp_var(str, &i);
-		else if (str[i] == '$' && str[i + 1] == '~')
-		{
-			aux = ft_strdup("$~");
-			i += 2;
-		}
-		else if (str[i] == '$')
-			aux = get_exp(str, &i, msh);
-		else
-			aux = get_word(str, &i);
-		line = strjoin_msh(line, aux);
-	}
-	free(str);
-	str = ft_strdup(line);
-	free(line);
-}
-
-static void	expand_heredoc(char *line, t_msh *msh)
-{
-	int		i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '$')
-		{
-			exp_line(line, msh);
-			break ;
-		}
-		i++;
-	}
-}
-
-static void	here_doc(char *limit, t_cmd *new, t_msh *msh)
-{
-	char	*line;
-	int		fd;
-	int		len;
+	int	stat;
 
 	(void)msh;
-	fd = open(".here_doc.tmp", O_WRONLY | O_CREAT, 0644);
+	waitpid(0, &stat, 0);
+	if (WEXITSTATUS(stat))
+	{
+		cmd->error = 1;
+		msh->state = 130;
+	}
+	close(fd);
+	cmd->fd_in = open(".here_doc.tmp", O_RDONLY);
+	// if (cmd->fd_in == -1)
+	// {
+	// 	error_files((*tok)->content, NO_FILE);
+	// 	cmd->error = 1;
+	// }
+	signal(SIGINT, ctrl_c);
+}
+
+static void	here_doc(char *limit, t_cmd *new, t_msh *msh, int fd)
+{
+	char	*line;
+	int		len;
+
+	(void)new;
 	len = ft_strlen(limit);
 	line = readline("> ");
 	while (line)
@@ -66,27 +41,29 @@ static void	here_doc(char *limit, t_cmd *new, t_msh *msh)
 		free(line);
 		line = readline("> ");
 	}
-	unlink(".here_doc.tmp");
-	new->fd_in = fd;
+	exit(0);
 }
 
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh)
 {
-//	pid_t	pid;
+	pid_t	pid;
+	int		fd;
 
 	*tok = (*tok)->next;
-	if (new->fd_in > 2)
-		close(new->fd_in);
-	// pid = fork();
-	// if (pid == 0)
-	here_doc((*tok)->content, new, msh); // Falta hacer funcion de here_doc con fork()
-	// else if (pid > 0)
-	// 	waitpid(pid, NULL, 0); // Falta hacer una funcion que espere.
-	if (new->fd_in == -1)
+	if (new->error == 0)
 	{
-		error_files((*tok)->content, NO_FILE);
-		new->error = 1;
-		msh->state = 1;
+		if (new->fd_in > 2)
+			close(new->fd_in);
+		signal(SIGINT, SIG_IGN);
+		fd = open(".here_doc.tmp", O_WRONLY | O_CREAT, 0644);
+		pid = fork();
+		if (pid == 0)
+		{
+			signal(SIGINT, ctrl_c_hd);
+			here_doc((*tok)->content, new, msh, fd);
+		}
+		else if (pid > 0)
+			wait_hd(new, msh, fd);
 	}
 	*tok = (*tok)->next;
 }

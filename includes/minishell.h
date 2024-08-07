@@ -84,6 +84,7 @@ void	print_tokens(t_token *tokens);
 void	print_env(t_env *env);
 //-------------SIGNALS---------//
 void	init_signals(void);
+void	ctrl_c(int signal);
 void	ctrl_d(void);
 //-------------INIT------------//
 void	init_msh(char **envp, t_msh *msh);
@@ -135,7 +136,11 @@ int		get_cmd_len(t_token *tok);
 void	set_outfile(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_append(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_infile(t_token **tok, t_cmd *new, t_msh *msh);
+//-----HERE DOC && UTILS-------//
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh);
+void	ctrl_c_hd(int signal);
+void	exp_line(char *str, t_msh *msh);
+void	expand_heredoc(char *line, t_msh *msh);
 //                 	EXECUTOR
 void	executor(t_msh *msh);
 //------------BUILTINS---------//

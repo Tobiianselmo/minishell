@@ -24,6 +24,7 @@ src/parser/cmd_utils.c \
 src/parser/cmd_content.c \
 src/parser/redirections.c \
 src/parser/here_doc.c \
+src/parser/here_doc_utils.c \
 src/parser/free.c \
 src/parser/expand.c \
 src/parser/expand_flag.c \
