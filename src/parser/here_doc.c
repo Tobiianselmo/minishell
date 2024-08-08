@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static void	wait_hd(t_cmd *cmd, t_msh *msh, int fd)
+static void	wait_hd(t_token *tok, t_cmd *cmd, t_msh *msh, int fd)
 {
 	int	stat;
 
@@ -14,7 +14,7 @@ static void	wait_hd(t_cmd *cmd, t_msh *msh, int fd)
 	else if (WEXITSTATUS(stat) == 1)
 	{
 		ft_putstr_fd(CTRLD_HD, 1);
-		ft_putstr_fd(msh->tokens->next->content, 1);
+		ft_putstr_fd(tok->content, 1);
 		ft_putendl_fd("')", 1);
 	}
 	close(fd);
@@ -66,7 +66,7 @@ void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh)
 			here_doc((*tok)->content, new, msh, fd);
 		}
 		else if (pid > 0)
-			wait_hd(new, msh, fd);
+			wait_hd(*tok, new, msh, fd);
 	}
 	*tok = (*tok)->next;
 }
