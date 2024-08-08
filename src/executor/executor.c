@@ -24,8 +24,8 @@ static int	is_builtin(t_msh *msh)
 
 void	executor(t_msh *msh)
 {
-	printf("entra al ejecutor\n");
-	exit(0);
+	(void)msh;
+	// printf("entra al ejecutor\n");
 	if (is_builtin(msh))
 		printf("no es builtin\n");
 }

@@ -56,7 +56,7 @@ void	get_line(t_msh *msh)
 			if (clean_tokens(msh))
 			{
 				get_cmd(msh);
-				executor(msh);
+				//executor(msh);
 			}
 			free_msh(msh);
 		}
@@ -64,4 +64,5 @@ void	get_line(t_msh *msh)
 		if (!msh->line) // Cuando recibe el CTRL+D el Readline devuelve (NULL)
 			ctrl_d();
 	}
+	free_msh(msh);
 }

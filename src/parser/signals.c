@@ -13,7 +13,7 @@ void	ctrl_c(int signal)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (g_signal == 1) // Ejecucion(esperando mensaje)
+	else if (g_signal == 1) // Ejecucion
 		write(1, "\n", 1);
 }
 

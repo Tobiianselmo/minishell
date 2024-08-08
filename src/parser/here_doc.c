@@ -6,18 +6,19 @@ static void	wait_hd(t_cmd *cmd, t_msh *msh, int fd)
 
 	(void)msh;
 	waitpid(0, &stat, 0);
-	if (WEXITSTATUS(stat))
+	if (WEXITSTATUS(stat) == 130)
 	{
 		cmd->error = 1;
 		msh->state = 130;
 	}
+	else if (WEXITSTATUS(stat) == 1)
+	{
+		ft_putstr_fd(CTRLD_HD, 1);
+		ft_putstr_fd(msh->tokens->next->content, 1);
+		ft_putendl_fd("')", 1);
+	}
 	close(fd);
 	cmd->fd_in = open(".here_doc.tmp", O_RDONLY);
-	// if (cmd->fd_in == -1)
-	// {
-	// 	error_files((*tok)->content, NO_FILE);
-	// 	cmd->error = 1;
-	// }
 	signal(SIGINT, ctrl_c);
 }
 
@@ -41,6 +42,8 @@ static void	here_doc(char *limit, t_cmd *new, t_msh *msh, int fd)
 		free(line);
 		line = readline("> ");
 	}
+	if (!line)
+		exit(1);
 	exit(0);
 }
 

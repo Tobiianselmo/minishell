@@ -27,6 +27,8 @@
 # define NO_FILE "No such file or directory"
 # define NO_CFILE "File can not be created"
 # define MLLC_ERR "Error asignning Malloc"
+# define CTRLD_HD "minishell: warning: here-document \
+delimited by end-of-file (wanted `"
 
 typedef enum e_token_type
 {
@@ -97,6 +99,8 @@ t_env	*get_env(char **envp);
 void	get_first_env(t_env *aux, char **envp);
 void	get_all_env(t_env *aux, char **envp, int y, int j);
 //--------------FREE-----------//
+void	free_matrix(char **matrix);
+void	free_env(t_env *env);
 void	free_msh(t_msh *msh);
 //------------DOLLAR-----------//
 void	expand_flag(t_token *tok);
