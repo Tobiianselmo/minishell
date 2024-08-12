@@ -1,26 +1,30 @@
 COSAS A REALIZAR:
 
--Funcion de HEREDOC.
+-Funcion del executor donde entran las listas de comandos y se comprueban la cantidad
+que hay para saber como ejecutarlos. Si lo ejecutas dentro del padre o en
+un bucle creando procesos hijos.
 
--Gestionar bien el "~", cuando la carpeta home la modifica o si no existe.
+-Hay que tener en cuenta si ejecutamos un BUILTINS en el proceso hijo y necesitamos
+que haga cambios en el proceso padre como lo vamos a manejar.
+Por ejemplo si hacemos un CD en el proceso hijo, cuando cambiemos la ruta del pwd no se
+modificaria en el padre.
+Quizas se podrian comprobar al inicio del executor si hay BUILTINS en el medio de los comandos
+pero eso lo vamos a ir viendo despues.
 
-NUMERO DE ERRORES:
+-Hay que ver como nos guardamos el PATH para poder obtener las rutas de los comandos, si al inicio
+del executor o luego en las funciones de ejecucion.
 
-1: No such file or directory
+-Funciones de los BUILTINS (esta hecho el env y el echo, pero hay que ver si ya estan terminados)
 
-2: Unexpected token.
-
-127: Command not found.
-
-
-
-
-EJECUTOR
-
-BUILTINS:
+-Quedarian por hacer:
 
 cd
-echo
-export
-unset
+
+export (te imprime las variables de entorno ordenadas por orden alfabetico si se recibe solo "export")
+(agrega o modifica variables de entorno si se ejecuta de esta otra manera "  export var="hola"  ")
+
+unset (elimina una variable de entorno por ejemplo "unset var")
+
 pwd
+
+exit
