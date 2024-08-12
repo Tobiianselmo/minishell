@@ -2,10 +2,10 @@ COSAS A REALIZAR:
 
 -Funcion del executor donde entran las listas de comandos y se comprueban la cantidad
 que hay para saber como ejecutarlos. Si lo ejecutas dentro del padre o en
-un bucle creando procesos hijos.
+un bucle creando procesos hijos. (podemos usar la variable "msh->cmd_len")
 
 -Hay que ver como nos guardamos el PATH para poder obtener las rutas de los comandos, si al inicio
-del executor o luego en las funciones de ejecucion.
+del executor o luego en las funciones de ejecucion. (se podria usar la funcion expand_var)
 
 -Funciones de los BUILTINS (esta hecho el env y el echo, pero hay que ver si ya estan terminados)
 
