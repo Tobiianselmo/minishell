@@ -9,6 +9,8 @@ del executor o luego en las funciones de ejecucion. (se podria usar la funcion e
 
 -Funciones de los BUILTINS (esta hecho el env y el echo, pero hay que ver si ya estan terminados)
 
+-Revisar señales en signals.c here_doc*
+
 -Quedarian por hacer:
 
 cd
