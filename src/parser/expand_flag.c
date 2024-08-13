@@ -23,14 +23,15 @@ static int	check_home(char *line)
 	return (0);
 }
 
-static void	sup_backslash(char *line)
+static char	*sup_backslash(char *line)
 {
 	char	*aux;
 
-	aux = ft_substr(line, 1, ft_strlen(line));
+	aux = ft_substr((const char *)line, 1, ft_strlen(line));
 	free(line);
 	line = ft_strdup(aux);
 	free(aux);
+	return (line);
 }
 
 void	expand_flag(t_token *tok)
@@ -48,7 +49,7 @@ void	expand_flag(t_token *tok)
 			else if (check_home(aux->content) == 1)
 				aux->exp = 2;
 			else if (check_home(aux->content) == 2)
-				sup_backslash(aux->content);
+				aux->content = sup_backslash(aux->content);
 		}
 		aux = aux->next;
 	}

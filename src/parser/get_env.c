@@ -47,6 +47,8 @@ t_env	*get_env(char **envp)
 	t_env	*env;
 	t_env	*aux;
 
+	if (!envp || !*envp)
+		return (NULL);
 	env = (t_env *)malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);

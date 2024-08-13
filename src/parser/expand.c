@@ -68,13 +68,15 @@ static void	expand_home(t_token *tok, t_msh *msh)
 	aux = msh->env;
 	while (aux)
 	{
-		if (ft_strncmp("HOME", aux->type, 4) == 0)
+		if (ft_strncmp("HOME", aux->type, 5) == 0)
+		{
 			line = ft_strdup(aux->content);
+			break ;
+		}
 		aux = aux->next;
 	}
-// Si el HOME no existe, tendria que guardarse el primero cuando se abrio la MINISHELL
 	if (!line)
-		line = ft_strdup("Deberia guardar el primer HOME , en caso de no encontrar");
+		line = ft_strdup("");
 	free(tok->content);
 	tok->content = ft_strdup(line);
 	free(line);

@@ -6,6 +6,8 @@
 # include <limits.h>
 # include <string.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <signal.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -25,6 +27,8 @@
 # define NO_FILE "No such file or directory"
 # define NO_CFILE "File can not be created"
 # define MLLC_ERR "Error asignning Malloc"
+# define CTRLD_HD "minishell: warning: here-document \
+delimited by end-of-file (wanted `"
 
 typedef enum e_token_type
 {
@@ -74,10 +78,16 @@ typedef struct s_msh
 	struct s_cmd	*cmd;
 }	t_msh;
 
+extern int	g_signal;
+
 //              PARSER
 //-------------PRINTS----------// (BORRAR A FUTURO)
 void	print_tokens(t_token *tokens);
 void	print_env(t_env *env);
+//-------------SIGNALS---------//
+void	init_signals(void);
+void	ctrl_c(int signal);
+void	ctrl_d(void);
 //-------------INIT------------//
 void	init_msh(char **envp, t_msh *msh);
 void	get_line(t_msh *msh);
@@ -89,6 +99,8 @@ t_env	*get_env(char **envp);
 void	get_first_env(t_env *aux, char **envp);
 void	get_all_env(t_env *aux, char **envp, int y, int j);
 //--------------FREE-----------//
+void	free_matrix(char **matrix);
+void	free_env(t_env *env);
 void	free_msh(t_msh *msh);
 //------------DOLLAR-----------//
 void	expand_flag(t_token *tok);
@@ -128,7 +140,15 @@ int		get_cmd_len(t_token *tok);
 void	set_outfile(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_append(t_token **tok, t_cmd *new, t_msh *msh);
 void	set_infile(t_token **tok, t_cmd *new, t_msh *msh);
+//-----HERE DOC && UTILS-------//
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh);
+void	ctrl_c_hd(int signal);
+void	exp_line(char *str, t_msh *msh);
+void	expand_heredoc(char *line, t_msh *msh);
 //                 	EXECUTOR
+void	executor(t_msh *msh);
+//------------BUILTINS---------//
+void	env(t_msh *msh);
+void	echo(t_msh *msh);
 
 #endif

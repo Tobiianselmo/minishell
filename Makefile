@@ -13,7 +13,8 @@ OBJ_DIR = obj
 
 FILES = src/main.c \
 src/init.c \
-src/parser/env.c \
+src/parser/signals.c \
+src/parser/get_env.c \
 src/parser/tokens.c \
 src/parser/set_tokens.c \
 src/parser/create_nodes.c \
@@ -23,12 +24,16 @@ src/parser/cmd_utils.c \
 src/parser/cmd_content.c \
 src/parser/redirections.c \
 src/parser/here_doc.c \
+src/parser/here_doc_utils.c \
 src/parser/free.c \
 src/parser/expand.c \
 src/parser/expand_flag.c \
 src/parser/expand_utils.c \
 src/parser/join_tokens.c \
 src/parser/prints.c \
+src/executor/executor.c \
+src/executor/env.c \
+src/executor/echo.c \
 
 CC = clang
 

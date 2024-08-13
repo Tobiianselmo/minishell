@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static void	print_cmd(t_cmd *cmd)
+/* static void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
@@ -19,7 +19,7 @@ static void	print_cmd(t_cmd *cmd)
 		printf("%sFD_OUT = %s%d\n", M, RST, cmd->fd_out);
 		cmd = cmd->next;
 	}
-}
+} */
 
 static int	clean_tokens(t_msh *msh)
 {
@@ -43,21 +43,26 @@ void	init_msh(char **envp, t_msh *msh)
 void	get_line(t_msh *msh)
 {
 	msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
+	if (!msh->line) // Cuando recibe el CTRL+D el Readline devuelve (NULL)
+		ctrl_d();
 	while (msh->line)
 	{
-		add_history(msh->line);
 		if (msh->line[0] == '\0')
 			free(msh->line);
 		else
 		{
+			add_history(msh->line);
 			msh->tokens = set_tokens(msh->line, msh);
 			if (clean_tokens(msh))
 			{
 				get_cmd(msh);
-				print_cmd(msh->cmd);
+				//executor(msh);
 			}
 			free_msh(msh);
 		}
 		msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
+		if (!msh->line) // Cuando recibe el CTRL+D el Readline devuelve (NULL)
+			ctrl_d();
 	}
+	free_msh(msh);
 }
