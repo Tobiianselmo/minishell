@@ -1,5 +1,22 @@
 #include "../includes/minishell.h"
 
+static void	new_handler(int sig)
+{
+	if (sig == SIGINT)
+		ctrl_c_hd(sig);
+}
+
+static void	handle_ctrl_c(t_msh *msh)
+{
+	struct sigaction	new_act;
+
+	new_act.sa_handler = &new_handler;
+	new_act.sa_flags = SA_RESTART;
+	sigemptyset(&new_act.sa_mask);
+	if (sigaction(SIGINT, &new_act, NULL) == -1)
+		error_msh("Error: sigaction", msh, 1);
+}
+
 static void	wait_hd(t_token *tok, t_cmd *cmd, t_msh *msh, int fd)
 {
 	int	stat;
@@ -19,7 +36,6 @@ static void	wait_hd(t_token *tok, t_cmd *cmd, t_msh *msh, int fd)
 	}
 	close(fd);
 	cmd->fd_in = open(".here_doc.tmp", O_RDONLY);
-	signal(SIGINT, ctrl_c);
 }
 
 static void	here_doc(char *limit, t_cmd *new, t_msh *msh, int fd)
@@ -57,16 +73,17 @@ void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh)
 	{
 		if (new->fd_in > 2)
 			close(new->fd_in);
-		signal(SIGINT, SIG_IGN);
 		fd = open(".here_doc.tmp", O_WRONLY | O_CREAT, 0644);
+		g_signal = 2;
 		pid = fork();
 		if (pid == 0)
 		{
-			signal(SIGINT, ctrl_c_hd);
+			handle_ctrl_c(msh);
 			here_doc((*tok)->content, new, msh, fd);
 		}
 		else if (pid > 0)
 			wait_hd(*tok, new, msh, fd);
+		g_signal = 0;
 	}
 	*tok = (*tok)->next;
 }
