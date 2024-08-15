@@ -32,6 +32,8 @@ src/parser/expand_utils.c \
 src/parser/join_tokens.c \
 src/parser/prints.c \
 src/executor/executor.c \
+src/executor/path.c \
+src/executor/one_cmd.c \
 src/executor/env.c \
 src/executor/echo.c \
 
