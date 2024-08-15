@@ -36,6 +36,8 @@ src/executor/path.c \
 src/executor/one_cmd.c \
 src/executor/env.c \
 src/executor/echo.c \
+src/executor/pwd.c \
+src/executor/exit.c \
 
 CC = clang
 

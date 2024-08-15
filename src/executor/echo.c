@@ -1,19 +1,32 @@
 #include "../includes/minishell.h"
 
-void	echo(t_msh *msh)
+static int	get_flag(t_msh *msh, int *i, int *j)
+{
+	*j = 2;
+	while (msh->cmd->argv[*i][*j] == 'n')
+		*j += 1;
+	if (!msh->cmd->argv[*i][*j])
+		return (1);
+	else
+		return (0);
+}
+
+void	ft_echo(t_msh *msh, int fd)
 {
 	int	i;
+	int	j;
 	int	n_flag;
-	int	fd;
 
 	i = 1;
 	n_flag = 0;
-	fd = msh->cmd->fd_out;
 	if (!msh->cmd)
 		return ;
-	while (!ft_strncmp(msh->cmd->argv[i], "-n", 3))
+	while (msh->cmd->argv[i] && !(ft_strncmp(msh->cmd->argv[i], "-n", 2)))
 	{
-		n_flag = 1;
+		if (get_flag(msh, &i, &j) == 1)
+			n_flag = 1;
+		else if (get_flag(msh, &i, &j) == 0)
+			break ;
 		i++;
 	}
 	while (msh->cmd->argv[i])

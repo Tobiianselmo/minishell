@@ -8,6 +8,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <signal.h>
+# include <stdbool.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -149,8 +150,10 @@ void	expand_heredoc(char *line, t_msh *msh);
 //                 	EXECUTOR
 void	executor(t_msh *msh);
 //------------BUILTINS---------//
-void	env(t_msh *msh);
-void	echo(t_msh *msh);
+void	ft_env(t_msh *msh);
+void	ft_echo(t_msh *msh, int fd);
+void	ft_pwd(t_msh *msh);
+void	ft_exit(t_msh *msh);
 //-------------ONE CMD---------//
 void	one_cmd(t_msh *msh, char **env);
 //---------------PATH----------//
