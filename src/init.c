@@ -56,7 +56,7 @@ void	get_line(t_msh *msh)
 			if (clean_tokens(msh))
 			{
 				get_cmd(msh);
-				//executor(msh);
+				executor(msh);
 			}
 			free_msh(msh);
 		}
