@@ -73,6 +73,7 @@ typedef struct s_msh
 	char			*line;
 	int				state;
 	int				cmd_len;
+	char			**path;
 	struct s_env	*env;
 	struct s_token	*tokens;
 	struct s_cmd	*cmd;
@@ -150,5 +151,9 @@ void	executor(t_msh *msh);
 //------------BUILTINS---------//
 void	env(t_msh *msh);
 void	echo(t_msh *msh);
+//-------------ONE CMD---------//
+void	one_cmd(t_msh *msh, char **env);
+//---------------PATH----------//
+char	**get_path(t_msh *msh);
 
 #endif

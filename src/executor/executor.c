@@ -24,8 +24,11 @@ static int	is_builtin(t_msh *msh)
 
 void	executor(t_msh *msh)
 {
-	(void)msh;
-	// printf("entra al ejecutor\n");
-	if (is_builtin(msh))
-		printf("no es builtin\n");
+	msh->path = get_path(msh);
+	if (!msh->path)
+		error_msh("Path not found", msh, 130);
+	if (is_builtin(msh) == 0)
+		return ;
+	if (msh->cmd_len == 1)
+		one_cmd(msh, msh->path);
 }
