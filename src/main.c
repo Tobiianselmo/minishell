@@ -8,7 +8,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	init_signals();
+	init_signals(&msh);
 	init_msh(envp, &msh);
 	get_line(&msh);
 	free_env(msh.env);

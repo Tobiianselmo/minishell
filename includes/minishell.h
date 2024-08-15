@@ -85,8 +85,8 @@ extern int	g_signal;
 void	print_tokens(t_token *tokens);
 void	print_env(t_env *env);
 //-------------SIGNALS---------//
-void	init_signals(void);
-void	ctrl_c(int signal);
+void	init_signals(t_msh *msh);
+void	ctrl_c(void);
 void	ctrl_d(void);
 //-------------INIT------------//
 void	init_msh(char **envp, t_msh *msh);
