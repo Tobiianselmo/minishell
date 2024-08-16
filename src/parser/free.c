@@ -63,6 +63,8 @@ void	free_msh(t_msh *msh)
 		free(msh->line);
 		msh->line = NULL;
 	}
+	if (msh->path)
+		free_matrix(msh->path);
 	msh->cmd_len = 0;
 }
 

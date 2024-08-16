@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	env(t_msh *msh)
+void	ft_env(t_msh *msh)
 {
 	t_env	*tmp;
 	int		fd;
