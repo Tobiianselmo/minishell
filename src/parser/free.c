@@ -64,7 +64,10 @@ void	free_msh(t_msh *msh)
 		msh->line = NULL;
 	}
 	if (msh->path)
+	{
 		free_matrix(msh->path);
+		msh->path = NULL;
+	}
 	msh->cmd_len = 0;
 }
 
