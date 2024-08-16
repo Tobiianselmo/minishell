@@ -75,6 +75,7 @@ typedef struct s_msh
 	int				state;
 	int				cmd_len;
 	char			**path;
+	char			**envp;
 	struct s_env	*env;
 	struct s_token	*tokens;
 	struct s_cmd	*cmd;
