@@ -20,10 +20,8 @@ static void	set_fd(t_token **tok, t_cmd *new, t_msh *msh)
 static void	set_cmd(t_msh *msh, t_token **tokens)
 {
 	t_cmd	*new_cmd;
-	t_token	*tok;
 	int		len;
 
-	tok = *tokens;
 	len = get_cmd_len(*tokens);
 	new_cmd = new_node_cmd();
 	new_cmd->argv = (char **)malloc(sizeof(char *) * (len + 1));

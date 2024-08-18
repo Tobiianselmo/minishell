@@ -3,12 +3,10 @@
 static char	*find_cmd(char **path, char *cmd)
 {
 	int	i;
-	int	j;
 	char	*cmd_joined;
 	char	*aux;
 
 	i = 0;
-	j = 0;
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
 	while (path[i])
@@ -33,7 +31,7 @@ static int	is_builtin(t_msh *msh)
 
 	cmd = msh->cmd;
 	if (!ft_strncmp("cd", cmd->argv[0], 3))
-		return (0);
+		return (cd(msh), 0);
 	if (!ft_strncmp("echo", cmd->argv[0], 5))
 		return (ft_echo(msh, msh->cmd->fd_out), 0);
 	if (!ft_strncmp("export", cmd->argv[0], 7))
