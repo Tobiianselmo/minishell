@@ -1,5 +1,21 @@
 #include "../../includes/minishell.h"
 
+void	add_env(t_msh *msh, char *var, char *content)
+{
+	t_env	*aux;
+
+	aux = msh->env;
+	while (aux->next)
+		aux = aux->next;
+	aux->next = malloc(sizeof(t_env));
+	if (!aux->next)
+		return ;
+	aux = aux->next;
+	aux->type = ft_strdup(var);
+	aux->content = ft_strdup(content);
+	aux->next = NULL;
+}
+
 void	set_env(t_msh *msh, char *var, char *new)
 {
 	t_env	*aux;
@@ -11,11 +27,11 @@ void	set_env(t_msh *msh, char *var, char *new)
 		{
 			free(aux->content);
 			aux->content = ft_strdup(new);
-			break ;
+			return ;
 		}
 		aux = aux->next;
 	}
-	free(new);
+	add_env(msh, var, new);
 }
 
 void	export(t_msh *msh)
