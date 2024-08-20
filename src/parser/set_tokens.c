@@ -24,11 +24,9 @@ void	set_word_tok(char *line, int *i, t_token **tokens)
 {
 	int	start;
 	int	flag;
-	int	j;
 
 	flag = 0;
 	start = *i;
-	j = 0;
 	if (line[*i])
 	{
 		if (*i > 0 && line[*i - 1] != ' ')

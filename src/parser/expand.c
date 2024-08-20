@@ -59,11 +59,9 @@ void	expand_content(t_token *tok, t_msh *msh)
 
 static void	expand_home(t_token *tok, t_msh *msh)
 {
-	int		i;
 	char	*line;
 	t_env	*aux;
 
-	i = 0;
 	line = NULL;
 	aux = msh->env;
 	while (aux)
