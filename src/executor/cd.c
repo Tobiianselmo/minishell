@@ -27,15 +27,9 @@ static char	*get_env_cd(t_msh *msh, char *var)
 static void	cd_errors(t_msh *msh, char *path)
 {
 	if (ft_strncmp(path, "HOME", 5) == 0 || path == NULL)
-	{
-		ft_printf("Minishell: cd: HOME not set\n");
-		msh->state = 1;
-	}
+		error_msh("Minishell: cd: HOME not set", msh, 1);
 	else if (ft_strncmp(path, "OLDPWD", 6) == 0)
-	{
-		ft_printf("Minishell: cd: OLDPWD not set\n");
-		msh->state = 1;
-	}
+		error_msh("Minishell: cd: OLDPWD not set", msh, 1);
 	else
 	{
 		ft_printf("Minishell: cd: %s: %s\n", path, strerror(errno));
@@ -71,10 +65,15 @@ void	cd(t_msh *msh)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (error_msh("Minishell: cd: getcwd: cannot access parent directories", msh, 1));
 	if (chdir_handle(msh) == 1)
 		return (free(pwd), (void)0);
-	printf("pwd: %s\n", pwd);
 	set_env(msh, "OLDPWD", pwd);
+	free(pwd);
 	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (error_msh("Minishell: cd: getcwd: cannot access parent directories", msh, 1));
 	set_env(msh, "PWD", pwd);
+	free(pwd);
 }
