@@ -38,6 +38,8 @@ src/executor/env.c \
 src/executor/echo.c \
 src/executor/pwd.c \
 src/executor/exit.c \
+src/executor/cd.c \
+src/executor/export.c \
 
 CC = clang
 
