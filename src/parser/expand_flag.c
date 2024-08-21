@@ -20,6 +20,8 @@ static int	check_home(char *line)
 		return (1);
 	else if (line[0] == '\\' && line[1] == '~')
 		return (2);
+	else if (line[0] == '~' && line[1] == '/')
+		return (3);
 	return (0);
 }
 
@@ -50,6 +52,8 @@ void	expand_flag(t_token *tok)
 				aux->exp = 2;
 			else if (check_home(aux->content) == 2)
 				aux->content = sup_backslash(aux->content);
+			else if (check_home(aux->content) == 3)
+				aux->exp = 3;
 		}
 		aux = aux->next;
 	}

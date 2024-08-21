@@ -80,6 +80,26 @@ static void	expand_home(t_token *tok, t_msh *msh)
 	free(line);
 }
 
+static void	expand_both(t_token *tok, t_msh *msh)
+{
+	char	*home;
+	char	*aux;
+
+	aux = ft_strdup(&tok->content[1]);
+	if (!aux)
+		return ; /* test */
+	expand_home(tok, msh);
+	home = ft_strdup(tok->content);
+	if (!home)
+		return ; /* test */
+	free(tok->content);
+	tok->content = ft_strjoin(home, aux);
+	if (!tok->content)
+		return ; /* test */
+	free(home);
+	free(aux);
+}
+
 void	expand_tokens(t_token **tokens, t_msh *msh)
 {
 	t_token	*tmp;
@@ -93,6 +113,8 @@ void	expand_tokens(t_token **tokens, t_msh *msh)
 			expand_content(tmp, msh);
 		else if (tmp->exp == 2)
 			expand_home(tmp, msh);
+		else if (tmp->exp == 3)
+			expand_both(tmp, msh);
 		if (tmp)
 			tmp = tmp->next;
 	}
