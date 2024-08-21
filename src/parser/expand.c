@@ -55,6 +55,7 @@ void	expand_content(t_token *tok, t_msh *msh)
 	free(tok->content);
 	tok->content = ft_strdup(line);
 	free(line);
+	printf("expansion: %s\n", tok->content);
 }
 
 static void	expand_home(t_token *tok, t_msh *msh)

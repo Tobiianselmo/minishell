@@ -86,11 +86,22 @@ char	*get_exp(char *line, int *i, t_msh *msh)
 
 	start = *i + 1;
 	*i += 1;
-	while (ft_isalnum(line[*i]) || line[*i] == '_')
-		*i += 1;
+	if (line[start] == '{')
+	{
+		start++;
+		while (line[*i] && line[*i] != '}')
+			*i += 1;
+		if (!line[*i])
+			start--;
+	}
+	else
+		while (ft_isalnum(line[*i]) || line[*i] == '_')
+			*i += 1;
 	if (*i == start && line[*i] == '?')
 		*i += 1;
 	var = ft_substr(line, start, (*i - start));
+	if (line[*i] == '}')
+		*i += 1;
 	ret = expand_var(var, msh);
 	free(var);
 	return (ret);
