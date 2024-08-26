@@ -58,6 +58,7 @@ typedef struct s_env
 	char			*type;
 	char			*content;
 	int				index;
+	int				val;
 	struct s_env	*next;
 }	t_env;
 
@@ -99,9 +100,7 @@ void	get_line(t_msh *msh);
 void	error_msh(char *msg, t_msh *msh, int state);
 void	error_files(char *name, char *msg);
 //--------------ENV------------//
-t_env	*get_env(char **envp);
-void	get_first_env(t_env *aux, char **envp);
-void	get_all_env(t_env *aux, char **envp, int y, int j);
+t_env	*create_env_lst(char **envp);
 //--------------FREE-----------//
 void	free_matrix(char **matrix);
 void	free_env(t_env *env);

@@ -1,59 +1,39 @@
 #include "../includes/minishell.h"
 
-void	get_first_env(t_env *aux, char **envp)
+static void	init_lst(t_env **lst, char **envp)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		x;
+	int		j;
+	t_env	*new;
 
-	i = 0;
-	j = 0;
-	if (envp[0])
-	{
-		while (envp[0][i] != '=')
-			i++;
-		aux->type = ft_substr(envp[0], 0, i);
-		j = ++i;
-		while (envp[0][j])
-			j++;
-		aux->content = ft_substr(envp[0], i, (j - i));
-		aux->next = NULL;
-	}
-}
-
-void	get_all_env(t_env *aux, char **envp, int y, int j)
-{
-	int	x;
-
-	while (envp[++y])
+	i = -1;
+	while (envp[++i])
 	{
 		x = 0;
-		aux->next = malloc(sizeof(t_env));
-		if (!aux)
+		new = malloc(sizeof(t_env));
+		if (!new)
 			return ;
-		aux = aux->next;
-		while (envp[y][x] != '=')
+		while (envp[i][x] != '=')
 			x++;
-		aux->type = ft_substr(envp[y], 0, x);
+		new->type = ft_substr(envp[i], 0, x);
 		j = ++x;
-		while (envp[y][j])
+		while (envp[i][j])
 			j++;
-		aux->content = ft_substr(envp[y], x, (j - x));
-		aux->next = NULL;
+		new->content = ft_substr(envp[i], x, (j - x));
+		new->val = 1;
+		new->next = NULL;
+		add_back((t_token **)lst, (t_token *)new);
 	}
 }
 
-t_env	*get_env(char **envp)
+t_env	*create_env_lst(char **envp)
 {
 	t_env	*env;
-	t_env	*aux;
 
 	if (!envp || !*envp)
 		return (NULL);
-	env = (t_env *)malloc(sizeof(t_env));
-	if (!env)
-		return (NULL);
-	aux = env;
-	get_first_env(aux, envp);
-	get_all_env(aux, envp, 0, 0);
+	env = NULL;
+	init_lst(&env, envp);
 	return (env);
 }
