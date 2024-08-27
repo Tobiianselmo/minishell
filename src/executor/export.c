@@ -48,50 +48,70 @@ static void	add_var_value(t_msh *msh, char *str)
 	return(free(var), free(content), free(new_content));
 }
 
-static int	add_vars(t_msh *msh)
+static void	add_vars(t_msh *msh, int i)
 {
-	int	i;
 	int	j;
 
-	i = 1;
-	while (msh->cmd->argv[i])
+	j = 0;
+	while (msh->cmd->argv[i][j])
 	{
-		j = 0;
-		if (!ft_strchr(msh->cmd->argv[i], '='))
+		if (msh->cmd->argv[i][j] == '+')
 		{
-			if (get_env(msh, msh->cmd->argv[i]))
-			{
-				i++;
-				continue ;
-			}
-			add_env(msh, msh->cmd->argv[i], NULL);
+			add_var_value(msh, msh->cmd->argv[i]);
+			break ;
 		}
-		while (msh->cmd->argv[i][j])
+		if (msh->cmd->argv[i][j] == '=')
 		{
-			if (msh->cmd->argv[i][j] == '+')
-			{
-				add_var_value(msh, msh->cmd->argv[i]);
-				break ;
-			}
-			if (msh->cmd->argv[i][j] == '=')
-			{
-				new_var_value(msh, msh->cmd->argv[i]);
-				break ;
-			}
-			j++;
+			new_var_value(msh, msh->cmd->argv[i]);
+			break ;
+		}
+		j++;
+	}
+}
+
+static int	parse_export(t_msh *msh, char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(line[i]) && line[i] != '_')
+		return (error_msh("minishell: export: not a valid identifier", msh, 1), 0);
+	while (line[i])
+	{
+		if (!ft_isalnum(line[i]) && line[i] != '_')
+		{
+			if (line[i] != '+' && line[i] != '=')
+				return (error_msh("minishell: export: not a valid identifier", msh, 1), 0);
+			if (line[i] == '+' && line[i + 1] && line[i + 1] != '=')
+				return (error_msh("minishell: export: not a valid identifier", msh, 1), 0);
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 void	export(t_msh *msh)
 {
+	int	i;
+
+	i = 0;
 	if (!msh->cmd->argv[1])
 		print_export(msh->env);
 	else
 	{
-		if (add_vars(msh))
-			printf("error\n");
+		while (msh->cmd->argv[++i])
+		{
+			if (parse_export(msh, msh->cmd->argv[i]))
+			{
+				if (!ft_strchr(msh->cmd->argv[i], '='))
+				{
+					if (get_env(msh, msh->cmd->argv[i]))
+						continue ;
+					add_env(msh, msh->cmd->argv[i], NULL);
+				}
+				else
+					add_vars(msh, i);
+			}
+		}	
 	}
 }
