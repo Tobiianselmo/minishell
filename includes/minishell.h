@@ -58,7 +58,6 @@ typedef struct s_env
 	char			*type;
 	char			*content;
 	int				index;
-	int				val;
 	struct s_env	*next;
 }	t_env;
 
@@ -151,6 +150,9 @@ void	expand_heredoc(char *line, t_msh *msh);
 //                 	EXECUTOR
 void	executor(t_msh *msh);
 void	set_env(t_msh *msh, char *var, char *new);
+void	add_env(t_msh *msh, char *var, char *content);
+char	*get_env(t_msh *msh, char *var);
+void	print_export(t_env *env);
 //------------BUILTINS---------//
 void	ft_env(t_msh *msh);
 void	ft_echo(t_msh *msh, int fd);

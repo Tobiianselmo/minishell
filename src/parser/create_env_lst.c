@@ -21,7 +21,6 @@ static void	init_lst(t_env **lst, char **envp)
 		while (envp[i][j])
 			j++;
 		new->content = ft_substr(envp[i], x, (j - x));
-		new->val = 1;
 		new->next = NULL;
 		add_back((t_token **)lst, (t_token *)new);
 	}

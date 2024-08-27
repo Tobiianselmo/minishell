@@ -5,8 +5,6 @@ del executor o luego en las funciones de ejecucion. (se podria usar la funcion e
 
 -Funciones de los BUILTINS (esta hecho el env y el echo, pero hay que ver si ya estan terminados)
 
--cd (Funciona correctamente, solo quedaria preguntar cuando no existe el getcwd(), si le encontramos otra solucion)
-
 -export (te imprime las variables de entorno ordenadas por orden alfabetico si se recibe solo "export")
 (agrega o modifica variables de entorno si se ejecuta de esta otra manera "  export var="hola"  ")
 
@@ -16,4 +14,4 @@ del executor o luego en las funciones de ejecucion. (se podria usar la funcion e
 
 -exit
 
--Revisar funcion GET_ENV/GET_FIRST_ENV/GET_ALL_ENV
+-Revisar export.c y export_utils.c por multiples funciones y posible reduccion de lineas.
