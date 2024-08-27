@@ -63,17 +63,21 @@ int static	chdir_handle(t_msh *msh)
 void	cd(t_msh *msh)
 {
 	char	*pwd;
+	char	*aux;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		return (error_msh("Minishell: cd: getcwd: cannot access parent directories", msh, 1));
+	aux = NULL;
+	pwd = get_env_cd(msh, "PWD");
 	if (chdir_handle(msh) == 1)
-		return (free(pwd), (void)0);
+		return ;
 	set_env(msh, "OLDPWD", pwd);
-	free(pwd);
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return (error_msh("Minishell: cd: getcwd: cannot access parent directories", msh, 1));
+	{
+		error_msh("Minishell: cd: getcwd: cannot access parent directories", msh, 1);
+		aux = ft_strjoin("/", msh->cmd->argv[1]);
+		set_env(msh, "PWD", ft_strjoin(get_env_cd(msh, "PWD"), aux));
+		return (free(aux));
+	}
 	set_env(msh, "PWD", pwd);
 	free(pwd);
 }

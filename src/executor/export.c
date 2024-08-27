@@ -21,6 +21,8 @@ void	set_env(t_msh *msh, char *var, char *new)
 	t_env	*aux;
 
 	aux = msh->env;
+	if (!new)
+		return ;
 	while (aux)
 	{
 		if (ft_strncmp(var, aux->type, ft_strlen(var)) == 0)
