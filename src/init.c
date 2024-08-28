@@ -33,7 +33,7 @@ static int	clean_tokens(t_msh *msh)
 
 void	init_msh(char **envp, t_msh *msh)
 {
-	msh->env = get_env(envp);
+	msh->env = create_env_lst(envp);
 	msh->envp = envp;
 	msh->cmd_len = 0;
 	msh->state = 0;

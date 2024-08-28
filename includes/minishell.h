@@ -30,6 +30,7 @@
 # define MLLC_ERR "Error asignning Malloc"
 # define CTRLD_HD "minishell: warning: here-document \
 delimited by end-of-file (wanted `"
+# define EXPORT "minishell: export: not a valid identifier"
 
 typedef enum e_token_type
 {
@@ -57,6 +58,7 @@ typedef struct s_env
 {
 	char			*type;
 	char			*content;
+	int				index;
 	struct s_env	*next;
 }	t_env;
 
@@ -98,9 +100,7 @@ void	get_line(t_msh *msh);
 void	error_msh(char *msg, t_msh *msh, int state);
 void	error_files(char *name, char *msg);
 //--------------ENV------------//
-t_env	*get_env(char **envp);
-void	get_first_env(t_env *aux, char **envp);
-void	get_all_env(t_env *aux, char **envp, int y, int j);
+t_env	*create_env_lst(char **envp);
 //--------------FREE-----------//
 void	free_matrix(char **matrix);
 void	free_env(t_env *env);
@@ -151,6 +151,9 @@ void	expand_heredoc(char *line, t_msh *msh);
 //                 	EXECUTOR
 void	executor(t_msh *msh);
 void	set_env(t_msh *msh, char *var, char *new);
+void	add_env(t_msh *msh, char *var, char *content);
+char	*get_env(t_msh *msh, char *var);
+void	print_export(t_env *env);
 //------------BUILTINS---------//
 void	ft_env(t_msh *msh);
 void	ft_echo(t_msh *msh, int fd);

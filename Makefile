@@ -14,7 +14,7 @@ OBJ_DIR = obj
 FILES = src/main.c \
 src/init.c \
 src/parser/signals.c \
-src/parser/get_env.c \
+src/parser/create_env_lst.c \
 src/parser/tokens.c \
 src/parser/set_tokens.c \
 src/parser/create_nodes.c \
@@ -40,6 +40,7 @@ src/executor/pwd.c \
 src/executor/exit.c \
 src/executor/cd.c \
 src/executor/export.c \
+src/executor/export_utils.c \
 
 CC = clang
 
