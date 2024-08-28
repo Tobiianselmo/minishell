@@ -45,7 +45,7 @@ static void	add_var_value(t_msh *msh, char *str)
 	else
 		new_content = ft_strjoin("", content);
 	set_env(msh, var, new_content);
-	return(free(var), free(content), free(new_content));
+	return (free(var), free(content), free(new_content));
 }
 
 static void	add_vars(t_msh *msh, int i)
@@ -75,15 +75,15 @@ static int	parse_export(t_msh *msh, char *line)
 
 	i = 0;
 	if (!ft_isalpha(line[i]) && line[i] != '_')
-		return (error_msh("minishell: export: not a valid identifier", msh, 1), 0);
+		return (error_msh(EXPORT, msh, 1), 0);
 	while (line[i])
 	{
 		if (!ft_isalnum(line[i]) && line[i] != '_')
 		{
 			if (line[i] != '+' && line[i] != '=')
-				return (error_msh("minishell: export: not a valid identifier", msh, 1), 0);
+				return (error_msh(EXPORT, msh, 1), 0);
 			if (line[i] == '+' && line[i + 1] && line[i + 1] != '=')
-				return (error_msh("minishell: export: not a valid identifier", msh, 1), 0);
+				return (error_msh(EXPORT, msh, 1), 0);
 		}
 		i++;
 	}
@@ -112,6 +112,6 @@ void	export(t_msh *msh)
 				else
 					add_vars(msh, i);
 			}
-		}	
+		}
 	}
 }

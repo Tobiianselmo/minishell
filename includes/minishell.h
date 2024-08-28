@@ -30,6 +30,7 @@
 # define MLLC_ERR "Error asignning Malloc"
 # define CTRLD_HD "minishell: warning: here-document \
 delimited by end-of-file (wanted `"
+# define EXPORT "minishell: export: not a valid identifier"
 
 typedef enum e_token_type
 {
