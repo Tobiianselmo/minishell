@@ -2,7 +2,7 @@
 
 static int	cmd_argc(t_cmd *cmd)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (cmd->argv[i])
@@ -59,7 +59,8 @@ void	cd(t_msh *msh)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
-		error_msh("Minishell: cd: getcwd: cannot access parent directories", msh, 1);
+		error_msh("Minishell: cd: getcwd: cannot access parent directories",
+			msh, 1);
 		aux = ft_strjoin("/", msh->cmd->argv[1]);
 		set_env(msh, "PWD", ft_strjoin(get_env(msh, "PWD"), aux));
 		return (free(aux));
