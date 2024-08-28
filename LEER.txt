@@ -10,7 +10,7 @@ del executor o luego en las funciones de ejecucion. (se podria usar la funcion e
 
 -unset (elimina una variable de entorno por ejemplo "unset var")
 
--pwd (medio medio)
+-pwd (Hay que ver algun caso de error)
 
 -exit
 
