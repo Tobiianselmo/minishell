@@ -159,8 +159,8 @@ void	ft_env(t_msh *msh);
 void	ft_echo(t_msh *msh, int fd);
 void	ft_pwd(t_msh *msh);
 void	ft_exit(t_msh *msh);
-void	cd(t_msh *msh);
-void	export(t_msh *msh);
+void	ft_cd(t_msh *msh);
+void	ft_export(t_msh *msh);
 void	ft_unset(t_msh *msh);
 
 //-------------ONE CMD---------//

@@ -90,7 +90,7 @@ static int	parse_export(t_msh *msh, char *line)
 	return (1);
 }
 
-void	export(t_msh *msh)
+void	ft_export(t_msh *msh)
 {
 	int	i;
 

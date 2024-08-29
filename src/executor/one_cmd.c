@@ -31,11 +31,11 @@ static int	is_builtin(t_msh *msh)
 
 	cmd = msh->cmd;
 	if (!ft_strncmp("cd", cmd->argv[0], 3))
-		return (cd(msh), 0);
+		return (ft_cd(msh), 0);
 	if (!ft_strncmp("echo", cmd->argv[0], 5))
 		return (ft_echo(msh, msh->cmd->fd_out), 0);
 	if (!ft_strncmp("export", cmd->argv[0], 7))
-		return (export(msh), 0);
+		return (ft_export(msh), 0);
 	if (!ft_strncmp("unset", cmd->argv[0], 6))
 		return (ft_unset(msh), 0);
 	if (!ft_strncmp("pwd", cmd->argv[0], 4))

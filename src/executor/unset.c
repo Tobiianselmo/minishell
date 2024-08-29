@@ -11,9 +11,7 @@ static void	delete_var(t_msh *msh, char *var)
 {
 	t_env	*curr;
 	t_env	*prev;
-	int		i;
 
-	i = 0;
 	prev = msh->env;
 	curr = msh->env->next;
 	if (ft_strncmp(prev->type, var, ft_strlen(var) + 1) == 0)
@@ -38,16 +36,8 @@ static void	delete_var(t_msh *msh, char *var)
 void	ft_unset(t_msh *msh)
 {
 	int		i;
-	t_env	*aux;
 
 	i = 0;
 	while (msh->cmd->argv[++i])
-	{
-		aux = msh->env;
-		while (aux && ft_strncmp(aux->type, msh->cmd->argv[i],
-				ft_strlen(aux->type) + 1))
-			aux = aux->next;
-		if (aux)
-			delete_var(msh, aux->type);
-	}
+		delete_var(msh, msh->cmd->argv[i]);
 }
