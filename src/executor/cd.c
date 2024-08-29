@@ -46,7 +46,7 @@ int static	chdir_handle(t_msh *msh)
 	return (0);
 }
 
-void	cd(t_msh *msh)
+void	ft_cd(t_msh *msh)
 {
 	char	*pwd;
 	char	*aux;

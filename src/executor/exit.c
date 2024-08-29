@@ -79,9 +79,6 @@ static void	exit_extra_options(t_msh *msh)
 
 void	ft_exit(t_msh *msh)
 {
-	int	fd;
-
-	fd = msh->cmd->fd_out;
 	if (!msh->cmd->argv[1])
 	{
 		error_msh("exit", msh, 0);
