@@ -37,7 +37,7 @@ static int	is_builtin(t_msh *msh)
 	if (!ft_strncmp("export", cmd->argv[0], 7))
 		return (export(msh), 0);
 	if (!ft_strncmp("unset", cmd->argv[0], 6))
-		return (0);
+		return (ft_unset(msh), 0);
 	if (!ft_strncmp("pwd", cmd->argv[0], 4))
 		return (ft_pwd(msh), 0);
 	if (!ft_strncmp("exit", cmd->argv[0], 5))
