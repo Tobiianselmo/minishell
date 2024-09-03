@@ -65,5 +65,4 @@ void	print_export(t_env *env)
 		print_var(aux, aux->content);
 		index++;
 	}
-
 }

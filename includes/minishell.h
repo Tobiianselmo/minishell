@@ -155,6 +155,7 @@ void	add_env(t_msh *msh, char *var, char *content);
 char	*get_env(t_msh *msh, char *var);
 void	print_export(t_env *env);
 //------------BUILTINS---------//
+int		is_builtin(t_msh *msh, t_cmd *cmd);
 void	ft_env(t_msh *msh);
 void	ft_echo(t_msh *msh, int fd);
 void	ft_pwd(t_msh *msh);
@@ -164,8 +165,13 @@ void	ft_export(t_msh *msh);
 void	ft_unset(t_msh *msh);
 
 //-------------ONE CMD---------//
-void	one_cmd(t_msh *msh, char **env);
+void	one_cmd(t_msh *msh, char **env, t_cmd *cmd);
+void	one_cmd_handler(t_msh *msh);
+//-----------MULTI CMD---------//
+void	multiple_cmds(t_msh *msh, t_cmd *cmd);
 //---------------PATH----------//
 char	**get_path(t_msh *msh);
+//---------------WAIT----------//
+void	wait_handler(t_msh *msh, pid_t pid);
 
 #endif
