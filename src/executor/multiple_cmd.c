@@ -1,89 +1,50 @@
 #include "../../includes/minishell.h"
 
-static char	*find_cmd(char **path, char *cmd)
+static void	create_child(t_msh *msh, t_cmd *cmd, int *fd, int fd_in)
 {
-	int		i;
-	char	*cmd_joined;
-	char	*aux;
-
-	i = 0;
-	if (access(cmd, F_OK | X_OK) == 0)
-		return (ft_strdup(cmd));
-	while (path[i])
-	{
-		aux = ft_strjoin(path[i], "/");
-		cmd_joined = ft_strjoin(aux, cmd);
-		if (access(cmd_joined, F_OK | X_OK) == 0)
-		{
-			free(aux);
-			return (cmd_joined);
-		}
-		free(aux);
-		free(cmd_joined);
-		i++;
-	}
-	return (NULL);
+	if (cmd->error == 1)
+		return (exit(EXIT_FAILURE)); /* Make free_and_exit function */
+	if (cmd->index == 0)
+		close(fd[0]);
+	if (!cmd->next)
+		close(fd[1]);
+	if (cmd->fd_in != 0)
+		dup2(cmd->fd_in, 0);
+	else if (cmd->fd_in == 0)
+		dup2(fd_in, 0);
+	if (cmd->fd_out != 1)
+		dup2(cmd->fd_out, 1);
+	else if (cmd->fd_out == 1)
+		dup2(fd[1], 1);
+	if (is_builtin(msh, cmd) == 0)
+		exit(EXIT_SUCCESS); /* Make free_and_exit function */
+	execute_cmd(msh, cmd, msh->path);
 }
 
-static void	execute_cmd(t_msh *msh, t_cmd *cmd, char **path)
-{
-	char	*cmd_and_path;
-
-	cmd_and_path = find_cmd(path, cmd->argv[0]);
-	if (!cmd_and_path)
-	{
-		error_msh("Minishell: Command not found", msh, 127);
-		exit(127);
-	}
-	execve(cmd_and_path, msh->cmd->argv, msh->envp);
-	perror("execve failed");
-	free(cmd_and_path);
-	exit(EXIT_FAILURE);
-}
-
-static void	create_child(t_msh *msh, t_cmd *cmd, int i)
+void	multiple_cmds(t_msh *msh, int fd_in)
 {
 	pid_t	pid;
 	int		fd[2];
+	t_cmd	*tmp;
 
-	if (pipe(fd))
-		error_msh("Error creating pipe in childproc", msh, 0); /* Test */
-	pid = fork();
-	if (pid < 0)
-		error_msh("Error creating child process", msh, 0); /* Test */
-	if (pid == 0)
+	tmp = msh->cmd;
+	while (tmp)
 	{
-		if (i != 0)
+		if (pipe(fd))
+			return (error_msh("Error creating pipe", msh, 1)); /* Test */
+		pid = fork();
+		if (pid == -1)
+			return (error_msh("Error creating child process", msh, 1)); /* Test */
+		if (pid == 0)
+			create_child(msh, tmp, fd, fd_in);
+		else
 		{
-			if (cmd->fd_in != 0)
-			{
-				dup2(fd[0], 0);
-				close(cmd->fd_in);
-			}
+			wait_handler(msh, pid);
+			close(fd[1]);
 		}
-		if (!cmd->next)
-			dup2(fd[1], 1);
+		tmp = tmp->next;
+		close(fd_in);
+		fd_in = dup(fd[0]);
 		close(fd[0]);
-		close(fd[1]);
-		execute_cmd(msh, cmd, msh->path);
-	}
-	wait_handler(msh, pid);
-	close(fd[1]);
-}
-
-void	multiple_cmds(t_msh *msh, t_cmd *cmd)
-{
-	int		i;
-
-	i = 0;
-	if (cmd->fd_in != 0)
-		dup2(cmd->fd_in, STDIN_FILENO);
-	if (cmd->fd_out != 1)
-		dup2(cmd->fd_out, STDOUT_FILENO);
-	while (cmd)
-	{
-		create_child(msh, cmd, i);
-		cmd = cmd->next;
-		i++;
 	}
 }

@@ -23,6 +23,8 @@
 
 static int	clean_tokens(t_msh *msh)
 {
+	if (!msh->tokens)
+		return (0);
 	expand_flag(msh->tokens);
 	expand_tokens(&msh->tokens, msh);
 	join_tokens(&msh->tokens);
@@ -44,7 +46,7 @@ void	init_msh(char **envp, t_msh *msh)
 
 void	get_line(t_msh *msh)
 {
-	msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
+	msh->line = readline("Minishell% ");
 	if (!msh->line) // Cuando recibe el CTRL+D el Readline devuelve (NULL)
 		ctrl_d();
 	while (msh->line)
@@ -62,7 +64,7 @@ void	get_line(t_msh *msh)
 			}
 			free_msh(msh);
 		}
-		msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
+		msh->line = readline("Minishell% ");
 		if (!msh->line) // Cuando recibe el CTRL+D el Readline devuelve (NULL)
 			ctrl_d();
 	}

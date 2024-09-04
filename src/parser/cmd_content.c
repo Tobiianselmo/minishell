@@ -25,6 +25,7 @@ t_cmd	*new_node_cmd(void)
 	new->error = 0;
 	new->fd_in = 0;
 	new->fd_out = 1;
+	new->index = 0;
 	new->next = NULL;
 	return (new);
 }

@@ -87,11 +87,13 @@ int	check_tokens(t_token **tokens, t_msh *msh)
 	{
 		if (!flag++ && aux->type == T_PIPE)
 			return (error_msh(UNEXPEC_TOK, msh, 2), 0);
-		else if (aux->type != T_WORD && aux->type != T_Q && aux->type != T_DQ)
+		else if (aux->type == T_PIPE && !aux->next)
+			return (error_msh(UNEXPEC_EOF, msh, 2), 0);
+		else if (aux->type != T_WORD && aux->type != T_Q && aux->type != T_DQ && aux->type != T_PIPE)
 		{
 			if (!aux->next)
 				return (error_msh(UNEXPEC_EOF, msh, 2), 0);
-			if (aux->next->type != T_WORD && aux->next->type != T_Q
+			if (aux->next->type != T_WORD && aux->next->type != T_Q \
 				&& aux->next->type != T_DQ)
 				return (error_msh(UNEXPEC_TOK, msh, 127), 0);
 		}

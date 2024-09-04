@@ -1,17 +1,17 @@
 #include "../includes/minishell.h"
 
-static int	get_flag(t_msh *msh, int *i, int *j)
+static int	get_flag(t_cmd *cmd, int *i, int *j)
 {
 	*j = 2;
-	while (msh->cmd->argv[*i][*j] == 'n')
+	while (cmd->argv[*i][*j] == 'n')
 		*j += 1;
-	if (!msh->cmd->argv[*i][*j])
+	if (!cmd->argv[*i][*j])
 		return (1);
 	else
 		return (0);
 }
 
-void	ft_echo(t_msh *msh, int fd)
+void	ft_echo(t_msh *msh, t_cmd *cmd, int fd)
 {
 	int	i;
 	int	j;
@@ -19,23 +19,23 @@ void	ft_echo(t_msh *msh, int fd)
 
 	i = 1;
 	n_flag = 0;
-	if (!msh->cmd)
+	if (!cmd)
 		return ;
-	while (msh->cmd->argv[i] && !(ft_strncmp(msh->cmd->argv[i], "-n", 2)))
+	while (cmd->argv[i] && !(ft_strncmp(cmd->argv[i], "-n", 2)))
 	{
-		if (get_flag(msh, &i, &j) == 1)
+		if (get_flag(cmd, &i, &j) == 1)
 			n_flag = 1;
-		else if (get_flag(msh, &i, &j) == 0)
+		else if (get_flag(cmd, &i, &j) == 0)
 			break ;
 		i++;
 	}
-	while (msh->cmd->argv[i])
+	while (cmd->argv[i])
 	{
-		ft_putstr_fd(msh->cmd->argv[i++], fd);
-		if (msh->cmd->argv[i])
+		ft_putstr_fd(cmd->argv[i++], fd);
+		if (cmd->argv[i])
 			ft_putstr_fd(" ", fd);
 	}
 	if (!n_flag)
 		ft_putstr_fd("\n", fd);
-	msh->cmd = msh->cmd->next;
+	msh->state = 0;
 }
