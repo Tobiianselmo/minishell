@@ -48,24 +48,24 @@ static void	add_var_value(t_msh *msh, char *str)
 	return (free(var), free(content), free(new_content));
 }
 
-static void	add_vars(t_msh *msh, int i)
+static void	add_vars(t_msh *msh, char *str)
 {
-	int	j;
+	int	i;
 
-	j = 0;
-	while (msh->cmd->argv[i][j])
+	i = 0;
+	while (str[i])
 	{
-		if (msh->cmd->argv[i][j] == '+')
+		if (str[i] == '+')
 		{
-			add_var_value(msh, msh->cmd->argv[i]);
+			add_var_value(msh, str);
 			break ;
 		}
-		if (msh->cmd->argv[i][j] == '=')
+		if (str[i] == '=')
 		{
-			new_var_value(msh, msh->cmd->argv[i]);
+			new_var_value(msh, str);
 			break ;
 		}
-		j++;
+		i++;
 	}
 }
 
@@ -90,27 +90,27 @@ static int	parse_export(t_msh *msh, char *line)
 	return (1);
 }
 
-void	ft_export(t_msh *msh)
+void	ft_export(t_msh *msh, t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (!msh->cmd->argv[1])
+	if (!cmd->argv[1])
 		print_export(msh->env);
 	else
 	{
-		while (msh->cmd->argv[++i])
+		while (cmd->argv[++i])
 		{
-			if (parse_export(msh, msh->cmd->argv[i]))
+			if (parse_export(msh, cmd->argv[i]))
 			{
-				if (!ft_strchr(msh->cmd->argv[i], '='))
+				if (!ft_strchr(cmd->argv[i], '='))
 				{
-					if (get_env(msh, msh->cmd->argv[i]))
+					if (get_env_type(msh, cmd->argv[i]))
 						continue ;
-					add_env(msh, msh->cmd->argv[i], NULL);
+					add_env(msh, cmd->argv[i], NULL);
 				}
 				else
-					add_vars(msh, i);
+					add_vars(msh, cmd->argv[i]);
 			}
 		}
 	}

@@ -12,7 +12,10 @@ void	add_env(t_msh *msh, char *var, char *content)
 		return ;
 	aux = aux->next;
 	aux->type = ft_strdup(var);
-	aux->content = ft_strdup(content);
+	if (content)
+		aux->content = ft_strdup(content);
+	else
+		aux->content = NULL;
 	aux->next = NULL;
 }
 
@@ -25,7 +28,7 @@ void	set_env(t_msh *msh, char *var, char *new)
 		return ;
 	while (aux)
 	{
-		if (ft_strncmp(var, aux->type, ft_strlen(var)) == 0)
+		if (ft_strncmp(var, aux->type, ft_strlen(var) + 1) == 0)
 		{
 			free(aux->content);
 			aux->content = ft_strdup(new);
@@ -45,6 +48,20 @@ char	*get_env(t_msh *msh, char *var)
 	{
 		if (ft_strncmp(var, aux->type, ft_strlen(var) + 1) == 0)
 			return (aux->content);
+		aux = aux->next;
+	}
+	return (NULL);
+}
+
+char	*get_env_type(t_msh *msh, char *var)
+{
+	t_env	*aux;
+
+	aux = msh->env;
+	while (aux)
+	{
+		if (ft_strncmp(var, aux->type, ft_strlen(var) + 1) == 0)
+			return (aux->type);
 		aux = aux->next;
 	}
 	return (NULL);

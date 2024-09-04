@@ -52,11 +52,13 @@ int	cmd_content(t_cmd *new, t_token *tok)
 			aux = aux->next;
 		else
 		{
-			new->argv[i] = ft_strdup(aux->content);
+			if (aux->content)
+				new->argv[i] = ft_strdup(aux->content);
+			else
+				new->argv[i] = ft_strdup("");
 			if (!new->argv[i])
 				return (0);
 			i++;
-
 		}
 		aux = aux->next;
 	}
