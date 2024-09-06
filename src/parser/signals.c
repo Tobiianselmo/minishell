@@ -2,7 +2,7 @@
 
 void	ctrl_c(void)
 {
-	if (g_signal == 0) // Prompt
+	if (g_signal == 0)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -12,7 +12,7 @@ void	ctrl_c(void)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (g_signal == 1) // Ejecucion
+	else if (g_signal == 1)
 		write(1, "\n", 1);
 }
 

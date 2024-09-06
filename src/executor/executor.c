@@ -16,7 +16,7 @@ static void	set_cmd_index(t_cmd *cmd)
 }
 
 int	is_builtin(t_msh *msh, t_cmd *cmd)
- {
+{
 	if (!ft_strncmp("cd", cmd->argv[0], 3))
 		return (ft_cd(msh, cmd), 0);
 	if (!ft_strncmp("echo", cmd->argv[0], 5))
@@ -40,14 +40,12 @@ void	executor(t_msh *msh)
 	int	fd_in;
 
 	g_signal = 1;
-	msh->path = get_path(msh);
 	fd[0] = dup(0);
 	fd[1] = dup(1);
 	set_cmd_index(msh->cmd);
 	fd_in = msh->cmd->fd_in;
-	if (!msh->path)
-		error_msh("Path not found", msh, 130);
-	else if (msh->cmd_len == 1)
+	msh->path = get_path(msh);
+	if (msh->cmd_len == 1)
 		one_cmd_handler(msh);
 	else
 		multiple_cmds(msh, fd_in);
