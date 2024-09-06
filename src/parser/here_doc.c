@@ -53,9 +53,12 @@ static void	here_doc(char *limit, t_cmd *new, t_msh *msh, int fd)
 			free(line);
 			break ;
 		}
-		expand_heredoc(line, msh);
-		ft_putendl_fd(line, fd);
-		free(line);
+		line = expand_heredoc(line, msh);
+		if (line)
+		{
+			ft_putendl_fd(line, fd);
+			free(line);
+		}
 		line = readline("> ");
 	}
 	if (!line)
