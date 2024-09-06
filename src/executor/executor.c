@@ -24,13 +24,13 @@ int	is_builtin(t_msh *msh, t_cmd *cmd)
 	if (!ft_strncmp("export", cmd->argv[0], 7))
 		return (ft_export(msh, cmd), 0);
 	if (!ft_strncmp("unset", cmd->argv[0], 6))
-		return (ft_unset(msh), 0);
+		return (ft_unset(msh, cmd), 0);
 	if (!ft_strncmp("pwd", cmd->argv[0], 4))
-		return (ft_pwd(msh), 0);
+		return (ft_pwd(msh, cmd), 0);
 	if (!ft_strncmp("exit", cmd->argv[0], 5))
-		return (ft_exit(msh), 0);
+		return (ft_exit(msh, cmd), 0);
 	if (!ft_strncmp("env", cmd->argv[0], 4))
-		return (ft_env(msh), 0);
+		return (ft_env(msh, cmd), 0);
 	return (1);
 }
 
