@@ -158,13 +158,13 @@ char	*get_env_type(t_msh *msh, char *var);
 void	print_export(t_env *env);
 //------------BUILTINS---------//
 int		is_builtin(t_msh *msh, t_cmd *cmd);
-void	ft_env(t_msh *msh);
+void	ft_env(t_msh *msh, t_cmd *cmd);
 void	ft_echo(t_msh *msh, t_cmd *cmd, int fd);
-void	ft_pwd(t_msh *msh);
-void	ft_exit(t_msh *msh);
+void	ft_pwd(t_msh *msh, t_cmd *cmd);
+void	ft_exit(t_msh *msh, t_cmd *cmd);
 void	ft_cd(t_msh *msh, t_cmd *cmd);
 void	ft_export(t_msh *msh, t_cmd *cmd);
-void	ft_unset(t_msh *msh);
+void	ft_unset(t_msh *msh, t_cmd *cmd);
 
 //-------------ONE CMD---------//
 void	one_cmd_handler(t_msh *msh);
