@@ -1,7 +1,5 @@
 COSAS A REALIZAR:
 
--Funcion de CHECK_TOKENS en el parseo, con 29 lineas, hay que refactorizarla en 2.
-
 -Un solo comando (hecho pero hay que testearlo mas).
 
 -PWD cuando no encuentra la ruta y cambia el estado, buscar cual es el
@@ -9,6 +7,9 @@ numero del estado en el que sale.
 
 -Para ejecutar los comandos con el 'execve' nos guardamos las variables
 de entorno del sistema, pero creo que hay que ir actualizandola(la matriz).
+
+-Infile o outfile sin permisos poner el mensaje correcto
+
 
 COSAS A TESTEAR:
 
@@ -48,8 +49,6 @@ COSAS A TESTEAR:
     - echo hola | cat | cat | cat | cat | cat | cat | cat
 
 # general
-    - enter en input -> vacio
-    - solo espacios
     - comillas sin cerrar
     - echo $?
     - unset $PATH -> ls -> /bin/ls
