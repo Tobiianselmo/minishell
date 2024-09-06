@@ -28,9 +28,9 @@
 # define NO_FILE "No such file or directory"
 # define NO_CFILE "File can not be created"
 # define MLLC_ERR "Error asignning Malloc"
-# define CTRLD_HD "minishell: warning: here-document \
+# define CTRLD_HD "warning: here-document \
 delimited by end-of-file (wanted `"
-# define EXPORT "minishell: export: not a valid identifier"
+# define EXPORT "export: not a valid identifier"
 
 typedef enum e_token_type
 {
@@ -97,9 +97,10 @@ void	ctrl_d(void);
 //-------------INIT------------//
 void	init_msh(char **envp, t_msh *msh);
 void	get_line(t_msh *msh);
-//-------------UTILS-----------//
+//------------ERRORS-----------//
 void	error_msh(char *msg, t_msh *msh, int state);
 void	error_files(char *name, char *msg);
+void	error_and_exit(char *msg, int state);
 //--------------ENV------------//
 t_env	*create_env_lst(char **envp);
 //--------------FREE-----------//
@@ -148,8 +149,8 @@ void	set_infile(t_token **tok, t_cmd *new, t_msh *msh);
 //-----HERE DOC && UTILS-------//
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh);
 void	ctrl_c_hd(int signal);
-void	exp_line(char *str, t_msh *msh);
-void	expand_heredoc(char *line, t_msh *msh);
+char	*exp_line(char *str, t_msh *msh);
+char	*expand_heredoc(char *line, t_msh *msh);
 //                 	EXECUTOR
 void	executor(t_msh *msh);
 void	set_env(t_msh *msh, char *var, char *new);
@@ -166,7 +167,6 @@ void	ft_exit(t_msh *msh, t_cmd *cmd);
 void	ft_cd(t_msh *msh, t_cmd *cmd);
 void	ft_export(t_msh *msh, t_cmd *cmd);
 void	ft_unset(t_msh *msh, t_cmd *cmd);
-
 //-------------ONE CMD---------//
 void	one_cmd_handler(t_msh *msh);
 void	execute_cmd(t_msh *msh, t_cmd *cmd, char **path);
