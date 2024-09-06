@@ -66,12 +66,12 @@ static void	exit_extra_options(t_msh *msh, t_cmd *cmd)
 		if (ft_atolli(cmd->argv[1], &value) == true)
 		{
 			value = value % 256;
-			error_msh("exit", msh, value);
+			ft_putendl_fd("exit", 2);
 			free_exit(msh);
 			exit(value);
 		}
 	}
-	error_msh("exit", msh, 2);
+	ft_putendl_fd("exit", 2);
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(cmd->argv[1], 2);
 	ft_putendl_fd(": numeric argument required", 2);
@@ -83,7 +83,7 @@ void	ft_exit(t_msh *msh, t_cmd *cmd)
 {
 	if (!cmd->argv[1])
 	{
-		error_msh("exit", msh, 0);
+		ft_putendl_fd("exit", 2);
 		free_exit(msh);
 		exit(0);
 	}
