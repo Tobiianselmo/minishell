@@ -126,7 +126,8 @@ void	set_q_tok(char *line, int *i, t_token **tokens, t_msh *msh);
 void	set_l_tok(char *line, int *i, t_token **tokens);
 void	set_g_tok(char *line, int *i, t_token **tokens);
 void	set_pipe_tok(char *line, int *i, t_token **tokens);
-int		check_tokens(t_token **tokens, t_msh *msh);
+int		check_tokens(t_token **tokens, t_msh *msh, int flag);
+int		check_pipes(t_msh *msh, t_token *tok, int *flag);
 //-----------TOKEN LIST--------//
 t_token	*new_node(char *content, int type, int flag);
 void	create_tok_lst(t_token **tok, int type, char *content, int flag);

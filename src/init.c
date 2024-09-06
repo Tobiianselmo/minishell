@@ -28,7 +28,7 @@ static int	clean_tokens(t_msh *msh)
 	expand_flag(msh->tokens);
 	expand_tokens(&msh->tokens, msh);
 	join_tokens(&msh->tokens);
-	if (check_tokens(&msh->tokens, msh))
+	if (check_tokens(&msh->tokens, msh, 0))
 		return (1);
 	return (0);
 }
