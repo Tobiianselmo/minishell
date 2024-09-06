@@ -33,11 +33,12 @@ static void	delete_var(t_msh *msh, char *var)
 	}
 }
 
-void	ft_unset(t_msh *msh)
+void	ft_unset(t_msh *msh, t_cmd *cmd)
 {
 	int		i;
 
 	i = 0;
-	while (msh->cmd->argv[++i])
-		delete_var(msh, msh->cmd->argv[i]);
+	while (cmd->argv[++i])
+		delete_var(msh, cmd->argv[i]);
+	msh->state = 0;
 }
