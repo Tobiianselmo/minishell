@@ -29,6 +29,8 @@ void	execute_cmd(t_msh *msh, t_cmd *cmd, char **path)
 {
 	char	*cmd_and_path;
 
+	if (!cmd->argv[0])
+		exit(EXIT_SUCCESS);
 	cmd_and_path = find_cmd(path, cmd->argv[0]);
 	if (!cmd_and_path)
 	{
