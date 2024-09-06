@@ -11,6 +11,16 @@ static int	get_flag(t_cmd *cmd, int *i, int *j)
 		return (0);
 }
 
+static bool	write_space(char *line)
+{
+	if (line)
+	{
+		if (ft_strlen(line) > 0)
+			return (true);
+	}
+	return (false);
+}
+
 void	ft_echo(t_msh *msh, t_cmd *cmd, int fd)
 {
 	int	i;
@@ -31,8 +41,8 @@ void	ft_echo(t_msh *msh, t_cmd *cmd, int fd)
 	}
 	while (cmd->argv[i])
 	{
-		ft_putstr_fd(cmd->argv[i++], fd);
-		if (cmd->argv[i])
+		ft_putstr_fd(cmd->argv[i], fd);
+		if (write_space(cmd->argv[i++]) == true)
 			ft_putstr_fd(" ", fd);
 	}
 	if (!n_flag)

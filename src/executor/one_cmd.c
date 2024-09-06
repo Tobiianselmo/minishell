@@ -9,6 +9,8 @@ char	*find_cmd(char **path, char *cmd)
 	i = 0;
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
+	if (!path)
+		error_and_exit(cmd, 127);
 	while (path[i])
 	{
 		aux = ft_strjoin(path[i], "/");
@@ -34,7 +36,7 @@ void	execute_cmd(t_msh *msh, t_cmd *cmd, char **path)
 	cmd_and_path = find_cmd(path, cmd->argv[0]);
 	if (!cmd_and_path)
 	{
-		error_msh("Minishell: Command not found", msh, 127);
+		error_msh("Command not found", msh, 127);
 		exit(127);
 	}
 	execve(cmd_and_path, cmd->argv, msh->envp);

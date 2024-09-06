@@ -76,7 +76,7 @@ static int	parse_export(t_msh *msh, char *line)
 	i = 0;
 	if (!ft_isalpha(line[i]) && line[i] != '_')
 		return (error_msh(EXPORT, msh, 1), 0);
-	while (line[i])
+	while (line[i] && line[i] != '=')
 	{
 		if (!ft_isalnum(line[i]) && line[i] != '_')
 		{
@@ -95,6 +95,7 @@ void	ft_export(t_msh *msh, t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	// print_tokens(msh->tokens);
 	if (!cmd->argv[1])
 		print_export(msh->env);
 	else
