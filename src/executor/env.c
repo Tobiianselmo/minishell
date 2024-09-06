@@ -67,13 +67,13 @@ char	*get_env_type(t_msh *msh, char *var)
 	return (NULL);
 }
 
-void	ft_env(t_msh *msh)
+void	ft_env(t_msh *msh, t_cmd *cmd)
 {
 	t_env	*tmp;
 	int		fd;
 
 	tmp = msh->env;
-	fd = msh->cmd->fd_out;
+	fd = cmd->fd_out;
 	if (!tmp)
 		return ;
 	while (tmp)
@@ -86,4 +86,5 @@ void	ft_env(t_msh *msh)
 		}
 		tmp = tmp->next;
 	}
+	msh->state = 0;
 }
