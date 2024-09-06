@@ -15,6 +15,8 @@ static bool	all_nbr(char *line)
 				return (false);
 			if (line[i] == '-' || line[i] == '+')
 				check = 1;
+			else
+				return (false);
 		}
 		i++;
 	}
@@ -55,13 +57,13 @@ static bool	ft_atolli(const char *str, long long int *result)
 	return (true);
 }
 
-static void	exit_extra_options(t_msh *msh)
+static void	exit_extra_options(t_msh *msh, t_cmd *cmd)
 {
 	long long int	value;
 
-	if (all_nbr(msh->cmd->argv[1]) == true)
+	if (all_nbr(cmd->argv[1]) == true)
 	{
-		if (ft_atolli(msh->cmd->argv[1], &value) == true)
+		if (ft_atolli(cmd->argv[1], &value) == true)
 		{
 			value = value % 256;
 			error_msh("exit", msh, value);
@@ -71,26 +73,26 @@ static void	exit_extra_options(t_msh *msh)
 	}
 	error_msh("exit", msh, 2);
 	ft_putstr_fd("minishell: exit: ", 2);
-	ft_putstr_fd(msh->cmd->argv[1], 2);
+	ft_putstr_fd(cmd->argv[1], 2);
 	ft_putendl_fd(": numeric argument required", 2);
 	free_exit(msh);
 	exit(2);
 }
 
-void	ft_exit(t_msh *msh)
+void	ft_exit(t_msh *msh, t_cmd *cmd)
 {
-	if (!msh->cmd->argv[1])
+	if (!cmd->argv[1])
 	{
 		error_msh("exit", msh, 0);
 		free_exit(msh);
 		exit(0);
 	}
-	if (msh->cmd->argv[2] && all_nbr(msh->cmd->argv[1]) == true)
+	if (cmd->argv[2] && all_nbr(cmd->argv[1]) == true)
 	{
 		ft_putendl_fd("exit", 2);
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		msh->state = 1;
 		return ;
 	}
-	exit_extra_options(msh);
+	exit_extra_options(msh, cmd);
 }
