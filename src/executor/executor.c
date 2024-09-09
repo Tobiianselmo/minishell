@@ -30,7 +30,7 @@ int	is_builtin(t_msh *msh, t_cmd *cmd)
 	if (!ft_strncmp("exit", cmd->argv[0], 5))
 		return (ft_exit(msh, cmd), 0);
 	if (!ft_strncmp("env", cmd->argv[0], 4))
-		return (ft_env(msh, cmd), 0);
+		return (ft_env(msh, cmd, cmd->argv[1]), 0);
 	return (1);
 }
 

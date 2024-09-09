@@ -67,22 +67,28 @@ char	*get_env_type(t_msh *msh, char *var)
 	return (NULL);
 }
 
-void	ft_env(t_msh *msh, t_cmd *cmd)
+void	ft_env(t_msh *msh, t_cmd *cmd, char *next)
 {
 	t_env	*tmp;
-	int		fd;
 
 	tmp = msh->env;
-	fd = cmd->fd_out;
 	if (!tmp)
 		return ;
+	if (next)
+	{
+		ft_putstr_fd("env: '", 2);
+		ft_putstr_fd(next, 2);
+		ft_putendl_fd("': No such file or directory", 2);
+		msh->state = 127;
+		return ;
+	}
 	while (tmp)
 	{
 		if (tmp->content)
 		{
-			ft_putstr_fd(tmp->type, fd);
-			ft_putstr_fd("=", fd);
-			ft_putendl_fd(tmp->content, fd);
+			ft_putstr_fd(tmp->type, cmd->fd_out);
+			ft_putstr_fd("=", cmd->fd_out);
+			ft_putendl_fd(tmp->content, cmd->fd_out);
 		}
 		tmp = tmp->next;
 	}
