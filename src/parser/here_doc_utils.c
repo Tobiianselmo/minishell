@@ -40,7 +40,7 @@ char	*expand_heredoc(char *line, t_msh *msh)
 	while (aux[i])
 	{
 		if (aux[i] == '$')
-			return (exp_line_test(aux, msh));
+			return (exp_line(aux, msh));
 		i++;
 	}
 	return (aux);

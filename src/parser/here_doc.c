@@ -76,7 +76,7 @@ void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh)
 	{
 		if (new->fd_in > 2)
 			close(new->fd_in);
-		fd = open(".here_doc.tmp", O_WRONLY | O_CREAT, 0644);
+		fd = open(".here_doc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		g_signal = 2;
 		pid = fork();
 		if (pid == 0)
