@@ -3,7 +3,7 @@
 static void	create_child(t_msh *msh, t_cmd *cmd, int *fd, int fd_in)
 {
 	if (cmd->error == 1)
-		return (exit(EXIT_FAILURE)); /* Make free_and_exit function */
+		return (exit(EXIT_FAILURE));
 	if (cmd->index == 0)
 		close(fd[0]);
 	if (!cmd->next)
@@ -17,7 +17,7 @@ static void	create_child(t_msh *msh, t_cmd *cmd, int *fd, int fd_in)
 	else if (cmd->fd_out == 1)
 		dup2(fd[1], 1);
 	if (is_builtin(msh, cmd) == 0)
-		exit(EXIT_SUCCESS); /* Make free_and_exit function */
+		exit(EXIT_SUCCESS);
 	execute_cmd(msh, cmd, msh->path);
 }
 

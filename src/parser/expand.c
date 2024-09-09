@@ -87,15 +87,15 @@ static void	expand_both(t_token *tok, t_msh *msh)
 
 	aux = ft_strdup(&tok->content[1]);
 	if (!aux)
-		return ; /* test */
+		return ;
 	expand_home(tok, msh);
 	home = ft_strdup(tok->content);
 	if (!home)
-		return ; /* test */
+		return ;
 	free(tok->content);
 	tok->content = ft_strjoin(home, aux);
 	if (!tok->content)
-		return ; /* test */
+		return ;
 	free(home);
 	free(aux);
 }

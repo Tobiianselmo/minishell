@@ -95,7 +95,6 @@ void	ft_export(t_msh *msh, t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	// print_tokens(msh->tokens);
 	if (!cmd->argv[1])
 		print_export(msh->env);
 	else

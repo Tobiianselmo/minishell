@@ -50,12 +50,12 @@ void	one_cmd_handler(t_msh *msh)
 	pid_t	pid;
 
 	if (msh->cmd->error == 1)
-		return; /* Not finished */
+		return ;
 	if (is_builtin(msh, msh->cmd) == 0)
 		return ;
 	pid = fork();
 	if (pid < 0)
-		error_msh("Error creating pid", msh, 0); /* Test return */
+		error_msh("Error creating pid", msh, 0);
 	if (pid == 0)
 	{
 		if (msh->cmd->fd_in != 0)
