@@ -1,55 +1,18 @@
 COSAS A REALIZAR:
 
--Un solo comando (hecho pero hay que testearlo mas).
-
 -PWD cuando no encuentra la ruta y cambia el estado, buscar cual es el
 numero del estado en el que sale.
 
 -Para ejecutar los comandos con el 'execve' nos guardamos las variables
 de entorno del sistema, pero creo que hay que ir actualizandola(la matriz).
 
--Infile o outfile sin permisos poner el mensaje correcto
-
+-Ver que hace export | grep '(cualquier cosa)'
 
 COSAS A TESTEAR:
 
 # cd
-    - directorio existe
-    - directorio no existe
-    - file existe
-    - cd
-    -            cd
-    - cd - = $OLDPWD
-    - cd ~ = $HOME
     - cd $HOME si $HOME no existe
     - cd directorio con distintos permisos
 
-# Env
-    - env lalal
-    - env directorio
-
-# pwd
-    - con y sin argumentos
-
-# unset
-    - con y sin argumentos
-    - varios argumentos
-
 # pipe
-    - ls || wc
-    - ls |   | wc
-    - ls |   >/>>/</<< wc
-
-# redirecciones (Hay segfaults con redirecciones solas)
-    - </<</>/>>
-    - << EOF
-    - cat << hola << que << tal
-    - cat << hola << que << tal -> aplicarle señales a heredoc
-    - cat << EOF | ls
-    - echo hola | cat | cat | cat | cat | cat | cat | cat
-
-# general
-    - comillas sin cerrar
-    - echo $?
-    - unset $PATH -> ls -> /bin/ls
-    - unset $HOME -> cd
+    - ls |   >/>>/</<< wc (no llega al here_doc porque da el error del directorio antes)
