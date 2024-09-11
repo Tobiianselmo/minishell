@@ -157,7 +157,7 @@ void	set_env(t_msh *msh, char *var, char *new);
 void	add_env(t_msh *msh, char *var, char *content);
 char	*get_env(t_msh *msh, char *var);
 char	*get_env_type(t_msh *msh, char *var);
-void	print_export(t_env *env);
+void	print_export(t_env *env, int fd);
 //------------BUILTINS---------//
 int		is_builtin(t_msh *msh, t_cmd *cmd);
 void	ft_env(t_msh *msh, t_cmd *cmd, char *next);

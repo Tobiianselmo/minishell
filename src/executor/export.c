@@ -96,7 +96,7 @@ void	ft_export(t_msh *msh, t_cmd *cmd)
 
 	i = 0;
 	if (!cmd->argv[1])
-		print_export(msh->env);
+		print_export(msh->env, cmd->fd_out);
 	else
 	{
 		while (cmd->argv[++i])
