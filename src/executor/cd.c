@@ -12,8 +12,7 @@ static int	cmd_argc(t_cmd *cmd)
 
 static void	cd_errors(t_msh *msh, char *path)
 {
-	if (ft_strncmp(path, "HOME", 5) == 0 || path == NULL
-		|| ft_strlen(path) < 1)
+	if (ft_strncmp(path, "HOME", 5) == 0)
 		error_msh("cd: HOME not set", msh, 1);
 	else if (ft_strncmp(path, "OLDPWD", 7) == 0)
 		error_msh("cd: OLDPWD not set", msh, 1);
@@ -28,10 +27,10 @@ int static	chdir_handle(t_msh *msh, t_cmd *cmd)
 {
 	if (cmd_argc(cmd) > 2)
 		error_msh("cd: too many arguments", msh, 1);
-	else if (cmd->argv[1] == NULL)
+	else if (cmd->argv[1] == NULL || ft_strlen(cmd->argv[1]) < 1)
 	{
 		if (chdir(get_env(msh, "HOME")) == -1)
-			return (cd_errors(msh, get_env(msh, "HOME")), 1);
+			return (cd_errors(msh, "HOME"), 1);
 	}
 	else if (ft_strncmp(cmd->argv[1], "-", 2) == 0)
 	{

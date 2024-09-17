@@ -31,10 +31,10 @@ void	multiple_cmds(t_msh *msh, int fd_in)
 	while (tmp)
 	{
 		if (pipe(fd))
-			return (error_msh("Error creating pipe", msh, 1)); /* Test */
+			return (error_msh("Error creating pipe", msh, 1));
 		pid = fork();
 		if (pid == -1)
-			return (error_msh("Error creating child process", msh, 1)); /* Test */
+			return (error_msh("Error creating child process", msh, 1));
 		if (pid == 0)
 			create_child(msh, tmp, fd, fd_in);
 		else
