@@ -69,6 +69,7 @@ void	free_msh(t_msh *msh)
 		msh->path = NULL;
 	}
 	msh->cmd_len = 0;
+	msh->parse_error = 0;
 }
 
 void	free_env(t_env *env)

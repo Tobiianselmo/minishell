@@ -2,7 +2,7 @@
 
 static int	clean_tokens(t_msh *msh)
 {
-	if (!msh->tokens)
+	if (!msh->tokens || msh->parse_error == 1)
 		return (0);
 	expand_flag(msh->tokens);
 	expand_tokens(&msh->tokens, msh);
@@ -17,6 +17,7 @@ void	init_msh(char **envp, t_msh *msh)
 	msh->env = create_env_lst(envp);
 	msh->envp = envp;
 	msh->cmd_len = 0;
+	msh->parse_error = 0;
 	msh->state = 0;
 	msh->cmd = NULL;
 	msh->tokens = NULL;

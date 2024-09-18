@@ -64,7 +64,10 @@ void	set_q_tok(char *line, int *i, t_token **tokens, t_msh *msh)
 			*i += 1;
 		}
 		else
+		{
 			error_msh(WRONG_Q, msh, 2);
+			msh->parse_error = 1;
+		}
 	}
 }
 
@@ -89,6 +92,9 @@ void	set_dq_tok(char *line, int *i, t_token **tokens, t_msh *msh)
 			*i += 1;
 		}
 		else
+		{
 			error_msh(WRONG_DQ, msh, 2);
+			msh->parse_error = 1;
+		}
 	}
 }

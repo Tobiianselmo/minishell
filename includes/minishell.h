@@ -76,6 +76,7 @@ typedef struct s_msh
 {
 	char			*line;
 	int				state;
+	int				parse_error;
 	int				cmd_len;
 	char			**path;
 	char			**envp;
