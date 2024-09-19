@@ -45,6 +45,7 @@ void	executor(t_msh *msh)
 	set_cmd_index(msh->cmd);
 	fd_in = msh->cmd->fd_in;
 	msh->path = get_path(msh);
+	init_signals(msh);
 	if (msh->cmd_len == 1)
 		one_cmd_handler(msh);
 	else
@@ -52,4 +53,5 @@ void	executor(t_msh *msh)
 	g_signal = 0;
 	dup2(fd[0], 0);
 	dup2(fd[1], 1);
+	init_signals(msh);
 }

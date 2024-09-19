@@ -3,7 +3,7 @@
 static void	create_child(t_msh *msh, t_cmd *cmd, int *fd, int fd_in)
 {
 	if (cmd->error == 1)
-		return (exit(EXIT_FAILURE));
+		exit(EXIT_FAILURE);
 	if (cmd->index == 0)
 		close(fd[0]);
 	if (!cmd->next)
