@@ -1,18 +1,1 @@
-COSAS A REALIZAR:
-
--PWD cuando no encuentra la ruta y cambia el estado, buscar cual es el
-numero del estado en el que sale.
-
--Para ejecutar los comandos con el 'execve' nos guardamos las variables
-de entorno del sistema, pero creo que hay que ir actualizandola(la matriz).
-
--Ver que hace export | grep '(cualquier cosa)'
-
-COSAS A TESTEAR:
-
-# cd
-    - cd $HOME si $HOME no existe
-    - cd directorio con distintos permisos
-
-# pipe
-    - ls |   >/>>/</<< wc (no llega al here_doc porque da el error del directorio antes)
+-Testear todo por si se encuentra un memory leak.
