@@ -22,3 +22,15 @@ void	error_and_exit(char *name, int state)
 	ft_putendl_fd(": No such file or directory", 2);
 	exit(state);
 }
+
+void	free_and_exit(char *msg, t_msh *msh, int state, bool print)
+{
+	if (print == true)
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putendl_fd(msg, 2);
+	}
+	free_env(msh->env);
+	free_msh(msh);
+	exit(state);
+}
