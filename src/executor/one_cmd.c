@@ -35,14 +35,10 @@ void	execute_cmd(t_msh *msh, t_cmd *cmd, char **path)
 		exit(EXIT_SUCCESS);
 	cmd_and_path = find_cmd(path, cmd->argv[0]);
 	if (!cmd_and_path)
-	{
-		error_msh("Command not found", msh, 127);
-		exit(127);
-	}
+		free_and_exit("Command not found", msh, 127, true);
 	execve(cmd_and_path, cmd->argv, msh->envp);
-	perror("execve failed");
 	free(cmd_and_path);
-	exit(EXIT_FAILURE);
+	free_and_exit("execve failed", msh, EXIT_FAILURE, true);
 }
 
 void	one_cmd_handler(t_msh *msh)
