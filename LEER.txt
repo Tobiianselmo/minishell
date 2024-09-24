@@ -1,1 +1,7 @@
 -Testear todo por si se encuentra un memory leak.
+
+-Still reachable en el Here Doc.
+
+-Cuando al CHDIR recibe NULL retorna el siguiente error:
+
+"Syscall param chdir(path) points to unaddressable byte(s)"
