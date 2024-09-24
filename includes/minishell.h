@@ -101,7 +101,7 @@ void	get_line(t_msh *msh);
 //------------ERRORS-----------//
 void	error_msh(char *msg, t_msh *msh, int state);
 void	error_files(char *name, char *msg);
-void	error_and_exit(char *msg, int state);
+void	error_and_exit(char *name, int state, t_msh *msh);
 void	free_and_exit(char *msg, t_msh *msh, int state, bool print);
 //--------------ENV------------//
 t_env	*create_env_lst(char **envp);
@@ -172,7 +172,7 @@ void	ft_unset(t_msh *msh, t_cmd *cmd);
 //-------------ONE CMD---------//
 void	one_cmd_handler(t_msh *msh);
 void	execute_cmd(t_msh *msh, t_cmd *cmd, char **path);
-char	*find_cmd(char **path, char *cmd);
+char	*find_cmd(char **path, char *cmd, t_msh *msh);
 //-----------MULTI CMD---------//
 void	multiple_cmds(t_msh *msh, int fd_in);
 //---------------PATH----------//

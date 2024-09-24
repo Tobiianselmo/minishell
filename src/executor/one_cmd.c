@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char	*find_cmd(char **path, char *cmd)
+char	*find_cmd(char **path, char *cmd, t_msh *msh)
 {
 	int		i;
 	char	*cmd_joined;
@@ -10,7 +10,7 @@ char	*find_cmd(char **path, char *cmd)
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
 	if (!path)
-		error_and_exit(cmd, 127);
+		error_and_exit(cmd, 127, msh);
 	while (path[i])
 	{
 		aux = ft_strjoin(path[i], "/");
@@ -32,8 +32,8 @@ void	execute_cmd(t_msh *msh, t_cmd *cmd, char **path)
 	char	*cmd_and_path;
 
 	if (!cmd->argv[0])
-		exit(EXIT_SUCCESS);
-	cmd_and_path = find_cmd(path, cmd->argv[0]);
+		free_and_exit("", msh, 0, false);
+	cmd_and_path = find_cmd(path, cmd->argv[0], msh);
 	if (!cmd_and_path)
 		free_and_exit("Command not found", msh, 127, true);
 	execve(cmd_and_path, cmd->argv, msh->envp);
