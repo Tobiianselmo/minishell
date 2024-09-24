@@ -1,0 +1,9 @@
+# Test for minishell
+
+# redirecciones
+    - echo hola > file << EOF
+    - cat << EOF > file
+    - << EOF
+    - cat << hola << que << tal
+    - cat << hola << que << tal -> aplicarle señales a heredoc
+    - cat << EOF | ls
