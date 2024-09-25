@@ -17,7 +17,7 @@ static void	free_tokens(t_token **tokens)
 	*tokens = NULL;
 }
 
-static void	free_cmds(t_cmd **cmd)
+void	free_cmds(t_cmd **cmd)
 {
 	t_cmd	*aux;
 

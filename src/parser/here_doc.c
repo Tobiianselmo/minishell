@@ -62,8 +62,8 @@ static void	here_doc(char *limit, t_cmd *new, t_msh *msh, int fd)
 		line = readline("> ");
 	}
 	if (!line)
-		free_and_exit("", msh, 1, false);
-	free_and_exit("", msh, 0, false);
+		free_exit_hd(msh, new, 1);
+	free_exit_hd(msh, new, 0);
 }
 
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh)

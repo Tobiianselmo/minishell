@@ -52,3 +52,9 @@ void	ctrl_c_hd(int signal)
 	ft_putstr_fd("\n", 1);
 	exit(130);
 }
+
+void	free_exit_hd(t_msh *msh, t_cmd *new, int state)
+{
+	free_cmds(&new);
+	free_and_exit("", msh, state, false);
+}

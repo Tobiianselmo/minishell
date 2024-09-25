@@ -107,6 +107,7 @@ void	free_and_exit(char *msg, t_msh *msh, int state, bool print);
 t_env	*create_env_lst(char **envp);
 //--------------FREE-----------//
 void	free_matrix(char **matrix);
+void	free_cmds(t_cmd **cmd);
 void	free_env(t_env *env);
 void	free_msh(t_msh *msh);
 //------------DOLLAR-----------//
@@ -153,6 +154,7 @@ void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh);
 void	ctrl_c_hd(int signal);
 char	*exp_line(char *str, t_msh *msh);
 char	*expand_heredoc(char *line, t_msh *msh);
+void	free_exit_hd(t_msh *msh, t_cmd *new, int state);
 //                 	EXECUTOR
 void	executor(t_msh *msh);
 void	set_env(t_msh *msh, char *var, char *new);
