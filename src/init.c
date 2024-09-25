@@ -1,32 +1,13 @@
 #include "../includes/minishell.h"
 
-/* static void	print_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("%sCOMMANDS%s\n", RED, RST);
-	while (cmd)
-	{
-		i = 0;
-		printf("%s%s%s\n", C, cmd->argv[0], RST);
-		while (cmd->argv[i])
-		{
-			printf("%sCONTENT:%s %s\n", G, RST, cmd->argv[i++]);
-		}
-		printf("%sERROR: %s%d\n", M, RST, cmd->error);
-		printf("%sFD_IN = %s%d\n", M, RST, cmd->fd_in);
-		printf("%sFD_OUT = %s%d\n", M, RST, cmd->fd_out);
-		cmd = cmd->next;
-	}
-} */
-
 static int	clean_tokens(t_msh *msh)
 {
+	if (!msh->tokens || msh->parse_error == 1)
+		return (0);
 	expand_flag(msh->tokens);
 	expand_tokens(&msh->tokens, msh);
 	join_tokens(&msh->tokens);
-	if (check_tokens(&msh->tokens, msh))
+	if (check_tokens(&msh->tokens, msh, 0))
 		return (1);
 	return (0);
 }
@@ -36,6 +17,7 @@ void	init_msh(char **envp, t_msh *msh)
 	msh->env = create_env_lst(envp);
 	msh->envp = envp;
 	msh->cmd_len = 0;
+	msh->parse_error = 0;
 	msh->state = 0;
 	msh->cmd = NULL;
 	msh->tokens = NULL;
@@ -44,8 +26,8 @@ void	init_msh(char **envp, t_msh *msh)
 
 void	get_line(t_msh *msh)
 {
-	msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
-	if (!msh->line) // Cuando recibe el CTRL+D el Readline devuelve (NULL)
+	msh->line = readline("Minishell% ");
+	if (!msh->line)
 		ctrl_d();
 	while (msh->line)
 	{
@@ -62,8 +44,8 @@ void	get_line(t_msh *msh)
 			}
 			free_msh(msh);
 		}
-		msh->line = readline(W"Min"RST RED"ish"RST W"ell% "RST);
-		if (!msh->line) // Cuando recibe el CTRL+D el Readline devuelve (NULL)
+		msh->line = readline("Minishell% ");
+		if (!msh->line)
 			ctrl_d();
 	}
 	free_msh(msh);

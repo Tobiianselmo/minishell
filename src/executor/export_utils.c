@@ -31,21 +31,20 @@ static int	get_var_index(t_env *list, t_env *tmp)
 	return (index);
 }
 
-static void	print_var(t_env *aux, char *content)
+static void	print_var(t_env *aux, char *content, int fd)
 {
-	ft_putstr_fd("declare -x ", 1);
-	ft_putstr_fd(aux->type, 1);
+	ft_putstr_fd("declare -x ", fd);
+	ft_putstr_fd(aux->type, fd);
 	if (content)
 	{
-		ft_putstr_fd("=\"", 1);
-		ft_putstr_fd(aux->content, 1);
-		write(1, "\"\n", 3);
+		ft_putstr_fd("=\"", fd);
+		ft_putstr_fd(aux->content, fd);
+		write(fd, "\"", 1);
 	}
-	else
-		ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\n", fd);
 }
 
-void	print_export(t_env *env)
+void	print_export(t_env *env, int fd)
 {
 	t_env	*aux;
 	int		index;
@@ -62,8 +61,7 @@ void	print_export(t_env *env)
 		aux = env;
 		while (index != aux->index)
 			aux = aux->next;
-		print_var(aux, aux->content);
+		print_var(aux, aux->content, fd);
 		index++;
 	}
-
 }

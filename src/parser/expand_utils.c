@@ -50,28 +50,29 @@ char	*get_word(char *s1, int *i)
 	return (line);
 }
 
-char	*expand_var(char *var, t_msh *msh)
+char	*expand_var(char *var, t_msh *msh, int len)
 {
 	t_env	*aux;
 	char	*line;
-	int		len;
 
 	aux = msh->env;
 	line = ft_strdup("");
+	if (var[0] == '?' && !var[1])
+	{
+		free(line);
+		line = ft_itoa(msh->state);
+		return (line);
+	}
 	while (aux)
 	{
 		len = ft_strlen(aux->type);
-		if (var[0] == '?' && !var[1])
-		{
-			free(line);
-			line = ft_itoa(msh->state);
-			break ;
-		}
 		if (ft_strncmp(var, aux->type, len) == 0 && var[len] == '\0')
 		{
-			free(line);
-			line = ft_strdup(aux->content);
-			break ;
+			if (aux->content)
+			{
+				free(line);
+				line = ft_strdup(aux->content);
+			}
 		}
 		aux = aux->next;
 	}
@@ -102,7 +103,7 @@ char	*get_exp(char *line, int *i, t_msh *msh)
 	var = ft_substr(line, start, (*i - start));
 	if (line[*i] == '}')
 		*i += 1;
-	ret = expand_var(var, msh);
+	ret = expand_var(var, msh, 0);
 	free(var);
 	return (ret);
 }

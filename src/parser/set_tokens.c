@@ -76,22 +76,33 @@ t_token	*set_tokens(char *line, t_msh *msh)
 	return (tokens);
 }
 
-int	check_tokens(t_token **tokens, t_msh *msh)
+int	check_pipes(t_msh *msh, t_token *tok, int *flag)
+{
+	if (!*flag && tok->type == T_PIPE)
+		return (error_msh(UNEXPEC_TOK, msh, 2), 0);
+	else if (tok->type == T_PIPE && !tok->next)
+		return (error_msh(UNEXPEC_EOF, msh, 2), 0);
+	else if (tok->type == T_PIPE && tok->next->type == T_PIPE)
+		return (error_msh(UNEXPEC_TOK, msh, 2), 0);
+	*flag += 1;
+	return (1);
+}
+
+int	check_tokens(t_token **tokens, t_msh *msh, int flag)
 {
 	t_token	*aux;
-	int		flag;
 
 	aux = *tokens;
-	flag = 0;
 	while (aux)
 	{
-		if (!flag++ && aux->type == T_PIPE)
-			return (error_msh(UNEXPEC_TOK, msh, 2), 0);
-		else if (aux->type != T_WORD && aux->type != T_Q && aux->type != T_DQ)
+		if (check_pipes(msh, aux, &flag) == 0)
+			return (0);
+		else if (aux->type != T_WORD && aux->type != T_Q && aux->type != T_DQ
+			&& aux->type != T_PIPE)
 		{
 			if (!aux->next)
 				return (error_msh(UNEXPEC_EOF, msh, 2), 0);
-			if (aux->next->type != T_WORD && aux->next->type != T_Q
+			if (aux->next->type != T_WORD && aux->next->type != T_Q \
 				&& aux->next->type != T_DQ)
 				return (error_msh(UNEXPEC_TOK, msh, 127), 0);
 		}

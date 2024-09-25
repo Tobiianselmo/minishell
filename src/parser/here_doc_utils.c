@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	exp_line(char *str, t_msh *msh)
+char	*exp_line(char *str, t_msh *msh)
 {
 	char	*aux;
 	char	*line;
@@ -26,22 +26,24 @@ void	exp_line(char *str, t_msh *msh)
 	free(str);
 	str = ft_strdup(line);
 	free(line);
+	return (str);
 }
 
-void	expand_heredoc(char *line, t_msh *msh)
+char	*expand_heredoc(char *line, t_msh *msh)
 {
 	int		i;
+	char	*aux;
 
 	i = 0;
-	while (line[i])
+	aux = ft_strdup(line);
+	free(line);
+	while (aux[i])
 	{
-		if (line[i] == '$')
-		{
-			exp_line(line, msh);
-			break ;
-		}
+		if (aux[i] == '$')
+			return (exp_line(aux, msh));
 		i++;
 	}
+	return (aux);
 }
 
 void	ctrl_c_hd(int signal)
@@ -49,4 +51,10 @@ void	ctrl_c_hd(int signal)
 	(void)signal;
 	ft_putstr_fd("\n", 1);
 	exit(130);
+}
+
+void	free_exit_hd(t_msh *msh, t_cmd *new, int state)
+{
+	free_cmds(&new);
+	free_and_exit("", msh, state, false);
 }

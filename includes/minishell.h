@@ -28,9 +28,9 @@
 # define NO_FILE "No such file or directory"
 # define NO_CFILE "File can not be created"
 # define MLLC_ERR "Error asignning Malloc"
-# define CTRLD_HD "minishell: warning: here-document \
+# define CTRLD_HD "warning: here-document \
 delimited by end-of-file (wanted `"
-# define EXPORT "minishell: export: not a valid identifier"
+# define EXPORT "export: not a valid identifier"
 
 typedef enum e_token_type
 {
@@ -68,6 +68,7 @@ typedef struct s_cmd
 	int				error;
 	int				fd_in;
 	int				fd_out;
+	int				index;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -75,6 +76,7 @@ typedef struct s_msh
 {
 	char			*line;
 	int				state;
+	int				parse_error;
 	int				cmd_len;
 	char			**path;
 	char			**envp;
@@ -96,13 +98,16 @@ void	ctrl_d(void);
 //-------------INIT------------//
 void	init_msh(char **envp, t_msh *msh);
 void	get_line(t_msh *msh);
-//-------------UTILS-----------//
+//------------ERRORS-----------//
 void	error_msh(char *msg, t_msh *msh, int state);
 void	error_files(char *name, char *msg);
+void	error_and_exit(char *name, int state, t_msh *msh);
+void	free_and_exit(char *msg, t_msh *msh, int state, bool print);
 //--------------ENV------------//
 t_env	*create_env_lst(char **envp);
 //--------------FREE-----------//
 void	free_matrix(char **matrix);
+void	free_cmds(t_cmd **cmd);
 void	free_env(t_env *env);
 void	free_msh(t_msh *msh);
 //------------DOLLAR-----------//
@@ -112,7 +117,7 @@ void	expand_tokens(t_token **tokens, t_msh *msh);
 void	expand_content(t_token *tok, t_msh *msh);
 char	*get_exp(char *line, int *i, t_msh *msh);
 char	*get_noexp_var(char *s1, int *i);
-char	*expand_var(char *var, t_msh *msh);
+char	*expand_var(char *var, t_msh *msh, int len);
 char	*get_word(char *s1, int *i);
 char	*strjoin_msh(char *s1, char *s2);
 //-------------JOIN------------//
@@ -125,7 +130,8 @@ void	set_q_tok(char *line, int *i, t_token **tokens, t_msh *msh);
 void	set_l_tok(char *line, int *i, t_token **tokens);
 void	set_g_tok(char *line, int *i, t_token **tokens);
 void	set_pipe_tok(char *line, int *i, t_token **tokens);
-int		check_tokens(t_token **tokens, t_msh *msh);
+int		check_tokens(t_token **tokens, t_msh *msh, int flag);
+int		check_pipes(t_msh *msh, t_token *tok, int *flag);
 //-----------TOKEN LIST--------//
 t_token	*new_node(char *content, int type, int flag);
 void	create_tok_lst(t_token **tok, int type, char *content, int flag);
@@ -146,26 +152,34 @@ void	set_infile(t_token **tok, t_cmd *new, t_msh *msh);
 //-----HERE DOC && UTILS-------//
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh);
 void	ctrl_c_hd(int signal);
-void	exp_line(char *str, t_msh *msh);
-void	expand_heredoc(char *line, t_msh *msh);
+char	*exp_line(char *str, t_msh *msh);
+char	*expand_heredoc(char *line, t_msh *msh);
+void	free_exit_hd(t_msh *msh, t_cmd *new, int state);
 //                 	EXECUTOR
 void	executor(t_msh *msh);
 void	set_env(t_msh *msh, char *var, char *new);
 void	add_env(t_msh *msh, char *var, char *content);
 char	*get_env(t_msh *msh, char *var);
-void	print_export(t_env *env);
+char	*get_env_type(t_msh *msh, char *var);
+void	print_export(t_env *env, int fd);
 //------------BUILTINS---------//
-void	ft_env(t_msh *msh);
-void	ft_echo(t_msh *msh, int fd);
-void	ft_pwd(t_msh *msh);
-void	ft_exit(t_msh *msh);
-void	ft_cd(t_msh *msh);
-void	ft_export(t_msh *msh);
-void	ft_unset(t_msh *msh);
-
+int		is_builtin(t_msh *msh, t_cmd *cmd);
+void	ft_env(t_msh *msh, t_cmd *cmd, char *next);
+void	ft_echo(t_msh *msh, t_cmd *cmd, int fd);
+void	ft_pwd(t_msh *msh, t_cmd *cmd);
+void	ft_exit(t_msh *msh, t_cmd *cmd);
+void	ft_cd(t_msh *msh, t_cmd *cmd);
+void	ft_export(t_msh *msh, t_cmd *cmd);
+void	ft_unset(t_msh *msh, t_cmd *cmd);
 //-------------ONE CMD---------//
-void	one_cmd(t_msh *msh, char **env);
+void	one_cmd_handler(t_msh *msh);
+void	execute_cmd(t_msh *msh, t_cmd *cmd, char **path);
+char	*find_cmd(char **path, char *cmd, t_msh *msh);
+//-----------MULTI CMD---------//
+void	multiple_cmds(t_msh *msh, int fd_in);
 //---------------PATH----------//
 char	**get_path(t_msh *msh);
+//---------------WAIT----------//
+void	wait_handler(t_msh *msh, pid_t pid);
 
 #endif

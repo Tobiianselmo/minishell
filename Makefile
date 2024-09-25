@@ -34,6 +34,8 @@ src/parser/prints.c \
 src/executor/executor.c \
 src/executor/path.c \
 src/executor/one_cmd.c \
+src/executor/multiple_cmd.c \
+src/executor/wait.c \
 src/executor/env.c \
 src/executor/echo.c \
 src/executor/pwd.c \

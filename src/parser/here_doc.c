@@ -53,14 +53,17 @@ static void	here_doc(char *limit, t_cmd *new, t_msh *msh, int fd)
 			free(line);
 			break ;
 		}
-		expand_heredoc(line, msh);
-		ft_putendl_fd(line, fd);
-		free(line);
+		line = expand_heredoc(line, msh);
+		if (line)
+		{
+			ft_putendl_fd(line, fd);
+			free(line);
+		}
 		line = readline("> ");
 	}
 	if (!line)
-		exit(1);
-	exit(0);
+		free_exit_hd(msh, new, 1);
+	free_exit_hd(msh, new, 0);
 }
 
 void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh)
@@ -73,7 +76,7 @@ void	set_heredoc(t_token **tok, t_cmd *new, t_msh *msh)
 	{
 		if (new->fd_in > 2)
 			close(new->fd_in);
-		fd = open(".here_doc.tmp", O_WRONLY | O_CREAT, 0644);
+		fd = open(".here_doc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		g_signal = 2;
 		pid = fork();
 		if (pid == 0)

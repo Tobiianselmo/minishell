@@ -12,5 +12,6 @@ int	main(int argc, char **argv, char **envp)
 	init_msh(envp, &msh);
 	get_line(&msh);
 	free_env(msh.env);
+	exit(msh.state);
 	return (0);
 }
